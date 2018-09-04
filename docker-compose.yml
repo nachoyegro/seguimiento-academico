@@ -2,6 +2,7 @@ version: '3'
 services:
   web:
     build: .
+    container_name: alumnos
     command: python3 alumnos/manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
