@@ -1,10 +1,12 @@
 from django.db import models
 
 class Materia(models.Model):
-    siglas = models.CharField(max_length=32)
+    siglas = models.CharField(max_length=32, null=True)
+    nombre = models.CharField(max_length=128, null=True)
+    codigo = models.IntegerField(null=True)
 
     def __str__(self):
-        return u'%s' % (self.siglas)
+        return u'%s' % (self.nombre)
 
 class Comision(models.Model):
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
@@ -17,14 +19,14 @@ class MateriaEnPlan(models.Model):
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=64)
     tipo = models.CharField(choices=(('b' ,'Basica'), ('a' ,'Avanzada'), ('o' ,'Optativa')), max_length=2)
-    creditos = models.IntegerField()
+    creditos = models.IntegerField(default=0)
 
     def __str__(self):
         return u'%s' % (self.nombre)
 
 class PlanDeEstudio(models.Model):
     nombre = models.CharField(max_length=64)
-    materias = models.ManyToManyField(Materia)
+    materias = models.ManyToManyField(MateriaEnPlan)
 
     def __str__(self):
         return u'%s' % (self.nombre)
@@ -32,6 +34,7 @@ class PlanDeEstudio(models.Model):
 class Carrera(models.Model):
     nombre = models.CharField(max_length=255)
     planes = models.ManyToManyField(PlanDeEstudio)
+    codigo = models.CharField(max_length=2)
 
     def __str__(self):
         return u'%s' % (self.nombre)
@@ -40,12 +43,13 @@ class Persona(models.Model):
     nombre = models.CharField(max_length=255)
     apellido = models.CharField(max_length=255)
     dni = models.CharField(max_length=15)
+    email = models.CharField(max_length=128)
 
     def __str__(self):
         return u'%s, %s' % (self.apellido, self.nombre)
 
 class Alumno(models.Model):
-    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    datos_personales = models.ForeignKey(Persona, on_delete=models.CASCADE)
     legajo = models.CharField(max_length=32)
     carreras = models.ManyToManyField(Carrera)
     es_regular = models.BooleanField(default=True)
@@ -62,18 +66,18 @@ class Alumno(models.Model):
     observacion = models.CharField(max_length=255, null=True)
 
     def __str__(self):
-        return u'%s' % (self.persona)
+        return u'%s' % (self.datos_personales)
 
 class Profesor(models.Model):
-    persona = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    datos_personales = models.ForeignKey(Persona, on_delete=models.CASCADE)
     comision = models.ForeignKey(Comision, on_delete=models.CASCADE)
     cargo = models.CharField(max_length=64)
 
     def __str__(self):
-        return u'%s' % (self.persona)
+        return u'%s' % (self.datos_personales)
 
 class MateriaCursada(models.Model):
-    alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
+    alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE, related_name='cursadas')
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
     nota = models.CharField(max_length=3, choices=(
                                 ('EQ', 'Equivalencia'), ('A', 'Aprobado'),
