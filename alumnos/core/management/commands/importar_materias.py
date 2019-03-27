@@ -11,7 +11,8 @@ class Command(BaseCommand):
             for row in spamreader:
                 carrera = Carrera.objects.get(codigo=row[0])
                 plan = PlanDeEstudio.objects.get(nombre=row[1])
-                materia, created = Materia.objects.get_or_create(siglas=row[4], codigo=row[2])
+                codigo = row[2].zfill(5) #Lo relleno con ceros hasta llegar a 5
+                materia, created = Materia.objects.get_or_create(siglas=row[4], codigo=codigo)
                 materia.nombre = row[3]
                 materia.save()
                 materia_plan = MateriaEnPlan.objects.create(materia=materia, nombre=row[3])

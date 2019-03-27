@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'graphene_django',
     'core',
 ]
 
@@ -100,6 +101,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+GRAPHENE = {
+    'SCHEMA': 'alumnos.schema.schema' # Where your Graphene schema lives
+}
 
 
 # Internationalization

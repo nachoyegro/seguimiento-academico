@@ -3,7 +3,7 @@ from django.db import models
 class Materia(models.Model):
     siglas = models.CharField(max_length=32, null=True)
     nombre = models.CharField(max_length=128, null=True)
-    codigo = models.IntegerField(null=True)
+    codigo = models.CharField(max_length=10)
 
     def __str__(self):
         return u'%s' % (self.nombre)
@@ -54,7 +54,7 @@ class Alumno(models.Model):
     carreras = models.ManyToManyField(Carrera)
     es_regular = models.BooleanField(default=True)
     sexo = models.CharField(choices=(('F', 'Femenino'), ('M', 'Masculino')), max_length=2)
-    cuatrimestre_inscripto = models.CharField(max_length=8, null=True)
+    cuatrimestre_inscripto = models.CharField(max_length=8, null=True) #Cuatrimestre Ingreso
     telefono = models.CharField(max_length=32, null=True)
     celular = models.CharField(max_length=32, null=True)
     tiene_beca = models.BooleanField(default=False)
@@ -64,6 +64,7 @@ class Alumno(models.Model):
     tiene_portatil = models.BooleanField(default=False)
     comentario = models.CharField(max_length=255, null=True)
     observacion = models.CharField(max_length=255, null=True)
+    promedio = models.CharField(max_length=3, null=True)
 
     def __str__(self):
         return u'%s' % (self.datos_personales)

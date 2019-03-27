@@ -39,6 +39,7 @@ class Command(BaseCommand):
                         tiene_pendrive = row[53]
                         tiene_portatil = row[54]
                         comentario = row[55]
+                        promedio = row[56]
                         #57 ... 61 TutCyT	cpi-doc	cpi-est	cpi-grad -> listas
                         observacion = row[62]
                         Tfinal = row[105]
@@ -63,7 +64,7 @@ class Command(BaseCommand):
                         persona = Persona.objects.create(nombre=nombre, apellido=apellido, dni=dni, email=mail)
                         alumno = Alumno.objects.create(datos_personales=persona, legajo=legajo,
                                 sexo=sexo, cuatrimestre_inscripto=ci, telefono=telefono, celular=celular,
-                                comentario=comentario, observacion=observacion)
+                                comentario=comentario, observacion=observacion, promedio=promedio)
                         if tpi: alumno.carreras.add(tpi)
                         if lds: alumno.carreras.add(lds)
                         alumno.save()
@@ -73,6 +74,7 @@ class Command(BaseCommand):
                                     'epl': 65, #equivalencia?
                                     'sem_ts': 104, #
                                     'sem_str': 95,#----
+                                    'sem_web': 96,
                                     'syd': 89, #
                                     'ing1': 66, #
                                     'ing2': 67, #
@@ -103,7 +105,6 @@ class Command(BaseCommand):
                                     'proysl': 92, #
                                     'sem_micro': 93, #
                                     'sem_tvd': 94, #
-                                    'sem_web': 96, #
                                     'tti': 102, #
                                     'ttu': 103, #
                                     'am1'	: 123, #

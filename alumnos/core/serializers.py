@@ -29,4 +29,4 @@ class AlumnoSerializer(serializers.HyperlinkedModelSerializer):
     carreras = CarreraSerializer(many=True)
     class Meta:
         model = Alumno
-        fields = ("datos_personales", "legajo", "es_regular", "cursadas", "carreras", "es_regular")
+        fields = ("datos_personales", "legajo", "es_regular", "cursadas", "carreras", "es_regular", "promedio")
