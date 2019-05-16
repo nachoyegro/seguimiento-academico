@@ -104,3 +104,17 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+.vscode/
+.docker-data/
+
+*.zip
+
+*#
+
+*.ods
+
+*.csv
+
+alumnos.json
+alumnos_promedios.json
