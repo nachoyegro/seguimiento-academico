@@ -26,6 +26,7 @@ class MateriaEnPlan(models.Model):
 
 class PlanDeEstudio(models.Model):
     nombre = models.CharField(max_length=64)
+    descripcion = models.TextField(null=True)
     materias = models.ManyToManyField(MateriaEnPlan)
 
     def __str__(self):
@@ -50,6 +51,7 @@ class Persona(models.Model):
 
 class Alumno(models.Model):
     datos_personales = models.ForeignKey(Persona, on_delete=models.CASCADE)
+    plan = models.ForeignKey(PlanDeEstudio, null=True, on_delete=models.SET_NULL)
     legajo = models.CharField(max_length=32)
     carreras = models.ManyToManyField(Carrera)
     es_regular = models.BooleanField(default=True)
@@ -71,11 +73,17 @@ class Alumno(models.Model):
 
 class Profesor(models.Model):
     datos_personales = models.ForeignKey(Persona, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return u'%s' % (self.datos_personales)
+
+class ProfesorEnComision(models.Model):
+    profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE)
     comision = models.ForeignKey(Comision, on_delete=models.CASCADE)
     cargo = models.CharField(max_length=64)
 
     def __str__(self):
-        return u'%s' % (self.datos_personales)
+        return u'%s-%s' % (self.profesor, self.comision)
 
 class MateriaCursada(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE, related_name='cursadas')
