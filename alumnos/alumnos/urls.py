@@ -19,6 +19,7 @@ from django.urls import path, re_path, include
 from django.conf.urls import url
 
 urlpatterns = [
+    path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     re_path('api/', include('core.urls')),
     url(r'^graphql', GraphQLView.as_view(graphiql=True)),
