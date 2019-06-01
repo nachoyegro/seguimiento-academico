@@ -1,6 +1,6 @@
 version: '3'
 services:
-  web:
+  alumnos_backend:
     build: .
     container_name: alumnos
     command: python3 alumnos/manage.py runserver 0.0.0.0:8000

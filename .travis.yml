@@ -9,10 +9,6 @@ services:
 - docker
 
 env:
-  # You may want to update this to whatever the latest version is, or keep it
-  # the same as your local machines. However, I have only tested it with 1.8.0+.
-  # There should be a time in the future when this is not necessary - it is
-  # explained in more detail below.
   DOCKER_COMPOSE_VERSION: 1.14.0
 
 before_install:
@@ -23,7 +19,7 @@ before_install:
   - docker-compose up -d
 
 script:
-  - /usr/local/bin/docker-compose run --rm alumnos pytest
+  - /usr/local/bin/docker-compose run --rm alumnos_backend pytest
 
 cache:
   - pip
