@@ -90,6 +90,7 @@ class MateriaCursada(models.Model):
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
     nota = models.CharField(max_length=3, choices=(
                                 ('EQ', 'Equivalencia'), ('A', 'Aprobado'),
+                                ('AP', 'Aprobado'),
                                 ('D', 'Desaprobado'),('1', '1'),('2', '2'),
                                 ('3', '3'),('4', '4'),('5', '5'),('6', '6'),
                                 ('7', '7'), ('8', '8'),('9', '9'),('10', '10')))
