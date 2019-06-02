@@ -102,7 +102,7 @@ class Inscripcion(models.Model):
         TODO: Tendria que ver como guardar un historial
     """
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
-    materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
+    comision = models.ForeignKey(Comision, on_delete=models.CASCADE)
 
     def __str__(self):
-        return u'%s, %s' % (self.materia, self.alumno)
+        return u'%s, %s' % (self.comision, self.alumno)
