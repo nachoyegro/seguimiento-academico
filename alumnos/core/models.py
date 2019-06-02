@@ -89,7 +89,7 @@ class MateriaCursada(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE, related_name='cursadas')
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
     nota = models.CharField(max_length=3, choices=(
-                                ('EQ', 'Equivalencia'), ('A', 'Aprobado'),
+                                ('EQ', 'Equivalencia'),
                                 ('AP', 'Aprobado'),
                                 ('D', 'Desaprobado'),('1', '1'),('2', '2'),
                                 ('3', '3'),('4', '4'),('5', '5'),('6', '6'),
