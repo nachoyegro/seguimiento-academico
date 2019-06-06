@@ -1,32 +1,51 @@
 from rest_framework import serializers
-from .models import Carrera, Persona, Materia, MateriaCursada, Alumno
+from .models import Carrera, Persona, Materia, MateriaCursada, Alumno, Comision
 
+class ComisionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comision
 
 class CarreraSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+    nombre = serializers.CharField(required=False)
+    codigo = serializers.CharField(required=False)
     class Meta:
         model = Carrera
-        fields = ("nombre", "codigo")
+        fields = ("id", "nombre", "codigo")
 
 class PersonaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Persona
-        fields = ("nombre", "apellido", "dni", "email")
+        fields = ("id", "nombre", "apellido", "dni", "email")
 
 class MateriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Materia
-        fields = ("nombre", "codigo", "siglas")
+        fields = ("id", "nombre", "codigo", "siglas")
 
 class MateriaCursadaSerializer(serializers.ModelSerializer):
     materia = MateriaSerializer()
     class Meta:
         model = MateriaCursada
-        fields = ("materia", "nota")
+        fields = ("id", "materia", "nota")
 
 class AlumnoSerializer(serializers.HyperlinkedModelSerializer):
     datos_personales = PersonaSerializer()
-    cursadas = MateriaCursadaSerializer(many=True)
+    cursadas = MateriaCursadaSerializer(many=True, required=False)
     carreras = CarreraSerializer(many=True)
+
+    def create(self, validated_data):
+        datos_personales = validated_data.pop('datos_personales')
+        persona = Persona.objects.create(**datos_personales)
+        carreras_data = validated_data.pop('carreras')
+        carreras_ids = [carrera['id'] for carrera in carreras_data]
+        carreras = Carrera.objects.filter(id__in=carreras_ids)
+        alumno = Alumno.objects.create(datos_personales=persona, **validated_data)
+        for carrera in carreras:
+            alumno.carreras.add(carrera)
+        alumno.save()
+        return alumno
+
     class Meta:
         model = Alumno
-        fields = ("datos_personales", "legajo", "es_regular", "cursadas", "carreras", "es_regular", "promedio")
+        fields = ("id", "datos_personales", "legajo", "es_regular", "cursadas", "carreras", "es_regular", "promedio")

@@ -15,12 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from graphene_django.views import GraphQLView
-from django.urls import path, re_path, include
+from django.urls import path, include
 from django.conf.urls import url
+#from core.admin_views.notas import NotasWizard, NOTAS_FORMS
 
 urlpatterns = [
-    path('grappelli/', include('grappelli.urls')),
+    url(r'^jet/', include('jet.urls', 'jet')),
     path('admin/', admin.site.urls),
-    re_path('api/', include('core.urls')),
+    #path(r'admin/notas/', NotasWizard.as_view(NOTAS_FORMS)),
+    path('', include('core.urls')),
     url(r'^graphql', GraphQLView.as_view(graphiql=True)),
 ]

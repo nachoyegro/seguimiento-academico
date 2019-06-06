@@ -1,7 +1,7 @@
-from .models import Persona, Alumno, Materia
-from .serializers import PersonaSerializer, AlumnoSerializer, MateriaSerializer
-from rest_framework import viewsets
-
+from .models import Persona, Alumno, Materia, Comision, Carrera
+from .serializers import PersonaSerializer, AlumnoSerializer, MateriaSerializer, ComisionSerializer, CarreraSerializer
+from rest_framework import viewsets, renderers, generics
+from rest_framework.response import Response
 
 class PersonasView(viewsets.ModelViewSet):
     """
@@ -23,3 +23,11 @@ class MateriasView(viewsets.ModelViewSet):
     """
     queryset = Materia.objects.all()
     serializer_class = MateriaSerializer
+
+class ComisionView(viewsets.ModelViewSet):
+    queryset = Comision.objects.all()
+    serializer_class = ComisionSerializer
+
+class CarrerasView(viewsets.ModelViewSet):
+    queryset = Carrera.objects.all()
+    serializer_class = CarreraSerializer
