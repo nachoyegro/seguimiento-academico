@@ -1,7 +1,11 @@
-from .models import Persona, Alumno, Materia, Comision, Carrera
-from .serializers import PersonaSerializer, AlumnoSerializer, MateriaSerializer, ComisionSerializer, CarreraSerializer
+from .models import *
+from .serializers import *
 from rest_framework import viewsets, renderers, generics
 from rest_framework.response import Response
+
+class InscripcionesView(viewsets.ModelViewSet):
+    queryset = Inscripcion.objects.all()
+    serializer_class = InscripcionSerializer
 
 class PersonasView(viewsets.ModelViewSet):
     """

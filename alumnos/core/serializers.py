@@ -1,9 +1,10 @@
 from rest_framework import serializers
-from .models import Carrera, Persona, Materia, MateriaCursada, Alumno, Comision
+from .models import *
 
 class ComisionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comision
+        fields = ("id", "materia", "nombre")
 
 class CarreraSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
@@ -49,3 +50,17 @@ class AlumnoSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Alumno
         fields = ("id", "datos_personales", "legajo", "es_regular", "cursadas", "carreras", "es_regular", "promedio")
+
+class AlumnoInscripcionSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField()
+    legajo = serializers.CharField(required=False)
+    class Meta:
+        model = Alumno
+        fields = ("id", "legajo")
+
+class InscripcionSerializer(serializers.ModelSerializer):
+    alumno = serializers.PrimaryKeyRelatedField(queryset=Alumno.objects.all())
+    comision = serializers.PrimaryKeyRelatedField(queryset=Comision.objects.all())
+    class Meta:
+        model = Inscripcion
+        fields = ("id", "alumno", "comision")
