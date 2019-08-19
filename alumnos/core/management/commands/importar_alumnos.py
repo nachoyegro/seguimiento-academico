@@ -1,13 +1,13 @@
 from django.core.management.base import BaseCommand
 import csv
-from core.models import *
+from core.models import Carrera, Alumno, Materia, MateriaCursada, PlanDeEstudio, AlumnoDeCarrera
 
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         carrera_tpi = Carrera.objects.get(codigo='P')
         carrera_lds = Carrera.objects.get(codigo='W')
-        with open('alumnos-reales.csv', 'r', encoding="utf8") as csvfile:
+        with open('alumnos2019s2.csv', 'r', encoding="utf8") as csvfile:
             spamreader = csv.reader(csvfile, delimiter=';')
             fila = 0
             sin_alumnos = 0
@@ -21,7 +21,9 @@ class Command(BaseCommand):
                     legajo = row[7]
                     nombre = row[8]
                     apellido = row[9]
-                    if nombre and apellido:
+                    if not row[11]:
+                        print('Sin plan: %s, %s, fila: %d' % (apellido, nombre, fila))
+                    if nombre and apellido and row[11]:
                         ci = row[10]
                         plan = row[11]
                         telefono = row[40]
@@ -61,12 +63,26 @@ class Command(BaseCommand):
                         observacion = row[121]
                         _  = row[122]
                         #Si no hay nombre ni apellido entonces es una linea en blanco
-                        persona = Persona.objects.create(nombre=nombre, apellido=apellido, dni=dni, email=mail)
-                        alumno = Alumno.objects.create(datos_personales=persona, legajo=legajo,
-                                sexo=sexo, cuatrimestre_inscripto=ci, telefono=telefono, celular=celular,
-                                comentario=comentario, observacion=observacion, promedio=promedio)
-                        if tpi: alumno.carreras.add(tpi)
-                        if lds: alumno.carreras.add(lds)
+                        alumno = Alumno.objects.create(nombre=nombre, apellido=apellido, dni=dni, email=mail, legajo=legajo,
+                                sexo=sexo, telefono=telefono, celular=celular,
+                                comentario=comentario, observacion=observacion)
+                        if tpi: 
+                            try:
+                                plan = PlanDeEstudio.objects.get(nombre=row[11], carrera=carrera_tpi)
+                            except:
+                                import pdb;pdb.set_trace()
+                            AlumnoDeCarrera.objects.create(alumno=alumno, 
+                                                            cuatrimestre_inscripto=ci, 
+                                                            carrera=carrera_tpi, 
+                                                            plan=plan, 
+                                                            promedio=promedio)
+                        if lds: 
+                            plan = PlanDeEstudio.objects.get(nombre=row[11], carrera=carrera_lds)
+                            AlumnoDeCarrera.objects.create(alumno=alumno, 
+                                                            cuatrimestre_inscripto=ci, 
+                                                            carrera=carrera_lds, 
+                                                            plan=plan, 
+                                                            promedio=promedio)
                         alumno.save()
                         sin_alumnos = 0
                         materias = {'len': 63, #equivalencia?
@@ -127,11 +143,11 @@ class Command(BaseCommand):
                                 print(sigla)
                             nota = row[indice]
                             if nota and 'c' not in nota and 'C' not in nota:
-                                cursada = MateriaCursada.objects.create(materia=materia,
+                                MateriaCursada.objects.create(materia=materia,
                                 alumno=alumno, nota=nota)
                     else:
                         sin_alumnos += 1
                     #Si acumulo 3 lineas sin alumnos termino
-                    if sin_alumnos >= 3:
+                    if fila == 1600:
                         break
                 fila += 1

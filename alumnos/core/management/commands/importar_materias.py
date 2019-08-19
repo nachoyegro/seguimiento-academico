@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 import csv
-from core.models import *
+from core.models import Carrera, PlanDeEstudio, Materia, MateriaEnPlan
 
 class Command(BaseCommand):
 
@@ -10,12 +10,10 @@ class Command(BaseCommand):
             fila = 0
             for row in spamreader:
                 carrera = Carrera.objects.get(codigo=row[0])
-                plan = PlanDeEstudio.objects.get(nombre=row[1])
+                plan = PlanDeEstudio.objects.get(nombre=row[1], carrera=carrera)
                 codigo = row[2].zfill(5) #Lo relleno con ceros hasta llegar a 5
-                materia, created = Materia.objects.get_or_create(siglas=row[4], codigo=codigo)
+                materia, _ = Materia.objects.get_or_create(siglas=row[4])
                 materia.nombre = row[3]
                 materia.save()
-                materia_plan = MateriaEnPlan.objects.create(materia=materia, nombre=row[3])
-                plan.materias.add(materia_plan)
-                plan.save()
+                MateriaEnPlan.objects.create(materia=materia, nombre=row[3], codigo=codigo, plan=plan)
                 fila += 1

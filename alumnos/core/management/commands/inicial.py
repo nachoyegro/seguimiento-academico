@@ -8,14 +8,15 @@ class Command(BaseCommand):
         #TPI
         tpi = Carrera.objects.create(nombre='TPI - Tecnicatura Universitaria en Programación Informática',
                                      codigo='P')
-        plan_2010 = PlanDeEstudio.objects.create(nombre='2010')
-        tpi.planes.add(plan_2010)
-        tpi.save()
-
 
         #LDS
         lds = Carrera.objects.create(nombre='LDS - Licenciatura en Informática',
         codigo='W')
-        plan_2012 = PlanDeEstudio.objects.create(nombre='2012')
-        lds.planes.add(plan_2012)
-        lds.save()
+
+        PlanDeEstudio.objects.create(nombre='2015', carrera=tpi)
+        PlanDeEstudio.objects.create(nombre='2015', carrera=lds)
+        PlanDeEstudio.objects.create(nombre='2012', carrera=tpi)
+        PlanDeEstudio.objects.create(nombre='2012', carrera=lds)
+        PlanDeEstudio.objects.create(nombre='2010', carrera=tpi)
+        PlanDeEstudio.objects.create(nombre='2010', carrera=lds)
+
