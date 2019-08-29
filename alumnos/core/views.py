@@ -12,7 +12,6 @@ class AlumnosView(viewsets.ModelViewSet):
     queryset = Alumno.objects.none()
     serializer_class = AlumnoSerializer
 
-    
     def get_queryset(self):
         """
             - Chequeo las carreras que tiene asignada la persona
@@ -24,6 +23,26 @@ class AlumnosView(viewsets.ModelViewSet):
             alumnos = Alumno.objects.filter(pk__in=AlumnoDeCarrera.objects.filter(carrera__in=carreras).values_list('pk'))
         except:
             alumnos = Alumno.objects.none()
+        return alumnos
+
+class AlumnosDeCarreraView(generics.ListAPIView):
+    queryset = Alumno.objects.none()
+    serializer_class = AlumnoSerializer
+
+    def get_queryset(self):
+        """
+        Retorna todos los alumnos de una determinada carrera,
+        Si es que el usuario tiene permisos para ver esa carrera
+        """
+        alumnos = Alumno.objects.none()
+        try:
+            carrera = Carrera.objects.get(pk=self.kwargs['pk'])
+            profile = Profile.objects.get(user=self.request.user)
+            carreras = profile.carreras.all()
+            if carrera in carreras:
+                alumnos = Alumno.objects.filter(pk__in=AlumnoDeCarrera.objects.filter(carrera=carrera).values_list('pk'))
+        except:
+            pass
         return alumnos
 
 class MateriasView(viewsets.ModelViewSet):

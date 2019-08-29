@@ -12,6 +12,7 @@ router.register(r'carreras', CarrerasView)
 
 urlpatterns = [
     path(r'api/v2/', include(router.urls)),
+    path(r'api/v2/carreras/<int:pk>/alumnos/', AlumnosDeCarreraView.as_view()),
     path(r'api/v1/alumnos/', AlumnosAPIV1.as_view()),
     path(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path(r'api/token/', AlumnosTokenObtainPairView.as_view()),
