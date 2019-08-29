@@ -1,7 +1,7 @@
 language: python
 branches:
   only:
-    - desarrollo
+    - master
 
 sudo: required
 
