@@ -9,8 +9,22 @@ class AlumnosView(viewsets.ModelViewSet):
     """
     Provides a get method handler.
     """
-    queryset = Alumno.objects.all()
+    queryset = Alumno.objects.none()
     serializer_class = AlumnoSerializer
+
+    
+    def get_queryset(self):
+        """
+            - Chequeo las carreras que tiene asignada la persona
+            - Devuelvo solo los alumnos que pertenecen a esa carrera
+        """
+        try:
+            profile = Profile.objects.get(user=self.request.user)
+            carreras = profile.carreras.all()
+            alumnos = Alumno.objects.filter(pk__in=AlumnoDeCarrera.objects.filter(carrera__in=carreras).values_list('pk'))
+        except:
+            alumnos = Alumno.objects.none()
+        return alumnos
 
 class MateriasView(viewsets.ModelViewSet):
     """

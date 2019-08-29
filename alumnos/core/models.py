@@ -48,7 +48,7 @@ class Alumno(models.Model):
     dni = models.CharField(max_length=15)
     email = models.CharField(max_length=128)
     legajo = models.CharField(max_length=32)
-    es_regular = models.BooleanField(default=True) #TODO: falta averiguar esto
+    es_regular = models.BooleanField(default=True)
     sexo = models.CharField(choices=(('F', 'Femenino'), ('M', 'Masculino')), max_length=2)
     telefono = models.CharField(max_length=32, null=True)
     celular = models.CharField(max_length=32, null=True)
