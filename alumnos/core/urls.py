@@ -1,6 +1,7 @@
 from django.urls import path, include
 from .views import *
 from rest_framework import routers, serializers, viewsets, generics
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 router = routers.DefaultRouter()
 router.register(r'materias', MateriasView)
@@ -12,4 +13,6 @@ urlpatterns = [
     path(r'api/v2/', include(router.urls)),
     path(r'api/v1/alumnos/', AlumnosAPIV1.as_view()),
     path(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path(r'api/token/', TokenObtainPairView.as_view()),
+    path(r'api/token/refresh/', TokenRefreshView.as_view()),
 ]
