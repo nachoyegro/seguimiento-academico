@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Materia(models.Model):
     siglas = models.CharField(max_length=32, null=True)
@@ -91,3 +92,9 @@ class MateriaCursada(models.Model):
     def __str__(self):
         return u'%s, %s' % (self.comision.materia, self.alumno)
 
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    carreras = models.ManyToManyField(Carrera)
+
+    def __str__(self):
+        return u'%s' % self.user
