@@ -1,13 +1,5 @@
 from django.contrib import admin
-from core.models import Alumno, Materia, MateriaCursada, PlanDeEstudio, Comision
-
-def apellido(obj):
-    return obj.datos_personales.apellido
-apellido.short_description = 'Apellido'
-
-def nombre(obj):
-    return obj.datos_personales.nombre
-nombre.short_description = 'Nombre'
+from core.models import Alumno, Materia, MateriaCursada, PlanDeEstudio, Comision, AlumnoDeCarrera
 
 class MateriaCursadaTabular(admin.TabularInline):
     model = MateriaCursada
@@ -15,9 +7,14 @@ class MateriaCursadaTabular(admin.TabularInline):
     classes = ('grp-collapse grp-open',)
     raw_id_fields = ('comision', )
 
+class AlumnoDeCarreraStackedAdmin(admin.StackedInline):
+    model = AlumnoDeCarrera
+    extra = 0
+
 class AlumnoAdmin(admin.ModelAdmin):
-    list_display = (apellido, nombre,'legajo', 'es_regular')
-    search_fields = ('datos_personales__apellido', 'datos_personales__nombre', 'legajo')
+    list_display = ('apellido', 'nombre','legajo', 'es_regular')
+    search_fields = ('apellido', 'nombre', 'legajo')
+    inlines = [AlumnoDeCarreraStackedAdmin]
 
 class MateriaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'siglas')

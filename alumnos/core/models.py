@@ -60,7 +60,7 @@ class Alumno(models.Model):
     observacion = models.CharField(max_length=255, null=True)
 
     def __str__(self):
-        return u'%s' % (self.datos_personales)
+        return u'%s, %s' % (self.apellido, self.nombre)
 
 
 class AlumnoDeCarrera(models.Model):
@@ -68,6 +68,7 @@ class AlumnoDeCarrera(models.Model):
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
     plan = models.ForeignKey(PlanDeEstudio, on_delete=models.CASCADE)
     promedio = models.CharField(max_length=3, null=True)
+    coeficiente = models.CharField(max_length=3, null=True)
     cuatrimestre_inscripto = models.CharField(max_length=8, null=True) #Cuatrimestre Ingreso
 
     def __str__(self):
