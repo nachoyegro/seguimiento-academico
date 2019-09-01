@@ -1,6 +1,18 @@
 from graphene_django import DjangoObjectType
 import graphene
+import graphql_jwt
+from graphql_jwt.decorators import login_required
 from .models import *
+from django.contrib.auth.models import User
+
+class Mutation(graphene.ObjectType):
+    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+    verify_token = graphql_jwt.Verify.Field()
+    refresh_token = graphql_jwt.Refresh.Field()
+
+class UserNode(DjangoObjectType):
+    class Meta:
+        model = User
 
 class MateriaNode(DjangoObjectType):
     class Meta:
@@ -8,11 +20,7 @@ class MateriaNode(DjangoObjectType):
 
 class AlumnoNode(DjangoObjectType):
     class Meta:
-        model = Alumno
-
-class PersonaNode(DjangoObjectType):
-    class Meta:
-        model = Persona
+        model = AlumnoDeCarrera
 
 class ComisionNode(DjangoObjectType):
     class Meta:
@@ -30,58 +38,75 @@ class CarreraNode(DjangoObjectType):
     class Meta:
         model = Carrera
 
-class ProfesorNode(DjangoObjectType):
-    class Meta:
-        model = Profesor
-
-class InscripcionNode(DjangoObjectType):
-    class Meta:
-        model = Inscripcion
-
 class MateriaCursadaNode(DjangoObjectType):
     class Meta:
         model = MateriaCursada
 
 class Query(graphene.ObjectType):
-    materia = graphene.List(MateriaNode)
-    alumno = graphene.List(AlumnoNode)
-    persona = graphene.List(PersonaNode)
-    comision = graphene.List(ComisionNode)
-    materia_en_plan = graphene.List(MateriaEnPlanNode)
-    plan_de_estudio = graphene.List(PlanDeEstudioNode)
-    carrera = graphene.List(CarreraNode)
-    profesor = graphene.List(ProfesorNode)
-    inscripcion = graphene.List(InscripcionNode)
-    materia_cursada = graphene.List(MateriaCursadaNode)
+    viewer = graphene.Field(UserNode, token=graphene.String(required=True))
+    materias = graphene.List(MateriaNode)
+    materia = graphene.Field(MateriaNode, id=graphene.Int())
+    alumnos = graphene.List(AlumnoNode)
+    alumno = graphene.Field(AlumnoNode, id=graphene.Int())
+    comisiones = graphene.List(ComisionNode)
+    materias_en_plan = graphene.List(MateriaEnPlanNode)
+    planes_de_estudio = graphene.List(PlanDeEstudioNode)
+    carreras = graphene.List(CarreraNode)
+    carrera = graphene.Field(CarreraNode, id=graphene.Int())
+    materias_cursadas = graphene.List(MateriaCursadaNode)
 
-    def resolve_materia(self, info):
+    @login_required
+    def resolve_viewer(self, info, **kwargs):
+        user = info.context.user
+        if not user.is_authenticated:
+            raise Exception('Authentication credentials were not provided')
+        return user
+
+    @login_required
+    def resolve_materias(self, info):
         return Materia.objects.all()
 
-    def resolve_alumno(self, info):
-        return Alumno.objects.all()
+    @login_required
+    def resolve_materia(self, info, **kwargs):
+        id = kwargs.get('id')
+        if id:
+            return Materia.objects.get(pk=id)
+        return None
 
-    def resolve_persona(self, info):
-        return Persona.objects.all()
+    @login_required
+    def resolve_alumnos(self, info):
+        return AlumnoDeCarrera.objects.all()
 
-    def resolve_comision(self, info):
+    @login_required
+    def resolve_alumno(self, info, **kwargs):
+        id = kwargs.get('id')
+        if id:
+            return AlumnoDeCarrera.objects.get(pk=id)
+        return None
+
+    @login_required
+    def resolve_comisiones(self, info):
         return Comision.objects.all()
 
-    def resolve_materia_en_plan(self, info):
+    @login_required
+    def resolve_materias_en_plan(self, info):
         return MateriaEnPlan.objects.all()
 
-    def resolve_plan_de_estudio(self, info):
+    @login_required
+    def resolve_planes_de_estudio(self, info):
         return PlanDeEstudio.objects.all()
 
-    def resolve_carrera(self, info):
+    @login_required
+    def resolve_carreras(self, info):
         return Carrera.objects.all()
 
-    def resolve_profesor(self, info):
-        return Profesor.objects.all()
+    @login_required
+    def resolve_carrera(self, info, **kwargs):
+        id = kwargs.get('id')
+        if id:
+            return Carrera.objects.get(pk=id)
+        return None
 
-    def resolve_inscripcion(self, info):
-        return Inscripcion.objects.all()
-
-    def resolve_materia_cursada(self, info):
+    @login_required
+    def resolve_materias_cursadas(self, info):
         return MateriaCursada.objects.all()
-
-schema = graphene.Schema(query=Query)
