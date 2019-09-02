@@ -77,6 +77,7 @@ class AlumnoDeCarrera(models.Model):
 
 class MateriaCursada(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE, related_name='cursadas')
+    carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name='cursadas')
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
     comision = models.ForeignKey(Comision, null=True, on_delete=models.SET_NULL)
     nota = models.CharField(max_length=3, default='C', choices=(

@@ -143,8 +143,9 @@ class Command(BaseCommand):
                                 print(sigla)
                             nota = row[indice]
                             if nota and 'c' not in nota and 'C' not in nota:
+                                carrera = carrera_tpi if tpi else carrera_lds
                                 MateriaCursada.objects.create(materia=materia,
-                                alumno=alumno, nota=nota)
+                                alumno=alumno, nota=nota, carrera=carrera)
                     else:
                         sin_alumnos += 1
                     #Si acumulo 3 lineas sin alumnos termino
