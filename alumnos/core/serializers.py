@@ -19,11 +19,23 @@ class MateriaSerializer(serializers.ModelSerializer):
         model = Materia
         fields = ("id", "nombre", "siglas")
 
+class AlumnoResumidoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Alumno
+        fields = ("id", "legajo")
+
+class CarreraResumidaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Carrera
+        fields = ("id", "codigo")
+
 class MateriaCursadaSerializer(serializers.ModelSerializer):
     materia = MateriaSerializer()
+    alumno = AlumnoResumidoSerializer()
+    carrera = CarreraResumidaSerializer()
     class Meta:
         model = MateriaCursada
-        fields = ("id", "materia", "nota")
+        fields = ("id", "materia", "nota", "alumno", "carrera")
 
 class AlumnoSerializer(serializers.HyperlinkedModelSerializer):
     cursadas = MateriaCursadaSerializer(many=True, required=False)
