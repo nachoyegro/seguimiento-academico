@@ -5,6 +5,23 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from django.views.generic import View
 
+class MateriasCursadasView(viewsets.ModelViewSet):
+    queryset = MateriaCursada.objects.none()
+    serializer_class = MateriaCursadaSerializer
+
+    def get_queryset(self):
+        """
+            - Chequeo las carreras que tiene asignada la persona
+            - Devuelvo solo las materias cursadas que pertenecen a esa carrera
+        """
+        try:
+            profile = Profile.objects.get(user=self.request.user)
+            carreras = profile.carreras.all()
+            alumnos = MateriaCursada.objects.filter(carrera__in=carreras)
+        except:
+            alumnos = MateriaCursada.objects.none()
+        return alumnos
+
 class AlumnosView(viewsets.ModelViewSet):
     """
     Provides a get method handler.

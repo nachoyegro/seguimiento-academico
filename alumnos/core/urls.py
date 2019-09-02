@@ -9,6 +9,7 @@ router.register(r'materias', MateriasView)
 router.register(r'alumnos', AlumnosView)
 router.register(r'comisiones', ComisionView)
 router.register(r'carreras', CarrerasView)
+router.register(r'materiascursadas', MateriasCursadasView)
 
 urlpatterns = [
     path(r'api/v2/', include(router.urls)),
