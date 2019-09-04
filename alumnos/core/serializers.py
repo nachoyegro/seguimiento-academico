@@ -19,20 +19,10 @@ class MateriaSerializer(serializers.ModelSerializer):
         model = Materia
         fields = ("id", "nombre", "siglas")
 
-class AlumnoResumidoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Alumno
-        fields = ("id", "legajo")
-
-class CarreraResumidaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Carrera
-        fields = ("id", "codigo")
-
 class MateriaCursadaSerializer(serializers.ModelSerializer):
-    materia = MateriaSerializer()
-    alumno = AlumnoResumidoSerializer()
-    carrera = CarreraResumidaSerializer()
+    materia = serializers.SlugRelatedField(read_only=True, slug_field="nombre")
+    alumno = serializers.SlugRelatedField(read_only=True, slug_field="legajo")
+    carrera = serializers.SlugRelatedField(read_only=True, slug_field="codigo")
     class Meta:
         model = MateriaCursada
         fields = ("id", "materia", "nota", "alumno", "carrera")
