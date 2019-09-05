@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
-from core.models import Profile, Alumno, Materia, MateriaCursada, PlanDeEstudio, Comision, AlumnoDeCarrera
+from core.models import Profile, Carrera, Alumno, Materia, MateriaCursada, PlanDeEstudio, Comision, AlumnoDeCarrera
 
 class MateriaCursadaTabular(admin.TabularInline):
     model = MateriaCursada
@@ -35,3 +35,4 @@ admin.site.register(Alumno, AlumnoAdmin)
 admin.site.register(Materia, MateriaAdmin)
 admin.site.register(PlanDeEstudio)
 admin.site.register(Comision)
+admin.site.register(Carrera)
