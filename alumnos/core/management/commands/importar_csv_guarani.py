@@ -5,9 +5,13 @@ from datetime import datetime
 
 class Command(BaseCommand):
 
+    def add_arguments(self, parser):
+        parser.add_argument('archivo')
+
     def handle(self, *args, **kwargs):
+        path = kwargs['archivo']
         carrera_iaci, created = Carrera.objects.get_or_create(codigo='D')
-        with open('alumnos_guarani.csv', 'r', encoding="utf8") as csvfile:
+        with open(path, 'r', encoding="utf8") as csvfile:
             spamreader = csv.reader(csvfile, delimiter=';')
             for fila, row in enumerate(spamreader):
                 if fila > 0:

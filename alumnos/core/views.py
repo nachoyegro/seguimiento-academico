@@ -1,9 +1,13 @@
 from .models import *
 from .serializers import *
+from .forms import ImportarMateriasCursadasForm
 from rest_framework import viewsets, renderers, generics
 from rest_framework.response import Response
 from django.http import JsonResponse
 from django.views.generic import View
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render
 
 class MateriasCursadasView(viewsets.ModelViewSet):
     queryset = MateriaCursada.objects.none()
@@ -102,3 +106,18 @@ class AlumnosAPIV1(View):
                 json_alumno["carreras"].append(carrera_json)
             json.append(json_alumno)
         return JsonResponse(json, safe=False)
+
+
+class ImportarMateriasCursadasView(View):
+
+    @method_decorator(user_passes_test(lambda u: u.is_superuser))
+    def get(self, request, **kwargs):
+        form = ImportarMateriasCursadasForm(user=request.user)
+        return render(request, 'importador_materias_cursadas.html', dict(form=form))
+
+    def post(self, request):
+        response = dict()
+        form = ImportarMateriasCursadasForm(request.POST, request.FILES, user=request.user)
+        if form.is_valid():
+            response['form'] = form
+        return render(request, 'importador_materias_cursadas.html', response)
