@@ -62,7 +62,7 @@ class Alumno(models.Model):
     observacion = models.CharField(max_length=255, null=True)
 
     def __str__(self):
-        return u'%s, %s' % (self.apellido, self.nombre)
+        return u'%s' % (self.legajo)
 
 
 class AlumnoDeCarrera(models.Model):
@@ -95,7 +95,7 @@ class MateriaCursada(models.Model):
     cuatrimestre = models.CharField(max_length=1, choices=(('1', 'C1'), ('2', 'C2')), null=True)
 
     def __str__(self):
-        return u'%s, %s' % (self.comision.materia, self.alumno)
+        return u'%s, %s' % (self.materia, self.alumno)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
