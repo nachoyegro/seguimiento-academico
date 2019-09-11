@@ -18,4 +18,5 @@ urlpatterns = [
     path(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path(r'api/token/', AlumnosTokenObtainPairView.as_view(), name='token'),
     path(r'api/token/refresh/', TokenRefreshView.as_view()),
+    path(r'admin/core/importar_materias_cursadas/', ImportarMateriasCursadasView.as_view()),
 ]
