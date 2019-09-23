@@ -33,7 +33,7 @@ class Command(BaseCommand):
                         materia.nombre = nombre_materia
                         materia.save()
                     materia_cursada = MateriaCursada.objects.create(alumno=alumno, carrera=carrera_iaci, 
-                                        materia=materia, fecha=fecha, resultado=result, nota=nota)
+                                        materia=materia, fecha=fecha, resultado=result, nota=nota or None)
                     plan_de_estudio, created = PlanDeEstudio.objects.get_or_create(nombre=plan, carrera=carrera_iaci)
                     if created:
                         plan_de_estudio.anio = plan
