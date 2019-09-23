@@ -88,7 +88,7 @@ class MateriaCursada(models.Model):
                                 ('AP', 'Aprobado'),
                                 ('D', 'Desaprobado'),('1', '1'),('2', '2'),
                                 ('3', '3'),('4', '4'),('5', '5'),('6', '6'),
-                                ('7', '7'), ('8', '8'),('9', '9'),('10', '10')))
+                                ('7', '7'), ('8', '8'),('9', '9'),('10', '10')), null=True)
     fecha = models.DateField(null=True)
     #Los dos campos de abajo deberian desaparecer
     anio = models.CharField(max_length=4)
