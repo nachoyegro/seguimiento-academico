@@ -139,6 +139,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL = os.path.join(PROJECT_ROOT, 'media/')
+DOCS_URL = os.path.join(BASE_DIR, 'docs/')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
