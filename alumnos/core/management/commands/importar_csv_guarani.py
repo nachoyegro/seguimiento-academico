@@ -10,7 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         path = kwargs['archivo']
-        carrera_iaci, created = Carrera.objects.get_or_create(codigo='D')
+        carrera_iaci, created = Carrera.objects.get_or_create(codigo='D', nombre='Ingeniería en Automatización y Control Industrial')
         with open(path, 'r', encoding="utf8") as csvfile:
             spamreader = csv.reader(csvfile, delimiter=';')
             for fila, row in enumerate(spamreader):

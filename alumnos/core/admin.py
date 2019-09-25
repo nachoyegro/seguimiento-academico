@@ -1,13 +1,18 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
-from core.models import Profile, Carrera, Alumno, Materia, MateriaCursada, PlanDeEstudio, Comision, AlumnoDeCarrera
+from core.models import Profile, Carrera, Alumno, Materia, MateriaEnPlan, MateriaCursada, PlanDeEstudio, Comision, AlumnoDeCarrera
 
 class MateriaCursadaTabular(admin.TabularInline):
     model = MateriaCursada
-    fields = ('comision', 'nota')
+    fields = ('materia', 'nota')
     classes = ('grp-collapse grp-open',)
-    raw_id_fields = ('comision', )
+    raw_id_fields = ('materia', )
+    extra = 0
+
+class MateriaEnPlanTabular(admin.TabularInline):
+    model = MateriaEnPlan
+    extra = 0
 
 class AlumnoDeCarreraStackedAdmin(admin.StackedInline):
     model = AlumnoDeCarrera
@@ -16,10 +21,11 @@ class AlumnoDeCarreraStackedAdmin(admin.StackedInline):
 class AlumnoAdmin(admin.ModelAdmin):
     list_display = ('apellido', 'nombre','legajo', 'es_regular')
     search_fields = ('apellido', 'nombre', 'legajo')
-    inlines = [AlumnoDeCarreraStackedAdmin]
+    inlines = [AlumnoDeCarreraStackedAdmin, MateriaCursadaTabular]
 
 class MateriaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'siglas')
+    inlines = [MateriaEnPlanTabular]
 
 class ProfileInLine(admin.StackedInline):
     model = Profile

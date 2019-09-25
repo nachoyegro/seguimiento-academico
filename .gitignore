@@ -114,7 +114,5 @@ venv.bak/
 
 *.ods
 
-*.csv
-
 alumnos.json
 alumnos_promedios.json
