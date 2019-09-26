@@ -19,7 +19,7 @@ class AlumnoDeCarreraStackedAdmin(admin.StackedInline):
     extra = 0
 
 class AlumnoAdmin(admin.ModelAdmin):
-    list_display = ('apellido', 'nombre','legajo', 'es_regular')
+    list_display = ('legajo', 'apellido', 'nombre', 'es_regular')
     search_fields = ('apellido', 'nombre', 'legajo')
     inlines = [AlumnoDeCarreraStackedAdmin, MateriaCursadaTabular]
 
