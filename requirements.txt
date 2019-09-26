@@ -6,3 +6,4 @@ pytest==3.2.2
 django-formtools==2.1
 django-cors-headers
 djangorestframework_simplejwt
+coverage==4.5.4

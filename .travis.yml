@@ -2,6 +2,7 @@ language: python
 branches:
   only:
     - master
+    - desarrollo
 
 sudo: required
 
@@ -18,8 +19,14 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker-compose up -d
 
+install:
+  - pip install codecov
+
 script:
-  - /usr/local/bin/docker-compose run --rm alumnos_backend python alumnos/manage.py test alumnos/
+  - /usr/local/bin/docker-compose run --rm alumnos_backend coverage run alumnos/manage.py test alumnos/
+
+after_success:
+  - codecov
 
 cache:
   - pip
