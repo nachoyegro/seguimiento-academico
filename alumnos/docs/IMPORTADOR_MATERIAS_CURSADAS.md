@@ -13,7 +13,7 @@ Las columnas tienen que estar en el orden que se detallan a continuación:
 - Calidad (?)
 - **Materia (Código de Guaraní)**
 - **Nombre (de la materia)**
-- **Fecha (de cursada)**
+- **Fecha** *formato dd/mm/yyyy*
 - **Resultado (2)**
 - **Nota**
 - **Forma de Aprobación**
