@@ -99,9 +99,7 @@ class MateriaCursada(models.Model):
                                 ('3', '3'),('4', '4'),('5', '5'),('6', '6'),
                                 ('7', '7'), ('8', '8'),('9', '9'),('10', '10')), null=True)
     fecha = models.DateField(null=True)
-    #Los dos campos de abajo deberian desaparecer
-    anio = models.CharField(max_length=4)
-    cuatrimestre = models.CharField(max_length=1, choices=(('1', 'C1'), ('2', 'C2')), null=True)
+    forma_aprobacion = models.CharField(max_length=32, null=True)
 
     def __str__(self):
         return u'%s, %s' % (self.materia, self.alumno)
