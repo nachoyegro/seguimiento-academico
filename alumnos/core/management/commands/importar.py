@@ -7,10 +7,7 @@ import os
 class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
-        #print('Importando')
-        #call_command('inicial')
-        #print('Importando materias')
-        #call_command('importar_materias')
-        #print('Importando alumnos')
-        #call_command('importar_alumnos')
+        print('Importando Carreras')
+        call_command('importar_carreras')
+        print('Importando Cursadas')
         call_command('importar_csv_guarani', os.path.join(settings.DOCS_URL, 'alumnos_guarani.csv'))

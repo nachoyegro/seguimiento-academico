@@ -10,33 +10,35 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         path = kwargs['archivo']
-        carrera_iaci, created = Carrera.objects.get_or_create(codigo='D', nombre='Ingeniería en Automatización y Control Industrial')
         with open(path, 'r', encoding="utf8") as csvfile:
             spamreader = csv.reader(csvfile, delimiter=';')
             for fila, row in enumerate(spamreader):
                 if fila > 0:
                     legajo = row[0]
-                    cod_materia = row[1]
-                    nombre_materia = row[2]
-                    fecha = datetime.strptime(row[3], '%d/%m/%Y')
-                    result = row[4]
-                    nota = row[5]
-                    forma_aprob = row[6]
-                    creditos = row[7]
-                    acta_promocion = row[8]
-                    acta_examen = row[9]
-                    plan = row[10]
+                    #dni = row[1]
+                    cod_carrera = row[2]
+                    cod_materia = row[5]
+                    nombre_materia = row[6]
+                    fecha = datetime.strptime(row[7], '%d/%m/%Y')
+                    resultado = row[8]
+                    nota = row[9]
+                    forma_aprob = row[10]
+                    creditos = row[11]
+                    acta_promocion = row[12]
+                    acta_examen = row[13]
+                    plan = row[14]
+                    carrera = Carrera.objects.get(codigo=cod_carrera)
                     alumno, created = Alumno.objects.get_or_create(legajo=legajo)
-                    alumno_carrera, created = AlumnoDeCarrera.objects.get_or_create(alumno=alumno, carrera=carrera_iaci)
+                    alumno_carrera, created = AlumnoDeCarrera.objects.get_or_create(alumno=alumno, carrera=carrera)
                     materia, created = Materia.objects.get_or_create(codigo=cod_materia)
                     if created:
                         materia.nombre = nombre_materia
                         materia.save()
-                    materia_cursada = MateriaCursada.objects.create(alumno=alumno, carrera=carrera_iaci, 
-                                        materia=materia, fecha=fecha, resultado=result, nota=nota or None)
-                    plan_de_estudio, created = PlanDeEstudio.objects.get_or_create(nombre=plan, carrera=carrera_iaci)
+                    materia_cursada = MateriaCursada.objects.create(alumno=alumno, carrera=carrera, 
+                                        materia=materia, fecha=fecha, resultado=resultado, nota=nota or None)
+                    plan_de_estudio, created = PlanDeEstudio.objects.get_or_create(anio=plan, carrera=carrera)
                     if created:
-                        plan_de_estudio.anio = plan
+                        plan_de_estudio.nombre = plan
                         plan_de_estudio.save()
                 
                     materia_en_plan, created = MateriaEnPlan.objects.get_or_create(materia=materia, plan=plan_de_estudio)
