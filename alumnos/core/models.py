@@ -45,7 +45,7 @@ class MateriaEnPlan(models.Model):
     area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
     nombre = models.CharField(max_length=64)
     nucleo = models.CharField(choices=(('I' ,'Introductoria'), ('B' ,'Basica'), ('A' ,'Avanzada'), ('C' ,'Complementaria')), max_length=2, null=True)
-    creditos = models.IntegerField(default=0)
+    creditos = models.IntegerField(null=True)
     codigo = models.CharField(max_length=10, null=True)
     orden_cuatrimestral = models.IntegerField(null=True)
     obligatorias = models.ManyToManyField("self", null=True, related_name="obligatorias")
@@ -92,16 +92,25 @@ class MateriaCursada(models.Model):
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name='cursadas')
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
     comision = models.ForeignKey(Comision, null=True, on_delete=models.SET_NULL)
-    resultado = models.CharField(max_length=2, null=True)
+    resultado = models.CharField(max_length=2, choices=(
+                                                        ('A', 'A- Aprobado'),
+                                                        ('E', 'E- Pendiente de Aprobacion'),
+                                                        ('N', 'N- Reprobado'),
+                                                        ('P', 'P- Aprobado'),
+                                                        ('U', 'U- Ausente'),
+                                                        ('R', 'R- Reprobado'),
+                                                        ('V', 'V- Pendiente Virtual'),
+                                                        ('', 'Ausente de Examen'),   
+                                                        ),null=True)
     nota = models.CharField(max_length=3, choices=(
-                                ('C', 'Cursando'),
-                                ('EQ', 'Equivalencia'),
-                                ('AP', 'Aprobado'),
-                                ('D', 'Desaprobado'),('1', '1'),('2', '2'),
+                                ('PA', 'Pendiente de Aprobacion'),
+                                ('A', 'Aprobado'),
+                                ('1', '1'),('2', '2'),
                                 ('3', '3'),('4', '4'),('5', '5'),('6', '6'),
                                 ('7', '7'), ('8', '8'),('9', '9'),('10', '10')), null=True)
     fecha = models.DateField(null=True)
     forma_aprobacion = models.CharField(max_length=32, null=True)
+        
 
     def __str__(self):
         return u'%s, %s' % (self.materia, self.alumno)
