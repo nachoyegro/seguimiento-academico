@@ -48,8 +48,8 @@ class MateriaEnPlan(models.Model):
     creditos = models.IntegerField(null=True)
     codigo = models.CharField(max_length=10, null=True)
     orden_cuatrimestral = models.IntegerField(null=True)
-    obligatorias = models.ManyToManyField("self", null=True, related_name="obligatorias")
-    recomendadas = models.ManyToManyField("self", null=True, related_name="recomendadas")
+    obligatorias = models.ManyToManyField("self", related_name="obligatorias")
+    recomendadas = models.ManyToManyField("self", related_name="recomendadas")
 
     def __str__(self):
         return u'%s-%s' % (self.plan, self.materia)
