@@ -45,7 +45,7 @@ class MateriaEnPlan(models.Model):
     area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
     nombre = models.CharField(max_length=64)
     nucleo = models.CharField(choices=(('I' ,'Introductoria'), ('B' ,'Basica'), ('A' ,'Avanzada'), ('C' ,'Complementaria')), max_length=2, null=True)
-    creditos = models.IntegerField(default=0)
+    creditos = models.IntegerField(null=True)
     codigo = models.CharField(max_length=10, null=True)
     orden_cuatrimestral = models.IntegerField(null=True)
 
