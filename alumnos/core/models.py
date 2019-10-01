@@ -48,9 +48,11 @@ class MateriaEnPlan(models.Model):
     creditos = models.IntegerField(default=0)
     codigo = models.CharField(max_length=10, null=True)
     orden_cuatrimestral = models.IntegerField(null=True)
+    obligatorias = models.ManyToManyField("self", null=True, related_name="obligatorias")
+    recomendadas = models.ManyToManyField("self", null=True, related_name="recomendadas")
 
     def __str__(self):
-        return u'%s' % (self.nombre)
+        return u'%s-%s' % (self.plan, self.materia)
 
 class Alumno(models.Model):
     nombre = models.CharField(max_length=255, null=True)
