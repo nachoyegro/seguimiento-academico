@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 import csv
-from core.models import Carrera, Alumno, Materia, MateriaCursada, PlanDeEstudio, AlumnoDeCarrera, MateriaEnPlan
 from datetime import datetime
+from core.materia_cursada_creator import MateriaCursadaCreator
 
 class Command(BaseCommand):
 
@@ -10,6 +10,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         path = kwargs['archivo']
+        mc_creator = MateriaCursadaCreator()
         with open(path, 'r', encoding="utf8") as csvfile:
             spamreader = csv.reader(csvfile, delimiter=';')
             for fila, row in enumerate(spamreader):
@@ -22,45 +23,14 @@ class Command(BaseCommand):
                     fecha = datetime.strptime(row[7], '%d/%m/%Y')
                     resultado = row[8]
                     nota = row[9]
-                    if not nota and resultado == 'A':
-                        nota = 'A'
                     forma_aprob = row[10]
-                    creditos = int(row[11]) if row[11] else None
+                    creditos = row[11]
                     acta_promocion = row[12]
                     acta_examen = row[13]
                     plan = int(row[14])
-                    carrera = Carrera.objects.get(codigo=cod_carrera)
-                    alumno, created = Alumno.objects.get_or_create(legajo=legajo, dni=dni)
-                    alumno_carrera, alumno_carrera_created = AlumnoDeCarrera.objects.get_or_create(alumno=alumno, carrera=carrera)
-         
-                    materia, created = Materia.objects.get_or_create(codigo=cod_materia)
-                    if created:
-                        materia.nombre = nombre_materia
-                        materia.save()
-                    plan_de_estudio, created = PlanDeEstudio.objects.get_or_create(anio=plan, carrera=carrera)
-                    #Actualizo el plan de estudios actual del alumno en esa carrera
-                    if not alumno_carrera.plan or plan_de_estudio > alumno_carrera.plan:
-                        alumno_carrera.plan = plan_de_estudio
-                        alumno_carrera.save()
-                    if created:
-                        plan_de_estudio.nombre = plan
-                        plan_de_estudio.save()
-                
-                    materia_en_plan, created = MateriaEnPlan.objects.get_or_create(materia=materia, plan=plan_de_estudio)
-                    if created:
-                        materia_en_plan.creditos = creditos
-                        materia_en_plan.codigo = cod_materia
-                        materia_en_plan.save()
-	
-                    materia_cursada = MateriaCursada.objects.create(alumno=alumno, materia=materia_en_plan,carrera=carrera, fecha=fecha, resultado=resultado, forma_aprobacion=forma_aprob, nota=nota or None)
-"""
-Resultados
-U: Libre
-U: Ausente
-R: Reprobó
-A: Regular
-P: Acreditó
-N: No Acreditó
-E: Pendiente Aprobación
-E: Pendiente Virtual
-"""
+                    mc_creator.create(legajo=legajo, dni=dni, codigo_carrera=cod_carrera, 
+                                        codigo_materia=cod_materia, nombre_materia=nombre_materia, 
+                                        fecha=fecha, resultado=resultado, nota=nota,
+                                        forma_aprobacion=forma_aprob,creditos=creditos,
+                                        acta_promocion=acta_promocion, acta_examen=acta_examen,
+                                        plan=plan)
