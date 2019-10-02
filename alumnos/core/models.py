@@ -21,7 +21,7 @@ class Carrera(models.Model):
     codigo = models.CharField(max_length=2)
 
     def __str__(self):
-        return u'%s' % (self.nombre)
+       return u'%s' % (self.nombre)
 
 class Area(models.Model):
     nombre = models.CharField(max_length=32)
@@ -90,7 +90,7 @@ class AlumnoDeCarrera(models.Model):
 class MateriaCursada(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE, related_name='cursadas')
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name='cursadas')
-    materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
+    materia = models.ForeignKey(MateriaEnPlan, on_delete=models.CASCADE)
     comision = models.ForeignKey(Comision, null=True, on_delete=models.SET_NULL)
     resultado = models.CharField(max_length=2, choices=(
                                                         ('A', 'A- Aprobado'),

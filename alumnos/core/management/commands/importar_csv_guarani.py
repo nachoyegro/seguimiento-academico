@@ -22,8 +22,10 @@ class Command(BaseCommand):
                     fecha = datetime.strptime(row[7], '%d/%m/%Y')
                     resultado = row[8]
                     nota = row[9]
+                    if not nota and resultado == 'A':
+                        nota = 'A'
                     forma_aprob = row[10]
-                    creditos = row[11]
+                    creditos = int(row[11]) if row[11] else None
                     acta_promocion = row[12]
                     acta_examen = row[13]
                     plan = row[14]
@@ -34,8 +36,6 @@ class Command(BaseCommand):
                     if created:
                         materia.nombre = nombre_materia
                         materia.save()
-                    materia_cursada = MateriaCursada.objects.create(alumno=alumno, carrera=carrera, 
-                                        materia=materia, fecha=fecha, resultado=resultado, nota=nota or None)
                     plan_de_estudio, created = PlanDeEstudio.objects.get_or_create(anio=plan, carrera=carrera)
                     if created:
                         plan_de_estudio.nombre = plan
@@ -46,6 +46,8 @@ class Command(BaseCommand):
                         materia_en_plan.creditos = creditos
                         materia_en_plan.codigo = cod_materia
                         materia_en_plan.save()
+	
+                    materia_cursada = MateriaCursada.objects.create(alumno=alumno, materia=materia_en_plan,carrera=carrera, fecha=fecha, resultado=resultado, forma_aprobacion=forma_aprob, nota=nota or None)
 """
 Resultados
 U: Libre
