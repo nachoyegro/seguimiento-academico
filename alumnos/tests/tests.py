@@ -11,8 +11,8 @@ class ApiTestCase(APITestCase):
                                      codigo='P')
         lds = Carrera.objects.create(nombre='LDS - Licenciatura en Informática',
                                     codigo='W')
-        p1 = PlanDeEstudio.objects.create(nombre='2015', carrera=tpi)
-        p2 = PlanDeEstudio.objects.create(nombre='2015', carrera=lds)
+        p1 = PlanDeEstudio.objects.create(nombre='2015', carrera=tpi, anio=2015)
+        p2 = PlanDeEstudio.objects.create(nombre='2015', carrera=lds, anio=2015)
         alumno1 = Alumno.objects.create(nombre='A', apellido='A', dni='A', email='A@a.com', legajo='2',
                                 sexo='M', telefono='', celular='',
                                 comentario='', observacion='')

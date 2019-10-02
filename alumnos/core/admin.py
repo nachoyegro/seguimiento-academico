@@ -5,7 +5,7 @@ from core.models import Profile, Carrera, Alumno, Materia, MateriaEnPlan, Materi
 
 class MateriaCursadaTabular(admin.TabularInline):
     model = MateriaCursada
-    fields = ('materia', 'nota')
+    fields = ('fecha', 'materia', 'nota', 'resultado', 'forma_aprobacion')
     classes = ('grp-collapse grp-open',)
     raw_id_fields = ('materia', )
     extra = 0

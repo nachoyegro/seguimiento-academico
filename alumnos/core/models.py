@@ -21,12 +21,12 @@ class Carrera(models.Model):
     codigo = models.CharField(max_length=2)
 
     def __str__(self):
-        return u'%s' % (self.nombre)
+       return u'%s' % (self.nombre)
 
 class Area(models.Model):
     nombre = models.CharField(max_length=32)
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
-
+ 
     def __str__(self):
         return u'%s' % (self.nombre)
 
@@ -34,7 +34,10 @@ class PlanDeEstudio(models.Model):
     nombre = models.CharField(max_length=64)
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
     descripcion = models.TextField(null=True)
-    anio = models.CharField(max_length=4)
+    anio = models.IntegerField()
+
+    def __gt__(self, other):
+        return self.anio > other.anio
 
     def __str__(self):
         return u'%s' % (self.nombre)
@@ -45,12 +48,14 @@ class MateriaEnPlan(models.Model):
     area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
     nombre = models.CharField(max_length=64)
     nucleo = models.CharField(choices=(('I' ,'Introductoria'), ('B' ,'Basica'), ('A' ,'Avanzada'), ('C' ,'Complementaria')), max_length=2, null=True)
-    creditos = models.IntegerField(default=0)
+    creditos = models.IntegerField(null=True)
     codigo = models.CharField(max_length=10, null=True)
     orden_cuatrimestral = models.IntegerField(null=True)
+    obligatorias = models.ManyToManyField("self", related_name="obligatorias")
+    recomendadas = models.ManyToManyField("self", related_name="recomendadas")
 
     def __str__(self):
-        return u'%s' % (self.nombre)
+        return u'%s-%s' % (self.plan, self.materia)
 
 class Alumno(models.Model):
     nombre = models.CharField(max_length=255, null=True)
@@ -88,7 +93,7 @@ class AlumnoDeCarrera(models.Model):
 class MateriaCursada(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE, related_name='cursadas')
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name='cursadas')
-    materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
+    materia = models.ForeignKey(MateriaEnPlan, on_delete=models.CASCADE)
     comision = models.ForeignKey(Comision, null=True, on_delete=models.SET_NULL)
     resultado = models.CharField(max_length=2, choices=(
                                                         ('A', 'A- Aprobado'),
