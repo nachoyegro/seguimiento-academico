@@ -15,7 +15,7 @@ class Command(BaseCommand):
             for fila, row in enumerate(spamreader):
                 if fila > 0:
                     legajo = row[0]
-                    #dni = row[1]
+                    dni = row[1]
                     cod_carrera = row[2]
                     cod_materia = row[5]
                     nombre_materia = row[6]
@@ -28,15 +28,20 @@ class Command(BaseCommand):
                     creditos = int(row[11]) if row[11] else None
                     acta_promocion = row[12]
                     acta_examen = row[13]
-                    plan = row[14]
+                    plan = int(row[14])
                     carrera = Carrera.objects.get(codigo=cod_carrera)
-                    alumno, created = Alumno.objects.get_or_create(legajo=legajo)
-                    alumno_carrera, created = AlumnoDeCarrera.objects.get_or_create(alumno=alumno, carrera=carrera)
+                    alumno, created = Alumno.objects.get_or_create(legajo=legajo, dni=dni)
+                    alumno_carrera, alumno_carrera_created = AlumnoDeCarrera.objects.get_or_create(alumno=alumno, carrera=carrera)
+         
                     materia, created = Materia.objects.get_or_create(codigo=cod_materia)
                     if created:
                         materia.nombre = nombre_materia
                         materia.save()
                     plan_de_estudio, created = PlanDeEstudio.objects.get_or_create(anio=plan, carrera=carrera)
+                    #Actualizo el plan de estudios actual del alumno en esa carrera
+                    if not alumno_carrera.plan or plan_de_estudio > alumno_carrera.plan:
+                        alumno_carrera.plan = plan_de_estudio
+                        alumno_carrera.save()
                     if created:
                         plan_de_estudio.nombre = plan
                         plan_de_estudio.save()

@@ -26,7 +26,7 @@ class Carrera(models.Model):
 class Area(models.Model):
     nombre = models.CharField(max_length=32)
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
-
+ 
     def __str__(self):
         return u'%s' % (self.nombre)
 
@@ -34,7 +34,10 @@ class PlanDeEstudio(models.Model):
     nombre = models.CharField(max_length=64)
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
     descripcion = models.TextField(null=True)
-    anio = models.CharField(max_length=4)
+    anio = models.IntegerField()
+
+    def __gt__(self, other):
+        return self.anio > other.anio
 
     def __str__(self):
         return u'%s' % (self.nombre)
