@@ -11,7 +11,7 @@ class MateriaCursadaCreator:
         nombre_materia = kwargs['nombre_materia']
         fecha = kwargs['fecha']
         resultado = kwargs['resultado']
-        nota = kwargs['resultado']
+        nota = kwargs['nota']
         #Si no tiene nota, y el resultado es 'A', entonces la nota tiene que ser 'A'
         if not nota and resultado == 'A':
             nota = 'A'
@@ -45,7 +45,7 @@ class MateriaCursadaCreator:
             materia_en_plan.creditos = creditos
             materia_en_plan.codigo = cod_materia
             materia_en_plan.save()
-        materia_cursada = MateriaCursada.objects.create(alumno=alumno, materia=materia_en_plan,carrera=carrera, fecha=fecha, resultado=resultado, forma_aprobacion=forma_aprob, nota=nota or None)
+        materia_cursada = MateriaCursada.objects.create(alumno=alumno, materia=materia_en_plan,carrera=carrera, fecha=fecha, resultado=resultado, forma_aprobacion=forma_aprob, nota=nota)
 """
 Resultados
 U: Libre
