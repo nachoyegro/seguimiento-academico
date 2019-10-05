@@ -6,8 +6,8 @@ class AlumnosTokenObtainPairSerializer(TokenObtainPairSerializer):
     def get_token(cls, user):
         token = super().get_token(user)
         # Agrego las carreras al payload
-        #if user.profile:
-        #    token['carreras'] = [carrera.pk for carrera in user.profile.carreras.all()]
+        if user.profile:
+            token['carreras'] = [carrera.pk for carrera in user.profile.carreras.all()]
         return token
 
 class AlumnosTokenObtainPairView(TokenObtainPairView):
