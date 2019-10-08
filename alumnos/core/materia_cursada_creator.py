@@ -40,7 +40,7 @@ class MateriaCursadaCreator:
         if not alumno_carrera.plan or plan_de_estudio > alumno_carrera.plan:
             alumno_carrera.plan = plan_de_estudio
             alumno_carrera.save()
-        materia_en_plan, created = MateriaEnPlan.objects.get_or_create(materia=materia, plan=plan_de_estudio)
+        materia_en_plan, created = MateriaEnPlan.objects.get_or_create(materia=materia, plan=plan_de_estudio, nombre_en_plan=nombre_materia)
         if created:
             materia_en_plan.creditos = creditos
             materia_en_plan.codigo = cod_materia
