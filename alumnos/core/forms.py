@@ -6,7 +6,6 @@ class ImportarMateriasCursadasForm(forms.Form):
     materias_file = forms.FileField()
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.get('user', None)
         super(ImportarMateriasCursadasForm, self).__init__(*args, **kwargs)
         self.command = 'importar_csv_guarani'
 
