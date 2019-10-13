@@ -40,11 +40,12 @@ class MateriaCursadaCreator:
         if not alumno_carrera.plan or plan_de_estudio > alumno_carrera.plan:
             alumno_carrera.plan = plan_de_estudio
             alumno_carrera.save()
-        materia_en_plan, created = MateriaEnPlan.objects.get_or_create(materia=materia, plan=plan_de_estudio, nombre_en_plan=nombre_materia)
+        materia_en_plan, created = MateriaEnPlan.objects.get_or_create(materia=materia, plan=plan_de_estudio)
         if created:
-            materia_en_plan.creditos = creditos
+            materia_en_plan.nombre_en_plan = nombre_materia
             materia_en_plan.codigo = cod_materia
-            materia_en_plan.save()
+        materia_en_plan.creditos = creditos
+        materia_en_plan.save()
         materia_cursada = MateriaCursada.objects.create(alumno=alumno, materia=materia_en_plan,carrera=carrera, fecha=fecha, resultado=resultado, forma_aprobacion=forma_aprob, nota=nota)
 """
 Resultados

@@ -30,6 +30,13 @@ class Area(models.Model):
     def __str__(self):
         return u'%s' % (self.nombre)
 
+class Ciclo(models.Model):
+    nombre = models.CharField(max_length=32)
+    carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
+ 
+    def __str__(self):
+        return u'%s' % (self.nombre)
+
 class PlanDeEstudio(models.Model):
     nombre = models.CharField(max_length=64)
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
@@ -46,6 +53,7 @@ class MateriaEnPlan(models.Model):
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
     plan = models.ForeignKey(PlanDeEstudio, on_delete=models.CASCADE)
     area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
+    ciclo = models.ForeignKey(Ciclo, on_delete=models.SET_NULL, null=True)
     nombre_en_plan = models.CharField(max_length=64)
     nucleo = models.CharField(choices=(('I' ,'Introductoria'), ('B' ,'Basica'), ('A' ,'Avanzada'), ('C' ,'Complementaria')), max_length=2, null=True)
     creditos = models.IntegerField(null=True)

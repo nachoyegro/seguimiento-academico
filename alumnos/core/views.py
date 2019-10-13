@@ -112,12 +112,12 @@ class ImportarMateriasCursadasView(View):
 
     @method_decorator(user_passes_test(lambda u: u.is_superuser))
     def get(self, request, **kwargs):
-        form = ImportarMateriasCursadasForm(user=request.user)
+        form = ImportarMateriasCursadasForm()
         return render(request, 'importador_materias_cursadas.html', dict(form=form))
 
     def post(self, request):
         response = dict()
-        form = ImportarMateriasCursadasForm(request.POST, request.FILES, user=request.user)
+        form = ImportarMateriasCursadasForm(request.POST, request.FILES)
         if form.is_valid():
             response['form'] = form
         return render(request, 'importador_materias_cursadas.html', response)

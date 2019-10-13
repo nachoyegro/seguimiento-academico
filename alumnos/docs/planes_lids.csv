@@ -1,0 +1,161 @@
+Codigo Carrera;Plan;Cuatrimestre;Ciclo;Nucleo;Area;Codigo;Nombre
+W;2019;1;;I;Introducción;80000;Lectura y escritura académica
+W;2019;1;;I;Introducción;80003;Matemática
+W;2019;1;;I;Introducción;80005;Elementos de programación y lógica
+W;2019;2;;B;Matemática;1033;Matemática I
+W;2019;2;;B;Programación;487;Introducción a la Programación
+W;2019;2;;B;Sistemas Informáticos;1032;Organización de Computadoras
+W;2019;3;;B;Programación;1036;Estructuras de Datos
+W;2019;3;;B;Programación;1034;Programación con Objetos I
+W;2019;3;;B;Programación;1035;Bases de Datos
+W;2019;4;;B;Matemática;1041;Matemática II
+W;2019;4;;B;Programación;1037;Programación con Objetos II
+W;2019;4;;B;Sistemas Informáticos;1038;Redes de Computadoras
+W;2019;4;;B;Sistemas Informáticos;1039;Sistemas Operativos
+W;2019;4;;B;Programación;1045;Programación Funcional
+W;2019;5;;B;Desarrollo de Software;1043;Construcción de Interfaces de Usuario
+W;2019;5;;B;Teoría de la Computación;1307;Algoritmos
+W;2019;5;;B;Desarrollo de Software;1044;Estrategias de Persistencia
+W;2019;5;;B;Sistemas Informáticos;1047;Laboratorio de Sistemas Operativos y Redes
+W;2019;6;;B;Matemática;54;Análisis Matemático
+W;2019;6;;B;Teoría de la Computación;1302;Lógica y Programación
+W;2019;6;;B;Procesos Informáticos;1042;Elementos de Ingeniería de Software
+W;2019;6;;B;Sistemas Informáticos;646;Seguridad de la Información
+W;2019;7;;B;Matemática;842;Matemática III
+W;2019;7;;B;Programación;1040;Programación Concurrente
+W;2019;7;;B;Procesos Informáticos;1308;Ingeniería de Requerimientos
+W;2019;7;;B;Desarrollo de Software;1305;Práctica del Desarrollo de Software
+W;2019;8;;B;Matemática;604;Probabilidad y Estadística
+W;2019;8;;B;Procesos Informáticos;1304;Gestión de Proyectos de Software
+W;2019;8;;B;Teoría de la Computación;1306;Lenguajes Formales y Autómatas
+W;2019;8;;A;Desarrollo de Software;1051;Programación con objetos III
+W;2019;9;;A;Teoría de la Computación;1309;Teoría de la Computación
+W;2019;9;;A;Desarrollo de Software;1310;Arquitectura de Software I
+W;2019;9;;A;Sistemas Informáticos;1311;Sistemas Distribuidos
+W;2019;10;;A;Teoría de la Computación;1312;Características de Lenguajes de Programación
+W;2019;10;;A;Desarrollo de Software;1313;Arquitectura de Software II
+W;2019;10;;A;Sistemas Informáticos;1314;Arquitectura de Computadoras
+W;2019;11;;A;Teoría de la Computación;1315;Parseo y Generación de Código
+W;2019;11;;A;Procesos Informáticos;1316;Aspectos Legales y Sociales
+W;2019;;;;Taller;751;Taller de Trabajo Intelectual
+W;2019;;;;Taller;752;Taller de Trabajo Universitario
+W;2019;;;;Inglés;90000;Inglés I
+W;2019;;;;Inglés;90028;Inglés II
+W;2019;;;C;Programación;1048;Bases de Datos II
+W;2019;;;C;Procesos Informáticos;1049;Participación y Gestión en Proyectos de Software Libre
+W;2019;;;C;Sistemas Informáticos;1052;Introducción a la Bioinformática
+W;2019;;;C;Procesos Informáticos;1053;Políticas Públicas en la Sociedad de la Información y la Era Digital
+W;2019;;;C;Sistemas Informáticos;1054;Sistemas de Información Geográfica
+W;2019;;;C;Desarrollo de Software;1055;Herramientas Declarativas en Programación
+W;2019;;;C;Desarrollo de Software;1056;Introducción al Desarrollo de Videojuegos
+W;2019;;;C;Procesos Informáticos;1057;Derechos de Autor y Derecho de Copia en la Era Digital
+W;2019;;;C;Teoría de la Computación;1319;Semántica de Lenguajes de Programación
+W;2019;;;C;Sistemas Informáticos;;Redes Neuronales
+W;2019;;;C;Procesos Informáticos;;Calidad del Software
+W;2019;;;C;Programación;;Programación Funcional Avanzada
+W;2019;;;C;Teoría de la Computación;;Introducción a la Programación Cuántica
+W;2019;;;C;Procesos Informáticos;;Ciencia Ciudadana y Colaboración Abierta y Distribuida
+W;2019;;;C;Procesos Informáticos;;Ludificación
+W;2012;;;;Taller;751;Taller de Trabajo Intelectual
+W;2012;;;;Taller;752;Taller de Trabajo Universitario
+W;2012;;;;Inglés;90000;Inglés I
+W;2012;;;;Inglés;90028;Inglés II
+W;2012;1;;B;Matemática;1033;Matemática I
+W;2012;1;;B;Programación;487;Introducción a la Programación
+W;2012;1;;B;Sistemas Informáticos;1032;Organización de Computadoras
+W;2012;2;;B;Programación;1036;Estructuras de Datos
+W;2012;2;;B;Programación;1034;Programación con Objetos I
+W;2012;2;;B;Programación;1035;Bases de Datos
+W;2012;3;;B;Matemática;1041;Matemática II
+W;2012;3;;B;Programación;1037;Programación con Objetos II
+W;2012;3;;B;Sistemas Informáticos;1038;Redes de Computadoras
+W;2012;3;;B;Sistemas Informáticos;1039;Sistemas Operativos
+W;2012;4;;B;Programación;1045;Programación Funcional
+W;2012;4;;B;Desarrollo de Software;1043;Construcción de Interfaces de Usuario
+W;2012;4;;B;Desarrollo de Software;1044;Estrategias de Persistencia
+W;2012;4;;B;Sistemas Informáticos;1047;Laboratorio de Sistemas Operativos y Redes
+W;2012;5;;B;Matemática;54;Análisis Matemático
+W;2012;5;;B;Teoría de la Computación;1302;Lógica y Programación
+W;2012;5;;B;Procesos Informáticos;1042;Elementos de Ingeniería de Software
+W;2012;5;;B;Sistemas Informáticos;646;Seguridad de la Información
+W;2012;6;;B;Matemática;842;Matemática III
+W;2012;6;;B;Programación;1040;Programación Concurrente
+W;2012;6;;B;Procesos Informáticos;1304;Gestión de Proyectos de Desarrollo de Software
+W;2012;6;;B;Desarrollo de Software;1305;Práctica del Desarrollo de Software
+W;2012;7;;B;Matemática;604;Probabilidad y Estadística
+W;2012;7;;B;Teoría de la Computación;1306;Lenguajes Formales y Autómatas
+W;2012;7;;B;Teoría de la Computación;1307;Algoritmos
+W;2012;7;;B;Procesos Informáticos;1308;Ingeniería de Requerimientos
+W;2012;8;;A;Teoría de la Computación;1309;Teoría de la Computación
+W;2012;8;;A;Desarrollo de Software;1051;Programación con objetos III
+W;2012;8;;A;Desarrollo de Software;1310;Arquitectura de Software I
+W;2012;8;;A;Sistemas Informáticos;1311;Sistemas Distribuidos
+W;2012;9;;A;Teoría de la Computación;1312;Características de Lenguajes de Programación
+W;2012;9;;A;Desarrollo de Software;1313;Arquitectura de Software II
+W;2012;9;;A;Sistemas Informáticos;1314;Arquitectura de Computadoras
+W;2012;10;;A;Teoría de la Computación;1315;Parseo y Generación de Código
+W;2012;10;;A;Procesos Informáticos;1316;Aspectos Legales y Sociales
+W;2012;;;C;Programación;1048;Bases de Datos II
+W;2012;;;C;Procesos Informáticos;1049;Participación y Gestión en Proyectos de Software Libre
+W;2012;;;C;Sistemas Informáticos;1052;Introducción a la Bioinformática
+W;2012;;;C;Procesos Informáticos;1053;Políticas Públicas en la Sociedad de la Información y la Era Digital
+W;2012;;;C;Sistemas Informáticos;1054;Sistemas de Información Geográfica
+W;2012;;;C;Desarrollo de Software;1055;Herramientas Declarativas en Programación
+W;2012;;;C;Desarrollo de Software;1056;Introducción al Desarrollo de Videojuegos
+W;2012;;;C;Procesos Informáticos;1057;Derechos de Autor y Derecho de Copia en la Era Digital
+W;2012;;;C;Teoría de la Computación;1318;Análisis Estático de Programas y Herramientas Asociadas
+W;2012;;;C;Teoría de la Computación;1319;Semántica de Lenguajes de Programación
+W;2012;;;C;Programación;1059;Seminarios sobre Herramientas o Técnicas Puntuales
+W;2015;;;;Taller;751;Taller de Trabajo Intelectual
+W;2015;;;;Taller;752;Taller de Trabajo Universitario
+W;2015;;;;Inglés;90000;Inglés I
+W;2015;;;;Inglés;90028;Inglés II
+W;2015;1;;I;Introducción;80000;Lectura y escritura académica
+W;2015;1;;I;Introducción;80003;Matemática
+W;2015;1;;I;Introducción;80005;Elementos de programación y lógica
+W;2015;2;;B;Matemática;1033;Matemática I
+W;2015;2;;B;Programación;487;Introducción a la Programación
+W;2015;2;;B;Sistemas Informáticos;1032;Organización de Computadoras
+W;2015;3;;B;Programación;1036;Estructuras de Datos
+W;2015;3;;B;Programación;1034;Programación con Objetos I
+W;2015;3;;B;Programación;1035;Bases de Datos
+W;2015;4;;B;Matemática;1041;Matemática II
+W;2015;4;;B;Programación;1037;Programación con Objetos II
+W;2015;4;;B;Sistemas Informáticos;1038;Redes de Computadoras
+W;2015;4;;B;Sistemas Informáticos;1039;Sistemas Operativos
+W;2015;4;;B;Programación;1045;Programación Funcional
+W;2015;5;;B;Desarrollo de Software;1043;Construcción de Interfaces de Usuario
+W;2015;5;;B;Teoría de la Computación;1307;Algoritmos
+W;2015;5;;B;Desarrollo de Software;1044;Estrategias de Persistencia
+W;2015;5;;B;Sistemas Informáticos;1047;Laboratorio de Sistemas Operativos y Redes
+W;2015;6;;B;Matemática;54;Análisis Matemático
+W;2015;6;;B;Teoría de la Computación;1302;Lógica y Programación
+W;2015;6;;B;Procesos Informáticos;1042;Elementos de Ingeniería de Software
+W;2015;6;;B;Sistemas Informáticos;646;Seguridad de la Información
+W;2015;7;;B;Matemática;842;Matemática III
+W;2015;7;;B;Programación;1040;Programación Concurrente
+W;2015;7;;B;Procesos Informáticos;1308;Ingeniería de Requerimientos
+W;2015;7;;B;Desarrollo de Software;1305;Práctica del Desarrollo de Software
+W;2015;8;;B;Matemática;604;Probabilidad y Estadística
+W;2015;8;;B;Procesos Informáticos;1304;Gestión de Proyectos de Software
+W;2015;8;;B;Teoría de la Computación;1306;Lenguajes Formales y Autómatas
+W;2015;8;;A;Desarrollo de Software;1051;Programación con objetos III
+W;2015;9;;A;Teoría de la Computación;1309;Teoría de la Computación
+W;2015;9;;A;Desarrollo de Software;1310;Arquitectura de Software I
+W;2015;9;;A;Sistemas Informáticos;1311;Sistemas Distribuidos
+W;2015;10;;A;Teoría de la Computación;1312;Características de Lenguajes de Programación
+W;2015;10;;A;Desarrollo de Software;1313;Arquitectura de Software II
+W;2015;10;;A;Sistemas Informáticos;1314;Arquitectura de Computadoras
+W;2015;11;;A;Teoría de la Computación;1315;Parseo y Generación de Código
+W;2015;11;;A;Procesos Informáticos;1316;Aspectos Legales y Sociales
+W;2015;;;C;Programación;1048;Bases de Datos II
+W;2015;;;C;Procesos Informáticos;1049;Participación y Gestión en Proyectos de Software Libre
+W;2015;;;C;Sistemas Informáticos;1052;Introducción a la Bioinformática
+W;2015;;;C;Procesos Informáticos;1053;Políticas Públicas en la Sociedad de la Información y la Era Digital
+W;2015;;;C;Sistemas Informáticos;1054;Sistemas de Información Geográfica
+W;2015;;;C;Desarrollo de Software;1055;Herramientas Declarativas en Programación
+W;2015;;;C;Desarrollo de Software;1056;Introducción al Desarrollo de Videojuegos
+W;2015;;;C;Procesos Informáticos;1057;Derechos de Autor y Derecho de Copia en la Era Digital
+W;2015;;;C;Teoría de la Computación;1318;Análisis Estático de Programas y Herramientas Asociadas
+W;2015;;;C;Teoría de la Computación;1319;Semántica de Lenguajes de Programación
+W;2015;;;C;Programación;1059;Seminarios sobre Herramientas o Técnicas Puntuales
