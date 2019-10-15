@@ -26,6 +26,28 @@ class MateriasCursadasView(viewsets.ModelViewSet):
             alumnos = MateriaCursada.objects.none()
         return alumnos
 
+class MateriasEnPlanView(generics.ListAPIView):
+    queryset = MateriaEnPlan.objects.none()
+    serializer_class = MateriaEnPlanSerializer
+
+    def get_queryset(self):
+        """
+        Retorna todas las materias pertenecientes al plan que busco,
+        si el usuario tiene permisos para ver esa carrera
+        """
+        materias = MateriaEnPlan.objects.none()
+        try:
+            carrera = Carrera.objects.get(codigo=self.kwargs['codigo_carrera'])
+            plan = PlanDeEstudio.objects.get(anio=self.kwargs['plan_anio'], carrera=carrera)
+            profile = Profile.objects.get(user=self.request.user)
+            carreras = profile.carreras.all()
+            if carrera in carreras:
+                materias = MateriaEnPlan.objects.filter(plan=plan)
+        except:
+            pass
+        return materias
+
+
 class AlumnosView(viewsets.ModelViewSet):
     """
     Provides a get method handler.
@@ -57,7 +79,7 @@ class AlumnosDeCarreraView(generics.ListAPIView):
         """
         alumnos = Alumno.objects.none()
         try:
-            carrera = Carrera.objects.get(pk=self.kwargs['pk'])
+            carrera = Carrera.objects.get(codigo=self.kwargs['codigo_carrera'])
             profile = Profile.objects.get(user=self.request.user)
             carreras = profile.carreras.all()
             if carrera in carreras:
