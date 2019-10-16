@@ -91,7 +91,7 @@ class ApiTestCase(APITestCase):
             Deberia darme una lista con un elemento
         """
         self.acreditarse_con_token()
-        url = '/api/v2/carreras/1/alumnos/'
+        url = '/api/v2/carreras/P/alumnos/'
         response = self.client.get(url)
         self.assertEquals(len(response.data), 1)
 
@@ -100,7 +100,7 @@ class ApiTestCase(APITestCase):
             Deberia darme una lista vacia
         """
         self.acreditarse_con_token()
-        url = '/api/v2/carreras/2/alumnos/'
+        url = '/api/v2/carreras/W/alumnos/'
         response = self.client.get(url)
         self.assertEquals(len(response.data), 0)
 
