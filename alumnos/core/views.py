@@ -103,6 +103,18 @@ class CarrerasView(viewsets.ModelViewSet):
     queryset = Carrera.objects.all()
     serializer_class = CarreraSerializer
 
+    def get_queryset(self):
+        """
+        Retorna todas las carreras que puede ver el usuario actual
+        """
+        carreras = Carrera.objects.none()
+        try:
+            profile = Profile.objects.get(user=self.request.user)
+            carreras = profile.carreras.all()
+        except:
+            pass
+        return carreras
+
 class AlumnosAPIV1(View):
     def get(self, *args, **kwargs):
         json = []
