@@ -20,7 +20,7 @@ PROJECT_ROOT = os.path.join(BASE_DIR, 'alumnos')
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$7=wvasd=&$#%d31m+v9lw565ir0h$mkzqp9g)shbry$7+i0tg'
+SECRET_KEY = 'super-secret'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
