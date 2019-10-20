@@ -106,10 +106,9 @@ class ApiTestCase(APITestCase):
 
     def test_api_carreras(self):
         """
-            Deberia darme las 2 carreras que hay en el sistema
-            Sin importar que yo tengo solo una asignada
+            Deberia darme solo la carrera que tengo asignada
         """
         self.acreditarse_con_token()
         url = '/api/v2/carreras/'
         response = self.client.get(url)
-        self.assertEquals(len(response.data), 2)
+        self.assertEquals(len(response.data), 1)
