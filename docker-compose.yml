@@ -1,9 +1,9 @@
-version: '3'
+version: '3.4'
 services:
   alumnos_backend:
+    container_name: seguimiento-academico
     restart: always
     build: .
-    container_name: alumnos
     command: python3 alumnos/manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
