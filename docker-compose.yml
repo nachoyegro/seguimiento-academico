@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.2'
 services:
   alumnos_backend:
     container_name: seguimiento-academico
