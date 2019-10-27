@@ -64,7 +64,7 @@ class ApiTestCase(APITestCase):
         """
             Deberia darme status code 401, unauthorized
         """
-        url = '/api/v2/alumnos/'
+        url = '/api/alumnos/'
         response = self.client.get(url)
         self.assertEqual(response.status_code, 401)
 
@@ -73,7 +73,7 @@ class ApiTestCase(APITestCase):
             Deberia darme status code 200, Ok
         """
         self.acreditarse_con_token()
-        url = '/api/v2/alumnos/'
+        url = '/api/alumnos/'
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
@@ -82,7 +82,7 @@ class ApiTestCase(APITestCase):
             Deberia darme solo un alumno, ya que tengo asignada solo una carrera
         """
         self.acreditarse_con_token()
-        url = '/api/v2/alumnos/'
+        url = '/api/alumnos/'
         response = self.client.get(url)
         self.assertEquals(len(response.data), 1)
 
@@ -91,7 +91,7 @@ class ApiTestCase(APITestCase):
             Deberia darme una lista con un elemento
         """
         self.acreditarse_con_token()
-        url = '/api/v2/carreras/P/alumnos/'
+        url = '/api/carreras/P/alumnos/'
         response = self.client.get(url)
         self.assertEquals(len(response.data), 1)
 
@@ -100,7 +100,7 @@ class ApiTestCase(APITestCase):
             Deberia darme una lista vacia
         """
         self.acreditarse_con_token()
-        url = '/api/v2/carreras/W/alumnos/'
+        url = '/api/carreras/W/alumnos/'
         response = self.client.get(url)
         self.assertEquals(len(response.data), 0)
 
@@ -109,6 +109,6 @@ class ApiTestCase(APITestCase):
             Deberia darme solo la carrera que tengo asignada
         """
         self.acreditarse_con_token()
-        url = '/api/v2/carreras/'
+        url = '/api/carreras/'
         response = self.client.get(url)
         self.assertEquals(len(response.data), 1)
