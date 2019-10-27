@@ -1,0 +1,14 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n %}
+{%block content%}
+<div class="alert alert-danger" name="alarm">
+    <h5>{% trans 'El archivo debe tener formato .CSV' %}</h5>
+</div>
+<form method="POST" action="{{action}}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>{% trans 'Archivo' %}</label>
+    {{form.archivo}}
+    <br clear="all">
+    <button class="btn btn-primary default" type='submit'>{% trans 'Cargar' %}</input>
+</form>
+{% endblock %}
