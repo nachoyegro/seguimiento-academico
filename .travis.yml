@@ -26,8 +26,8 @@ script:
   - token=b0d396b8-8527-4c19-84d2-1631fcb88d9d
   - ci_env="bash <(curl -s https://codecov.io/env)"
   - ci_post_cov="bash <(curl -s https://codecov.io/bash) -t $token"
-  - docker exec -it alumnos bash -c "yes | python alumnos/manage.py makemigrations"
-  - docker exec -it alumnos bash -c "$ci_env && coverage run alumnos/manage.py test alumnos/ && $ci_post_cov"
+  - docker exec -it seguimiento-academico bash -c "yes | python alumnos/manage.py makemigrations"
+  - docker exec -it seguimiento-academico bash -c "$ci_env && coverage run alumnos/manage.py test alumnos/ && $ci_post_cov"
 
 after_success:
   - codecov

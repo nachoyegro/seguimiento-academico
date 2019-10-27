@@ -12,12 +12,15 @@ router.register(r'carreras', CarrerasView)
 router.register(r'materiascursadas', MateriasCursadasView)
 
 urlpatterns = [
-    path(r'api/v2/', include(router.urls)),
-    path(r'api/v2/carreras/<str:codigo_carrera>/alumnos/', AlumnosDeCarreraView.as_view()),
-    path(r'api/v2/carreras/<str:codigo_carrera>/planes/<int:plan_anio>/', MateriasEnPlanView.as_view()),
-    path(r'api/v1/alumnos/', AlumnosAPIV1.as_view()),
+    path(r'api/', include(router.urls)),
+    path(r'api/carreras/<str:codigo_carrera>/alumnos/',
+         AlumnosDeCarreraView.as_view()),
+    path(r'api/carreras/<str:codigo_carrera>/planes/<int:plan_anio>/',
+         MateriasEnPlanView.as_view()),
     path(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path(r'api/token/', AlumnosTokenObtainPairView.as_view(), name='token'),
     path(r'api/token/refresh/', TokenRefreshView.as_view()),
-    path(r'admin/core/importar_materias_cursadas/', ImportarMateriasCursadasView.as_view()),
+    path(r'admin/core/importar_materias_cursadas/',
+         ImportarMateriasCursadasView.as_view()),
+    path(r'admin/core/importar_alumnos/', ImportarDatosAlumnosView.as_view()),
 ]
