@@ -9,13 +9,6 @@ class Materia(models.Model):
     def __str__(self):
         return u'%s' % (self.nombre)
 
-class Comision(models.Model):
-    materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=32)
-
-    def __str__(self):
-        return u'%s' % (self.nombre)
-
 class Carrera(models.Model):
     nombre = models.CharField(max_length=255)
     codigo = models.CharField(max_length=2)
@@ -93,7 +86,7 @@ class AlumnoDeCarrera(models.Model):
     plan = models.ForeignKey(PlanDeEstudio, on_delete=models.SET_NULL, null=True) #Solo descriptivo del plan actual en el que esta
     promedio = models.CharField(max_length=3, null=True)
     coeficiente = models.CharField(max_length=3, null=True)
-    cuatrimestre_inscripto = models.CharField(max_length=8, null=True) #Cuatrimestre Ingreso
+    fecha_inscripcion = models.DateField(null=True) #Cuatrimestre Ingreso
 
     def __str__(self):
         return u'%s-%s' % (self.alumno, self.carrera)
@@ -102,7 +95,6 @@ class MateriaCursada(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE, related_name='cursadas')
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name='cursadas')
     materia = models.ForeignKey(MateriaEnPlan, on_delete=models.CASCADE)
-    comision = models.ForeignKey(Comision, null=True, on_delete=models.SET_NULL)
     resultado = models.CharField(max_length=2, choices=(
                                                         ('A', 'A- Aprobado'),
                                                         ('E', 'E- Pendiente de Aprobacion'),
@@ -125,6 +117,16 @@ class MateriaCursada(models.Model):
 
     def __str__(self):
         return u'%s, %s' % (self.materia, self.alumno)
+
+class Inscripcion(models.Model):
+    alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE, related_name='inscripciones')
+    carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name='inscripciones')
+    materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
+    comision = models.CharField(max_length=32, null=True)
+    fecha = models.DateField(null=True)
+
+    def __str__(self):
+        return u'%s-%s' % (self.alumno, self.materia)   
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

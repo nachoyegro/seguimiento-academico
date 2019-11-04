@@ -1,6 +1,6 @@
 from .models import *
 from .serializers import *
-from .forms import ImportarMateriasCursadasForm, ImportarDatosAlumnosForm
+from .forms import ImportarMateriasCursadasForm, ImportarDatosAlumnosForm, ImportarInscripcionesForm
 from rest_framework import viewsets, renderers, generics
 from rest_framework.response import Response
 from django.http import JsonResponse
@@ -103,11 +103,6 @@ class MateriasView(viewsets.ModelViewSet):
     serializer_class = MateriaSerializer
 
 
-class ComisionView(viewsets.ModelViewSet):
-    queryset = Comision.objects.all()
-    serializer_class = ComisionSerializer
-
-
 class CarrerasView(viewsets.ModelViewSet):
     queryset = Carrera.objects.all()
     serializer_class = CarreraSerializer
@@ -150,3 +145,8 @@ class ImportarMateriasCursadasView(ImportadorView):
 class ImportarDatosAlumnosView(ImportadorView):
     form = ImportarDatosAlumnosForm
     template = 'importadores/importador_datos_alumnos.html'
+
+
+class ImportarInscripcionesView(ImportadorView):
+    form = ImportarInscripcionesForm
+    template = 'importadores/importador_inscripciones.html'

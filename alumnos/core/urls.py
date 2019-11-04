@@ -7,7 +7,6 @@ from .token_serializer import AlumnosTokenObtainPairView
 router = routers.DefaultRouter()
 router.register(r'materias', MateriasView)
 router.register(r'alumnos', AlumnosView)
-router.register(r'comisiones', ComisionView)
 router.register(r'carreras', CarrerasView)
 router.register(r'materiascursadas', MateriasCursadasView)
 
@@ -23,4 +22,6 @@ urlpatterns = [
     path(r'admin/core/importar_materias_cursadas/',
          ImportarMateriasCursadasView.as_view()),
     path(r'admin/core/importar_alumnos/', ImportarDatosAlumnosView.as_view()),
+    path(r'admin/core/importar_inscripciones/',
+         ImportarInscripcionesView.as_view()),
 ]
