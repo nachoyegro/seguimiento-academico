@@ -25,6 +25,9 @@ class MateriaCursadaCreator:
 
         carrera = Carrera.objects.get(codigo=cod_carrera)
         alumno, created = Alumno.objects.get_or_create(legajo=legajo)
+        if dni:
+            alumno.dni = dni
+            alumno.save()
         alumno_carrera, alumno_carrera_created = AlumnoDeCarrera.objects.get_or_create(
             alumno=alumno, carrera=carrera)
         materia, created = Materia.objects.get_or_create(codigo=cod_materia)
