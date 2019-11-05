@@ -21,7 +21,8 @@ class Command(BaseCommand):
                     nombre_nucleo = row[3]
                     nombre_area = row[4]
                     cod_materia = row[5].zfill(5)
-                    nombre_materia = row[6]
+                    creditos = row[6]
+                    nombre_materia = row[7]
 
                     carrera = Carrera.objects.get(codigo=cod_carrera)
                     plan, created = PlanDeEstudio.objects.get_or_create(
@@ -47,4 +48,5 @@ class Command(BaseCommand):
                         materia_en_plan.area = area
                         materia_en_plan.nucleo = nombre_nucleo
                         materia_en_plan.codigo = cod_materia
+                        materia_en_plan.creditos = creditos
                         materia_en_plan.save()
