@@ -29,3 +29,7 @@ class ImportarMateriasCursadasForm(ImportadorForm):
 
 class ImportarDatosAlumnosForm(ImportadorForm):
     command = 'importar_alumnos'
+
+
+class ImportarInscripcionesForm(ImportadorForm):
+    command = 'importar_inscripciones'

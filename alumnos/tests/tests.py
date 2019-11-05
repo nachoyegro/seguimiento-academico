@@ -4,31 +4,32 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from core.models import Profile, Carrera, Alumno, AlumnoDeCarrera, PlanDeEstudio
 
+
 class ApiTestCase(APITestCase):
 
     def setUp(self):
         tpi = Carrera.objects.create(nombre='TPI - Tecnicatura Universitaria en Programación Informática',
                                      codigo='P')
         lds = Carrera.objects.create(nombre='LDS - Licenciatura en Informática',
-                                    codigo='W')
-        p1 = PlanDeEstudio.objects.create(nombre='2015', carrera=tpi, anio=2015)
-        p2 = PlanDeEstudio.objects.create(nombre='2015', carrera=lds, anio=2015)
+                                     codigo='W')
+        p1 = PlanDeEstudio.objects.create(
+            nombre='2015', carrera=tpi, anio=2015)
+        p2 = PlanDeEstudio.objects.create(
+            nombre='2015', carrera=lds, anio=2015)
         alumno1 = Alumno.objects.create(nombre='A', apellido='A', dni='A', email='A@a.com', legajo='2',
-                                sexo='M', telefono='', celular='',
-                                comentario='', observacion='')
-        alumnodc1 = AlumnoDeCarrera.objects.create(alumno=alumno1, 
-                                                            cuatrimestre_inscripto='', 
-                                                            carrera=tpi, 
-                                                            plan=p1,
-                                                            promedio='8')
+                                        sexo='M', telefono='', celular='',
+                                        comentario='', observacion='')
+        alumnodc1 = AlumnoDeCarrera.objects.create(alumno=alumno1,
+                                                   carrera=tpi,
+                                                   plan=p1,
+                                                   promedio='8')
         alumno2 = Alumno.objects.create(nombre='B', apellido='B', dni='B', email='B@a.com', legajo='2',
-                                sexo='M', telefono='', celular='',
-                                comentario='', observacion='')
-        alumnodc2 = AlumnoDeCarrera.objects.create(alumno=alumno2, 
-                                                            cuatrimestre_inscripto='', 
-                                                            carrera=lds, 
-                                                            plan=p2,
-                                                            promedio='8')
+                                        sexo='M', telefono='', celular='',
+                                        comentario='', observacion='')
+        alumnodc2 = AlumnoDeCarrera.objects.create(alumno=alumno2,
+                                                   carrera=lds,
+                                                   plan=p2,
+                                                   promedio='8')
         self.credentials = {
             'username': 'testuser',
             'password': 'secret'}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Materia(models.Model):
     siglas = models.CharField(max_length=32, null=True)
     nombre = models.CharField(max_length=128, null=True)
@@ -9,33 +10,30 @@ class Materia(models.Model):
     def __str__(self):
         return u'%s' % (self.nombre)
 
-class Comision(models.Model):
-    materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=32)
-
-    def __str__(self):
-        return u'%s' % (self.nombre)
 
 class Carrera(models.Model):
     nombre = models.CharField(max_length=255)
     codigo = models.CharField(max_length=2)
 
     def __str__(self):
-       return u'%s' % (self.nombre)
+        return u'%s' % (self.nombre)
+
 
 class Area(models.Model):
     nombre = models.CharField(max_length=32)
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
- 
+
     def __str__(self):
         return u'%s' % (self.nombre)
+
 
 class Ciclo(models.Model):
     nombre = models.CharField(max_length=32)
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
- 
+
     def __str__(self):
         return u'%s' % (self.nombre)
+
 
 class PlanDeEstudio(models.Model):
     nombre = models.CharField(max_length=64)
@@ -49,13 +47,15 @@ class PlanDeEstudio(models.Model):
     def __str__(self):
         return u'%s' % (self.nombre)
 
+
 class MateriaEnPlan(models.Model):
     materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
     plan = models.ForeignKey(PlanDeEstudio, on_delete=models.CASCADE)
     area = models.ForeignKey(Area, on_delete=models.SET_NULL, null=True)
     ciclo = models.ForeignKey(Ciclo, on_delete=models.SET_NULL, null=True)
     nombre_en_plan = models.CharField(max_length=64)
-    nucleo = models.CharField(choices=(('I' ,'Introductoria'), ('B' ,'Basica'), ('A' ,'Avanzada'), ('C' ,'Complementaria')), max_length=2, null=True)
+    nucleo = models.CharField(choices=(('I', 'Introductoria'), ('B', 'Basica'), (
+        'A', 'Avanzada'), ('C', 'Complementaria')), max_length=2, null=True)
     creditos = models.IntegerField(null=True)
     codigo = models.CharField(max_length=10, null=True)
     orden_cuatrimestral = models.IntegerField(null=True)
@@ -65,6 +65,7 @@ class MateriaEnPlan(models.Model):
     def __str__(self):
         return u'%s-%s' % (self.plan, self.materia)
 
+
 class Alumno(models.Model):
     nombre = models.CharField(max_length=255, null=True)
     apellido = models.CharField(max_length=255, null=True)
@@ -72,7 +73,8 @@ class Alumno(models.Model):
     email = models.CharField(max_length=128, null=True)
     legajo = models.CharField(max_length=32)
     es_regular = models.BooleanField(default=True)
-    sexo = models.CharField(choices=(('F', 'Femenino'), ('M', 'Masculino')), max_length=2, null=True)
+    sexo = models.CharField(
+        choices=(('F', 'Femenino'), ('M', 'Masculino')), max_length=2, null=True)
     telefono = models.CharField(max_length=32, null=True)
     celular = models.CharField(max_length=32, null=True)
     tiene_beca = models.BooleanField(default=False)
@@ -90,41 +92,58 @@ class Alumno(models.Model):
 class AlumnoDeCarrera(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
-    plan = models.ForeignKey(PlanDeEstudio, on_delete=models.SET_NULL, null=True) #Solo descriptivo del plan actual en el que esta
+    # Solo descriptivo del plan actual en el que esta
+    plan = models.ForeignKey(
+        PlanDeEstudio, on_delete=models.SET_NULL, null=True)
     promedio = models.CharField(max_length=3, null=True)
     coeficiente = models.CharField(max_length=3, null=True)
-    cuatrimestre_inscripto = models.CharField(max_length=8, null=True) #Cuatrimestre Ingreso
+    fecha_inscripcion = models.DateField(null=True)
 
     def __str__(self):
         return u'%s-%s' % (self.alumno, self.carrera)
 
+
 class MateriaCursada(models.Model):
-    alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE, related_name='cursadas')
-    carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name='cursadas')
+    alumno = models.ForeignKey(
+        Alumno, on_delete=models.CASCADE, related_name='cursadas')
+    carrera = models.ForeignKey(
+        Carrera, on_delete=models.CASCADE, related_name='cursadas')
     materia = models.ForeignKey(MateriaEnPlan, on_delete=models.CASCADE)
-    comision = models.ForeignKey(Comision, null=True, on_delete=models.SET_NULL)
     resultado = models.CharField(max_length=2, choices=(
-                                                        ('A', 'A- Aprobado'),
-                                                        ('E', 'E- Pendiente de Aprobacion'),
-                                                        ('N', 'N- Reprobado'),
-                                                        ('P', 'P- Aprobado'),
-                                                        ('U', 'U- Ausente'),
-                                                        ('R', 'R- Reprobado'),
-                                                        ('V', 'V- Pendiente Virtual'),
-                                                        ('', 'Ausente de Examen'),   
-                                                        ),null=True)
+        ('A', 'A- Aprobado'),
+        ('E', 'E- Pendiente de Aprobacion'),
+        ('N', 'N- Reprobado'),
+        ('P', 'P- Aprobado'),
+        ('U', 'U- Ausente'),
+        ('R', 'R- Reprobado'),
+        ('V', 'V- Pendiente Virtual'),
+        ('', 'Ausente de Examen'),
+    ), null=True)
     nota = models.CharField(max_length=3, choices=(
-                                ('PA', 'Pendiente de Aprobacion'),
-                                ('A', 'Aprobado'),
-                                ('1', '1'),('2', '2'),
-                                ('3', '3'),('4', '4'),('5', '5'),('6', '6'),
-                                ('7', '7'), ('8', '8'),('9', '9'),('10', '10')), null=True)
+        ('PA', 'Pendiente de Aprobacion'),
+        ('A', 'Aprobado'),
+        ('1', '1'), ('2', '2'),
+        ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'),
+        ('7', '7'), ('8', '8'), ('9', '9'), ('10', '10')), null=True)
     fecha = models.DateField(null=True)
     forma_aprobacion = models.CharField(max_length=32, null=True)
-        
 
     def __str__(self):
         return u'%s, %s' % (self.materia, self.alumno)
+
+
+class Inscripcion(models.Model):
+    alumno = models.ForeignKey(
+        Alumno, on_delete=models.CASCADE, related_name='inscripciones')
+    carrera = models.ForeignKey(
+        Carrera, on_delete=models.CASCADE, related_name='inscripciones')
+    materia = models.ForeignKey(Materia, on_delete=models.CASCADE)
+    comision = models.CharField(max_length=32, null=True)
+    fecha = models.DateField(null=True)
+
+    def __str__(self):
+        return u'%s-%s' % (self.alumno, self.materia)
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

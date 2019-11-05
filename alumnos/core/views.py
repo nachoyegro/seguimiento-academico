@@ -1,6 +1,6 @@
 from .models import *
 from .serializers import *
-from .forms import ImportarMateriasCursadasForm, ImportarDatosAlumnosForm
+from .forms import ImportarMateriasCursadasForm, ImportarDatosAlumnosForm, ImportarInscripcionesForm
 from rest_framework import viewsets, renderers, generics
 from rest_framework.response import Response
 from django.http import JsonResponse
@@ -25,6 +25,24 @@ class MateriasCursadasView(viewsets.ModelViewSet):
             alumnos = MateriaCursada.objects.filter(carrera__in=carreras)
         except:
             alumnos = MateriaCursada.objects.none()
+        return alumnos
+
+
+class InscripcionesView(viewsets.ModelViewSet):
+    queryset = Inscripcion.objects.none()
+    serializer_class = InscripcionSerializer
+
+    def get_queryset(self):
+        """
+            - Chequeo las carreras que tiene asignada la persona
+            - Devuelvo solo las inscripciones que pertenecen a esa carrera
+        """
+        try:
+            profile = Profile.objects.get(user=self.request.user)
+            carreras = profile.carreras.all()
+            alumnos = Inscripcion.objects.filter(carrera__in=carreras)
+        except:
+            alumnos = Inscripcion.objects.none()
         return alumnos
 
 
@@ -103,11 +121,6 @@ class MateriasView(viewsets.ModelViewSet):
     serializer_class = MateriaSerializer
 
 
-class ComisionView(viewsets.ModelViewSet):
-    queryset = Comision.objects.all()
-    serializer_class = ComisionSerializer
-
-
 class CarrerasView(viewsets.ModelViewSet):
     queryset = Carrera.objects.all()
     serializer_class = CarreraSerializer
@@ -150,3 +163,8 @@ class ImportarMateriasCursadasView(ImportadorView):
 class ImportarDatosAlumnosView(ImportadorView):
     form = ImportarDatosAlumnosForm
     template = 'importadores/importador_datos_alumnos.html'
+
+
+class ImportarInscripcionesView(ImportadorView):
+    form = ImportarInscripcionesForm
+    template = 'importadores/importador_inscripciones.html'

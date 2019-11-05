@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
-from core.models import Profile, Carrera, Alumno, Materia, MateriaEnPlan, MateriaCursada, PlanDeEstudio, AlumnoDeCarrera
+from core.models import Inscripcion, Profile, Carrera, Alumno, Materia, MateriaEnPlan, MateriaCursada, PlanDeEstudio, AlumnoDeCarrera
+
 
 class MateriaCursadaTabular(admin.TabularInline):
     model = MateriaCursada
@@ -10,29 +11,41 @@ class MateriaCursadaTabular(admin.TabularInline):
     raw_id_fields = ('materia', )
     extra = 0
 
+
 class MateriaEnPlanTabular(admin.TabularInline):
     model = MateriaEnPlan
     extra = 0
+
 
 class AlumnoDeCarreraStackedAdmin(admin.StackedInline):
     model = AlumnoDeCarrera
     extra = 0
 
+
+class InscripcionStackedAdmin(admin.StackedInline):
+    model = Inscripcion
+    extra = 0
+
+
 class AlumnoAdmin(admin.ModelAdmin):
     list_display = ('legajo', 'apellido', 'nombre', 'es_regular')
     search_fields = ('apellido', 'nombre', 'legajo')
-    inlines = [AlumnoDeCarreraStackedAdmin, MateriaCursadaTabular]
+    inlines = [AlumnoDeCarreraStackedAdmin,
+               MateriaCursadaTabular, InscripcionStackedAdmin]
+
 
 class MateriaAdmin(admin.ModelAdmin):
     list_display = ('nombre', 'siglas')
     inlines = [MateriaEnPlanTabular]
 
+
 class ProfileInLine(admin.StackedInline):
     model = Profile
-    filter_horizontal = ['carreras',]
+    filter_horizontal = ['carreras', ]
+
 
 class CustomUserAdmin(UserAdmin):
-    inlines = [ProfileInLine,]
+    inlines = [ProfileInLine, ]
 
 
 admin.site.unregister(User)
