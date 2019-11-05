@@ -40,6 +40,16 @@ class MateriaCursadaSerializer(serializers.ModelSerializer):
                   "carrera", "fecha", "resultado")
 
 
+class InscripcionSerializer(serializers.ModelSerializer):
+    materia = serializers.SlugRelatedField(read_only=True, slug_field="codigo")
+    alumno = serializers.SlugRelatedField(read_only=True, slug_field="legajo")
+    carrera = serializers.SlugRelatedField(read_only=True, slug_field="codigo")
+
+    class Meta:
+        model = Inscripcion
+        fields = ("id", "materia", "alumno", "carrera", "fecha", "comision")
+
+
 class AlumnoSerializer(serializers.HyperlinkedModelSerializer):
     cursadas = MateriaCursadaSerializer(many=True, required=False)
 

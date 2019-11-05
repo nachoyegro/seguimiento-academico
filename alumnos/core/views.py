@@ -28,6 +28,24 @@ class MateriasCursadasView(viewsets.ModelViewSet):
         return alumnos
 
 
+class InscripcionesView(viewsets.ModelViewSet):
+    queryset = Inscripcion.objects.none()
+    serializer_class = InscripcionSerializer
+
+    def get_queryset(self):
+        """
+            - Chequeo las carreras que tiene asignada la persona
+            - Devuelvo solo las inscripciones que pertenecen a esa carrera
+        """
+        try:
+            profile = Profile.objects.get(user=self.request.user)
+            carreras = profile.carreras.all()
+            alumnos = Inscripcion.objects.filter(carrera__in=carreras)
+        except:
+            alumnos = Inscripcion.objects.none()
+        return alumnos
+
+
 class MateriasEnPlanView(generics.ListAPIView):
     queryset = MateriaEnPlan.objects.none()
     serializer_class = MateriaEnPlanSerializer
