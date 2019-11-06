@@ -33,3 +33,11 @@ class ImportarDatosAlumnosForm(ImportadorForm):
 
 class ImportarInscripcionesForm(ImportadorForm):
     command = 'importar_inscripciones'
+
+
+class ImportarRequisitosForm(ImportadorForm):
+    command = 'importar_requisitos'
+
+
+class ImportarPlanesForm(ImportadorForm):
+    command = 'importar_planes'
