@@ -8,8 +8,8 @@ router = routers.DefaultRouter()
 router.register(r'materias', MateriasView)
 router.register(r'alumnos', AlumnosView)
 router.register(r'carreras', CarrerasView)
-router.register(r'materiascursadas', MateriasCursadasView)
-router.register(r'inscripciones', InscripcionesView)
+#router.register(r'materiascursadas', MateriasCursadasView)
+#router.register(r'inscripciones', InscripcionesView)
 
 urlpatterns = [
     path(r'api/', include(router.urls)),
@@ -17,6 +17,10 @@ urlpatterns = [
          AlumnosDeCarreraView.as_view()),
     path(r'api/carreras/<str:codigo_carrera>/planes/<int:plan_anio>/',
          MateriasEnPlanView.as_view()),
+    path(r'api/carreras/<str:codigo_carrera>/materiascursadas/',
+         MateriasCursadasView.as_view()),
+    path(r'api/carreras/<str:codigo_carrera>/inscripciones/',
+         InscripcionesView.as_view()),
     path(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path(r'api/token/', AlumnosTokenObtainPairView.as_view(), name='token'),
     path(r'api/token/refresh/', TokenRefreshView.as_view()),
@@ -25,4 +29,8 @@ urlpatterns = [
     path(r'admin/core/importar_alumnos/', ImportarDatosAlumnosView.as_view()),
     path(r'admin/core/importar_inscripciones/',
          ImportarInscripcionesView.as_view()),
+    path(r'admin/core/importar_requisitos/',
+         ImportarRequisitosView.as_view()),
+    path(r'admin/core/importar_planes/',
+         ImportarPlanesView.as_view()),
 ]

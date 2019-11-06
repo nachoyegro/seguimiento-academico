@@ -1,6 +1,6 @@
 from .models import *
 from .serializers import *
-from .forms import ImportarMateriasCursadasForm, ImportarDatosAlumnosForm, ImportarInscripcionesForm
+from .forms import *
 from rest_framework import viewsets, renderers, generics
 from rest_framework.response import Response
 from django.http import JsonResponse
@@ -10,40 +10,44 @@ from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
 
 
-class MateriasCursadasView(viewsets.ModelViewSet):
+class MateriasCursadasView(generics.ListAPIView):
     queryset = MateriaCursada.objects.none()
     serializer_class = MateriaCursadaSerializer
 
     def get_queryset(self):
         """
-            - Chequeo las carreras que tiene asignada la persona
-            - Devuelvo solo las materias cursadas que pertenecen a esa carrera
+            - Chequeo permisos sobre esa carrera
+            - Si tiene permisos, filtro las materias cursadas
         """
         try:
+            carrera = Carrera.objects.get(codigo=self.kwargs['codigo_carrera'])
             profile = Profile.objects.get(user=self.request.user)
             carreras = profile.carreras.all()
-            alumnos = MateriaCursada.objects.filter(carrera__in=carreras)
+            if carrera in carreras:
+                return MateriaCursada.objects.filter(carrera=carrera)
         except:
-            alumnos = MateriaCursada.objects.none()
-        return alumnos
+            pass
+        return MateriaCursada.objects.none()
 
 
-class InscripcionesView(viewsets.ModelViewSet):
+class InscripcionesView(generics.ListAPIView):
     queryset = Inscripcion.objects.none()
     serializer_class = InscripcionSerializer
 
     def get_queryset(self):
         """
-            - Chequeo las carreras que tiene asignada la persona
-            - Devuelvo solo las inscripciones que pertenecen a esa carrera
+            - Chequeo permisos sobre esa carrera
+            - Si tiene permisos, filtro las inscripciones
         """
         try:
+            carrera = Carrera.objects.get(codigo=self.kwargs['codigo_carrera'])
             profile = Profile.objects.get(user=self.request.user)
             carreras = profile.carreras.all()
-            alumnos = Inscripcion.objects.filter(carrera__in=carreras)
+            if carrera in carreras:
+                return Inscripcion.objects.filter(carrera=carrera)
         except:
-            alumnos = Inscripcion.objects.none()
-        return alumnos
+            pass
+        return Inscripcion.objects.none()
 
 
 class MateriasEnPlanView(generics.ListAPIView):
@@ -168,3 +172,13 @@ class ImportarDatosAlumnosView(ImportadorView):
 class ImportarInscripcionesView(ImportadorView):
     form = ImportarInscripcionesForm
     template = 'importadores/importador_inscripciones.html'
+
+
+class ImportarRequisitosView(ImportadorView):
+    form = ImportarRequisitosForm
+    template = 'importadores/importador_requisitos.html'
+
+
+class ImportarPlanesView(ImportadorView):
+    form = ImportarPlanesForm
+    template = 'importadores/importador_planes.html'
