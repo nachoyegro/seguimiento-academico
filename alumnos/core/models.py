@@ -59,8 +59,16 @@ class MateriaEnPlan(models.Model):
     creditos = models.IntegerField(null=True)
     codigo = models.CharField(max_length=10, null=True)
     orden_cuatrimestral = models.IntegerField(null=True)
-    obligatorias = models.ManyToManyField("self", related_name="obligatorias")
-    recomendadas = models.ManyToManyField("self", related_name="recomendadas")
+    obligatorias = models.ManyToManyField(
+        "self", related_name="obligatoria_de", symmetrical=False)
+    recomendadas = models.ManyToManyField(
+        "self", related_name="recomendada_de", symmetrical=False)
+
+    def cantidad_obligatoria_de(self):
+        acum = self.obligatoria_de.count()
+        for materia in self.obligatoria_de.all():
+            acum += materia.cantidad_obligatoria_de()
+        return acum
 
     def __str__(self):
         return u'%s-%s' % (self.plan, self.materia)

@@ -22,11 +22,15 @@ class MateriaEnPlanSerializer(serializers.ModelSerializer):
     materia = serializers.SlugRelatedField(read_only=True, slug_field="nombre")
     plan = serializers.SlugRelatedField(read_only=True, slug_field="anio")
     area = serializers.SlugRelatedField(read_only=True, slug_field="nombre")
+    obligatorias = serializers.SlugRelatedField(
+        many=True, read_only=True, slug_field="codigo")
+    recomendadas = serializers.SlugRelatedField(
+        many=True, read_only=True, slug_field="codigo")
 
     class Meta:
         model = MateriaEnPlan
         fields = ("id", "materia", "plan", "nucleo",
-                  "creditos", "area", "codigo")
+                  "creditos", "area", "codigo", "obligatorias", "recomendadas", "cantidad_obligatoria_de")
 
 
 class MateriaCursadaSerializer(serializers.ModelSerializer):
