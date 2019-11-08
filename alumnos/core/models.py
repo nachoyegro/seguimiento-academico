@@ -135,12 +135,12 @@ class MateriaCursada(models.Model):
         ('7', '7'), ('8', '8'), ('9', '9'), ('10', '10')), null=True)
     fecha = models.DateField(null=True)
     forma_aprobacion = models.CharField(max_length=32, null=True, choices=(
-        'EqE', 'Equivalencia equivalente',
-        'PC', 'Promocion en otra carrera',
-        'P', 'Promocion',
-        'Eq', 'Equivalencia',
-        'ExE', 'Examen equivalente',
-        'Ex', 'Examen'))
+        ('EqE', 'Equivalencia equivalente'),
+        ('PC', 'Promocion en otra carrera'),
+        ('P', 'Promocion'),
+        ('Eq', 'Equivalencia'),
+        ('ExE', 'Examen equivalente'),
+        ('Ex', 'Examen')))
 
     def __str__(self):
         return u'%s, %s' % (self.materia, self.alumno)

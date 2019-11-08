@@ -3,27 +3,29 @@ from core.materia_cursada_creator import MateriaCursadaCreator
 from core.models import MateriaCursada, Materia, MateriaEnPlan, PlanDeEstudio, AlumnoDeCarrera, Alumno, Carrera
 from datetime import datetime
 
+
 class MateriaCursadaCreatorTest(TestCase):
 
     def setUp(self):
         self.mc_creator = MateriaCursadaCreator()
-        Carrera.objects.create(codigo='W') #MateriaCursadaCreator asume que ya existe la carrera
+        # MateriaCursadaCreator asume que ya existe la carrera
+        Carrera.objects.create(codigo='W')
         self.data = {'legajo': '21872',
-                    'dni': '35905769',
-                    'codigo_carrera': 'W',
-                    'codigo_materia': '1234',
-                    'nombre_materia': 'Materia Falsa',
-                    'fecha': datetime.strptime('21/06/2013', '%d/%m/%Y'),
-                    'resultado': 'P',
-                    'nota': '9',
-                    'forma_aprobacion': 'Promocion',
-                    'creditos': 12,
-                    'acta_promocion': '',
-                    'acta_examen': '',
-                    'plan': 2012}
+                     'dni': '35905769',
+                     'codigo_carrera': 'W',
+                     'codigo_materia': '1234',
+                     'nombre_materia': 'Materia Falsa',
+                     'fecha': datetime.strptime('21/06/2013', '%d/%m/%Y'),
+                     'resultado': 'P',
+                     'nota': '9',
+                     'forma_aprobacion': 'Promocion',
+                     'creditos': 12,
+                     'acta_promocion': '',
+                     'acta_examen': '',
+                     'plan': 2012}
         self.mc_creator.create(**self.data)
 
-    def test_alumno_creado(self):    
+    def test_alumno_creado(self):
         alumno = Alumno.objects.all()[0]
         self.assertEquals(alumno.dni, '35905769')
         self.assertEquals(alumno.legajo, '21872')
@@ -34,7 +36,7 @@ class MateriaCursadaCreatorTest(TestCase):
 
     def test_materia_creada(self):
         materia = Materia.objects.all()[0]
-        self.assertEquals(materia.codigo, '1234')
+        self.assertEquals(materia.codigo, '01234')
         self.assertEquals(materia.nombre, 'Materia Falsa')
 
     def test_plan_creado(self):
@@ -74,12 +76,11 @@ class MateriaCursadaCreatorTest(TestCase):
         alumno_de_carrera = AlumnoDeCarrera.objects.all()[0]
         self.assertEquals(alumno_de_carrera.plan.anio, 2012)
 
-
     def test_nota_aprobada_cuando_no_hay_nota_y_el_resultado_es_A(self):
         self.data['nota'] = ''
         self.data['resultado'] = 'A'
         self.mc_creator.create(**self.data)
-        #Traigo la nueva materia creada
+        # Traigo la nueva materia creada
         materia_cursada = MateriaCursada.objects.all()[1]
         self.assertEquals(materia_cursada.nota, 'A')
 
@@ -87,11 +88,6 @@ class MateriaCursadaCreatorTest(TestCase):
         self.data['nota'] = ''
         self.data['resultado'] = 'U'
         self.mc_creator.create(**self.data)
-        #Traigo la nueva materia creada
+        # Traigo la nueva materia creada
         materia_cursada = MateriaCursada.objects.all()[1]
         self.assertEquals(materia_cursada.nota, '')
-
-
-
-
-
