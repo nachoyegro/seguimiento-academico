@@ -8,7 +8,7 @@ class MateriaCursadaCreator:
         legajo = kwargs['legajo']
         dni = kwargs['dni']
         cod_carrera = kwargs['codigo_carrera']
-        cod_materia = kwargs['codigo_materia']
+        cod_materia = kwargs['codigo_materia'].zfill(5)
         nombre_materia = kwargs['nombre_materia']
         fecha = kwargs['fecha']
         resultado = kwargs['resultado']
