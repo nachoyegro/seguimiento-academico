@@ -41,7 +41,7 @@ class MateriaCursadaSerializer(serializers.ModelSerializer):
     class Meta:
         model = MateriaCursada
         fields = ("materia", "nota", "alumno",
-                  "carrera", "fecha", "resultado")
+                  "carrera", "fecha", "resultado", "forma_aprobacion")
 
 
 class InscripcionSerializer(serializers.ModelSerializer):
