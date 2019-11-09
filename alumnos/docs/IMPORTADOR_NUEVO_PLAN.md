@@ -17,6 +17,7 @@ Las columnas tienen que estar en el orden que se detallan a continuación:
 ### Núcleos
 
 Los códigos de núcleos son los siguientes:
+
 | Código | Nombre                     |
 | ------ | -------------------------- |
 | I      | Introductorio              |

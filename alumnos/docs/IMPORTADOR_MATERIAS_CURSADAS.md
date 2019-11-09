@@ -25,6 +25,7 @@ Las columnas tienen que estar en el orden que se detallan a continuación:
 ### (1) Carrera
 
 Los códigos de carreras son los siguientes:
+
 | Codigo | Nombre                                                          |
 |--------|-----------------------------------------------------------------|
 | A      | Enfermería Universitaria                                        |
@@ -60,6 +61,7 @@ Los códigos de carreras son los siguientes:
 ### (2) Resultado
 
 Los resultados posibles son los siguientes:
+
 | Código | Nombre               |
 | ------ | -------------------- |
 | U      | Libre                |
