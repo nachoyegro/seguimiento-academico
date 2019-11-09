@@ -11,14 +11,15 @@ Las columnas tienen que estar en el orden que se detallan a continuación:
 - **Núcleo**
 - **Área de Materia**
 - **Cod. de Materia**
+- **Créditos**
 - **Nombre**
 
 ### Núcleos
 
 Los códigos de núcleos son los siguientes:
-| Código | Nombre |
-| ------ | ------ |
-| I | Introductorio |
-| B | Básico |
-| A | Avanzado |
-| C | Complementario/Orientativo |
+| Código | Nombre                     |
+| ------ | -------------------------- |
+| I      | Introductorio              |
+| B      | Básico                     |
+| A      | Avanzado                   |
+| C      | Complementario/Orientativo |
