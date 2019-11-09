@@ -23,7 +23,7 @@ class Command(BaseCommand):
                         cod_materia = row[3]
                         comision = row[4]
                         fecha_str = row[5].split(' ')[0]
-                        fecha = datetime.strptime(fecha_str, '%Y-%m-%d')
+                        fecha = datetime.strptime(fecha_str, '%d/%m/%Y')
 
                         carrera = Carrera.objects.get(codigo=cod_carrera)
                         alumno, _ = Alumno.objects.get_or_create(
