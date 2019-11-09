@@ -1,31 +1,3 @@
-# Importadores
-
-
-## Materias Cursadas
-
-El formato debe ser .CSV, con separador de punto y coma (;).
-Las columnas tienen que estar en el orden que se detallan a continuación:
-
-- **Legajo**
-- DNI
-- **Carrera (1)**
-- Regular (?)
-- Calidad (?)
-- **Materia (Código de Guaraní)**
-- **Nombre (de la materia)**
-- **Fecha** *formato dd/mm/yyyy*
-- **Resultado (2)**
-- **Nota**
-- **Forma de Aprobación**
-- Crédito
-- Acta Promoción
-- Acta Exámen
-- **Plan**
-
-### (1) Carrera
-
-Los códigos de carreras son los siguientes:
-
 | Codigo | Nombre                                                          |
 |--------|-----------------------------------------------------------------|
 | A      | Enfermería Universitaria                                        |
@@ -57,18 +29,3 @@ Los códigos de carreras son los siguientes:
 | V1     | Licenciatura en Historia                                        |
 | W      | Licenciatura en Desarrollo de Software                          |
 | H1     | Licenciatura en Educación (Ciclo de Complementación Curricular) |
-
-### (2) Resultado
-
-Los resultados posibles son los siguientes:
-
-| Código | Nombre               |
-| ------ | -------------------- |
-| U      | Libre                |
-| U      | Ausente              |
-| R      | Reprobó              |
-| A      | Regular              |
-| P      | Acreditó             |
-| N      | No Acreditó          |
-| E      | Pendiente Aprobación |
-| E      | Pendiente Virtual    |
