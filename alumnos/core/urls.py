@@ -22,6 +22,7 @@ urlpatterns = [
     path(r'api/carreras/<str:codigo_carrera>/inscripciones/',
          InscripcionesView.as_view()),
     path(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path(r'api/v1/alumnos/', AlumnosAPIV1.as_view()),
     path(r'api/token/', AlumnosTokenObtainPairView.as_view(), name='token'),
     path(r'api/token/refresh/', TokenRefreshView.as_view()),
     path(r'admin/core/importar_materias_cursadas/',
