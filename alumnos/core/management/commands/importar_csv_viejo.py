@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 import csv
-from core.models import Carrera, Alumno, Materia, MateriaCursada, PlanDeEstudio, AlumnoDeCarrera
+from core.models import Carrera, Alumno, Materia, MateriaCursada, PlanDeEstudio, AlumnoDeCarrera, MateriaEnPlan
 
 
 class Command(BaseCommand):
@@ -8,27 +8,24 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         carrera_tpi = Carrera.objects.get(codigo='P')
         carrera_lds = Carrera.objects.get(codigo='W')
-        with open('alumnos2019s2.csv', 'r', encoding="utf8") as csvfile:
+        with open('alumnos2020s1.csv', 'r', encoding="utf8") as csvfile:
             spamreader = csv.reader(csvfile, delimiter=';')
             fila = 0
             sin_alumnos = 0
             for row in spamreader:
-                if fila >= 15:
+                if fila >= 56:
                     tpi = carrera_tpi if 'P' in row[2] else False
                     # Hay campos como W!
                     lds = carrera_lds if 'W' in row[3] else False
-                    sexo = row[4]
-                    numero_inscripto = row[5]
+                    #sexo = row[4]
+                    #numero_inscripto = row[5]
                     dni = row[6]
                     legajo = row[7]
                     nombre = row[8]
                     apellido = row[9]
-                    if not row[11]:
-                        print('Sin plan: %s, %s, fila: %d' %
-                              (apellido, nombre, fila))
-                    if nombre and apellido and row[11]:
+                    if nombre and apellido:
                         ci = row[10]
-                        plan = row[11]
+                        #plan = row[11]
                         telefono = row[40]
                         celular = row[41]
                         mail = row[42]
@@ -67,14 +64,15 @@ class Command(BaseCommand):
                         _ = row[120]
                         observacion = row[121]
                         _ = row[122]
+
                         # Si no hay nombre ni apellido entonces es una linea en blanco
                         alumno = Alumno.objects.create(nombre=nombre, apellido=apellido, dni=dni, email=mail, legajo=legajo,
-                                                       sexo=sexo, telefono=telefono, celular=celular,
+                                                       telefono=telefono, celular=celular,
                                                        comentario=comentario, observacion=observacion)
                         if tpi:
                             try:
                                 plan = PlanDeEstudio.objects.get(
-                                    nombre=row[11], carrera=carrera_tpi)
+                                    nombre=row[11] or '2015', carrera=carrera_tpi)
                             except:
                                 import pdb
                                 pdb.set_trace()
@@ -84,7 +82,7 @@ class Command(BaseCommand):
                                                            promedio=promedio)
                         if lds:
                             plan = PlanDeEstudio.objects.get(
-                                nombre=row[11], carrera=carrera_lds)
+                                nombre=row[11] or '2015', carrera=carrera_lds)
                             AlumnoDeCarrera.objects.create(alumno=alumno,
                                                            carrera=carrera_lds,
                                                            plan=plan,
@@ -141,21 +139,29 @@ class Command(BaseCommand):
                                     'tco': 133,
                                     'arqco': 134,
                                     'parse': 135,
-                                    'legal': 136
+                                    'legal': 136,
+                                    'sem_alga': 137,
+                                    'sem_talleralg': 138,
+                                    'bioinf': 139,
+                                    'politicas': 140,
+                                    'rn': 141,
+
+
                                     }
                         for sigla, indice in materias.items():
                             materia, created = Materia.objects.get_or_create(
                                 siglas=sigla)
+                            materia_plan, _ = MateriaEnPlan.objects.get_or_create(
+                                materia=materia, plan=plan)
                             if created:
                                 print(sigla)
                             nota = row[indice]
                             if nota and 'c' not in nota and 'C' not in nota:
                                 carrera = carrera_tpi if tpi else carrera_lds
-                                MateriaCursada.objects.create(materia=materia,
+                                MateriaCursada.objects.create(materia=materia_plan,
                                                               alumno=alumno, nota=nota, carrera=carrera)
                     else:
                         sin_alumnos += 1
-                    # Si acumulo 3 lineas sin alumnos termino
-                    if fila == 1600:
+                    if fila == 2215:
                         break
                 fila += 1
