@@ -11,12 +11,6 @@ class MateriaCursadaTabular(admin.TabularInline):
     raw_id_fields = ('materia', )
     extra = 0
 
-
-class MateriaEnPlanTabular(admin.TabularInline):
-    model = MateriaEnPlan
-    extra = 0
-
-
 class AlumnoDeCarreraStackedAdmin(admin.StackedInline):
     model = AlumnoDeCarrera
     extra = 0
@@ -35,23 +29,28 @@ class AlumnoAdmin(admin.ModelAdmin):
 
 
 class MateriaAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'siglas')
-    inlines = [MateriaEnPlanTabular]
+    list_display = ('materia', 'plan', 'carrera')
 
+    def carrera(self, obj):
+        return obj.plan.carrera
+
+    carrera.short_description = 'carrera'
+    carrera.admin_order_field = 'plan__carrera'
+
+class PlanDeEstudioAdmin(admin.ModelAdmin):
+    list_display = ('anio', 'carrera')
 
 class ProfileInLine(admin.StackedInline):
     model = Profile
     filter_horizontal = ['carreras', ]
 
-
 class CustomUserAdmin(UserAdmin):
     inlines = [ProfileInLine, ]
-
 
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Alumno, AlumnoAdmin)
-admin.site.register(Materia, MateriaAdmin)
-admin.site.register(PlanDeEstudio)
+admin.site.register(MateriaEnPlan, MateriaAdmin)
+admin.site.register(PlanDeEstudio, PlanDeEstudioAdmin)
 admin.site.register(Carrera)
 admin.site.register(MateriaCursada)
