@@ -15,6 +15,8 @@ class AlumnoDeCarreraStackedAdmin(admin.StackedInline):
     model = AlumnoDeCarrera
     extra = 0
 
+class MateriaEnPlanTabularInline(admin.TabularInline):
+    model = MateriaEnPlan
 
 class InscripcionStackedAdmin(admin.StackedInline):
     model = Inscripcion
@@ -39,6 +41,7 @@ class MateriaAdmin(admin.ModelAdmin):
 
 class PlanDeEstudioAdmin(admin.ModelAdmin):
     list_display = ('anio', 'carrera')
+    inlines = [MateriaEnPlanTabularInline]
 
 class ProfileInLine(admin.StackedInline):
     model = Profile
