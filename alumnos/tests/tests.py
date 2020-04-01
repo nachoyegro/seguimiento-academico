@@ -101,7 +101,7 @@ class ApiTestCase(APITestCase):
             Deberia darme una lista vacia
         """
         self.acreditarse_con_token()
-        url = '/api/carreras/W/alumnos/'
+        url = '/api/carreras/D/alumnos/'
         response = self.client.get(url)
         self.assertEquals(len(response.data), 0)
 
