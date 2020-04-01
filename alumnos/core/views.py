@@ -124,7 +124,7 @@ class AlumnosView(viewsets.ModelViewSet):
         return alumnos
 
 
-class AlumnosDeCarreraView(generics.ListAPIView):
+class AlumnosFiltradosPorCarreraView(generics.ListAPIView):
     queryset = Alumno.objects.none()
     serializer_class = AlumnoSerializer
 
@@ -145,6 +145,25 @@ class AlumnosDeCarreraView(generics.ListAPIView):
             pass
         return alumnos
 
+
+class AlumnosDeCarreraView(generics.ListAPIView):
+    queryset = AlumnoDeCarrera.objects.none()
+    serializer_class = AlumnoDeCarreraSerializer
+
+    def get_queryset(self):
+        """
+        Retorna todos los alumnos de una determinada carrera,
+        Si es que el usuario tiene permisos para ver esa carrera
+        """
+        alumnos = AlumnoDeCarrera.objects.none()
+        try:
+            carrera = Carrera.objects.get(codigo=self.kwargs['codigo_carrera'])
+            profile = Profile.objects.get(user=self.request.user)
+            carreras = profile.carreras.all()
+            alumnos = AlumnoDeCarrera.objects.filter(carrera=carrera)
+        except:
+            pass
+        return alumnos
 
 class MateriasView(viewsets.ModelViewSet):
     """

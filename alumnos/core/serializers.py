@@ -61,3 +61,11 @@ class AlumnoSerializer(serializers.HyperlinkedModelSerializer):
         model = Alumno
         fields = ("id", "nombre", "apellido", "email", "legajo",
                   "es_regular", "cursadas", "es_regular")
+
+class AlumnoDeCarreraSerializer(serializers.HyperlinkedModelSerializer):
+    alumno = serializers.SlugRelatedField(read_only=True, slug_field="legajo")
+    plan = serializers.SlugRelatedField(read_only=True, slug_field="anio")
+    
+    class Meta:
+        model = AlumnoDeCarrera
+        fields = ("alumno", "fecha_inscripcion", "plan")

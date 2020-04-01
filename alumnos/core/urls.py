@@ -15,6 +15,8 @@ urlpatterns = [
     path(r'api/', include(router.urls)),
     path(r'api/carreras/<str:codigo_carrera>/alumnos/',
          AlumnosDeCarreraView.as_view()),
+    path(r'api/carreras/<str:codigo_carrera>/alumnos-completos/',
+         AlumnosFiltradosPorCarreraView.as_view()),
     path(r'api/carreras/<str:codigo_carrera>/planes/<int:plan_anio>/',
          MateriasEnPlanView.as_view()),
     path(r'api/carreras/<str:codigo_carrera>/materiascursadas/',
