@@ -8,8 +8,6 @@ router = routers.DefaultRouter()
 router.register(r'materias', MateriasView)
 router.register(r'alumnos', AlumnosView)
 router.register(r'carreras', CarrerasView)
-#router.register(r'materiascursadas', MateriasCursadasView)
-#router.register(r'inscripciones', InscripcionesView)
 
 urlpatterns = [
     path(r'api/', include(router.urls)),
@@ -23,6 +21,8 @@ urlpatterns = [
          MateriasCursadasView.as_view()),
     path(r'api/carreras/<str:codigo_carrera>/inscripciones/',
          InscripcionesView.as_view()),
+    path(r'api/alumno/<str:legajo>/cursadas/',
+         AlumnoMateriasCursadasView.as_view()),
     path(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path(r'api/v1/alumnos/', AlumnosAPIV1.as_view()),
     path(r'api/token/', AlumnosTokenObtainPairView.as_view(), name='token'),

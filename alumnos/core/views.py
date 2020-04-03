@@ -165,6 +165,7 @@ class AlumnosDeCarreraView(generics.ListAPIView):
             pass
         return alumnos
 
+
 class MateriasView(viewsets.ModelViewSet):
     """
     Provides a get method handler.
@@ -188,6 +189,22 @@ class CarrerasView(viewsets.ModelViewSet):
         except:
             pass
         return carreras
+
+
+class AlumnoMateriasCursadasView(generics.ListAPIView):
+    queryset = MateriaCursada.objects.all()
+    serializer_class = MateriaCursadaSerializer
+
+    def get_queryset(self):
+        """
+            - Filtro las cursadas en base a las carreras que puede ver el usuario actual
+        """
+        try:
+            profile = Profile.objects.get(user=self.request.user)
+            return MateriaCursada.objects.filter(carrera__in=profile.carreras.all(),
+                                                 alumno__legajo=self.kwargs['legajo'])
+        except:
+            return MateriaCursada.objects.none()
 
 
 class ImportadorView(View):
