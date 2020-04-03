@@ -160,7 +160,8 @@ class AlumnosDeCarreraView(generics.ListAPIView):
             carrera = Carrera.objects.get(codigo=self.kwargs['codigo_carrera'])
             profile = Profile.objects.get(user=self.request.user)
             carreras = profile.carreras.all()
-            alumnos = AlumnoDeCarrera.objects.filter(carrera=carrera)
+            if carrera in carreras:
+                alumnos = AlumnoDeCarrera.objects.filter(carrera=carrera)
         except:
             pass
         return alumnos
@@ -197,7 +198,8 @@ class PlanesDeCarreraView(generics.ListAPIView):
 
     def get_queryset(self):
         """
-        Retorna todas las carreras que puede ver el usuario actual
+        - Retorna los planes en base al codigo de carrera pedido
+        - Si el usuario tiene permisos de ver esa carrera
         """
         planes = PlanDeEstudio.objects.none()
         try:
