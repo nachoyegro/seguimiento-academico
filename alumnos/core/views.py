@@ -191,7 +191,60 @@ class CarrerasView(viewsets.ModelViewSet):
         return carreras
 
 
+class PlanesDeCarreraView(generics.ListAPIView):
+    queryset = PlanDeEstudio.objects.all()
+    serializer_class = PlanDeEstudioSerializer
+
+    def get_queryset(self):
+        """
+        Retorna todas las carreras que puede ver el usuario actual
+        """
+        planes = PlanDeEstudio.objects.none()
+        try:
+            carrera = Carrera.objects.get(codigo=self.kwargs['codigo_carrera'])
+            profile = Profile.objects.get(user=self.request.user)
+            carreras = profile.carreras.all()
+            if carrera in carreras:
+                planes = PlanDeEstudio.objects.filter(
+                    carrera=carrera)
+        except:
+            pass
+        return planes
+
+
 class AlumnoMateriasCursadasView(generics.ListAPIView):
+    queryset = MateriaCursada.objects.all()
+    serializer_class = MateriaCursadaSerializer
+
+    def get_queryset(self):
+        """
+            - Filtro las cursadas en base a las carreras que puede ver el usuario actual y el alumno
+        """
+        try:
+            profile = Profile.objects.get(user=self.request.user)
+            return MateriaCursada.objects.filter(carrera__in=profile.carreras.all(),
+                                                 alumno__legajo=self.kwargs['legajo'])
+        except:
+            return MateriaCursada.objects.none()
+
+
+class AlumnoInscripcionesView(generics.ListAPIView):
+    queryset = Inscripcion.objects.all()
+    serializer_class = InscripcionSerializer
+
+    def get_queryset(self):
+        """
+            - Filtro las inscripciones en base a las carreras que puede ver el usuario actual
+        """
+        try:
+            profile = Profile.objects.get(user=self.request.user)
+            return Inscripcion.objects.filter(carrera__in=profile.carreras.all(),
+                                              alumno__legajo=self.kwargs['legajo'])
+        except:
+            return Inscripcion.objects.none()
+
+
+class MateriaAlumnosView(generics.ListAPIView):
     queryset = MateriaCursada.objects.all()
     serializer_class = MateriaCursadaSerializer
 
@@ -202,7 +255,7 @@ class AlumnoMateriasCursadasView(generics.ListAPIView):
         try:
             profile = Profile.objects.get(user=self.request.user)
             return MateriaCursada.objects.filter(carrera__in=profile.carreras.all(),
-                                                 alumno__legajo=self.kwargs['legajo'])
+                                                 materia__materia__codigo=self.kwargs['codigo'])
         except:
             return MateriaCursada.objects.none()
 

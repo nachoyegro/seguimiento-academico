@@ -5,8 +5,6 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .token_serializer import AlumnosTokenObtainPairView
 
 router = routers.DefaultRouter()
-router.register(r'materias', MateriasView)
-router.register(r'alumnos', AlumnosView)
 router.register(r'carreras', CarrerasView)
 
 urlpatterns = [
@@ -17,12 +15,18 @@ urlpatterns = [
          AlumnosFiltradosPorCarreraView.as_view()),
     path(r'api/carreras/<str:codigo_carrera>/planes/<int:plan_anio>/',
          MateriasEnPlanView.as_view()),
+    path(r'api/carreras/<str:codigo_carrera>/planes/',
+         PlanesDeCarreraView.as_view()),
     path(r'api/carreras/<str:codigo_carrera>/materiascursadas/',
          MateriasCursadasView.as_view()),
     path(r'api/carreras/<str:codigo_carrera>/inscripciones/',
          InscripcionesView.as_view()),
     path(r'api/alumno/<str:legajo>/cursadas/',
          AlumnoMateriasCursadasView.as_view()),
+    path(r'api/alumno/<str:legajo>/inscripciones/',
+         AlumnoInscripcionesView.as_view()),
+    path(r'api/materia/<str:codigo>/alumnos/',
+         MateriaAlumnosView.as_view()),
     path(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path(r'api/v1/alumnos/', AlumnosAPIV1.as_view()),
     path(r'api/token/', AlumnosTokenObtainPairView.as_view(), name='token'),
