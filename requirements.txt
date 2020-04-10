@@ -7,3 +7,6 @@ django-formtools==2.1
 django-cors-headers
 djangorestframework_simplejwt
 coverage==4.5.4
+
+psycopg2-binary==2.8.3
+gunicorn==19.9.0
