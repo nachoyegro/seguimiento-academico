@@ -8,6 +8,7 @@ from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
+import datetime
 
 
 class AlumnosAPIV1(View):
@@ -260,6 +261,19 @@ class MateriaAlumnosView(generics.ListAPIView):
                                                  materia__materia__codigo=self.kwargs['codigo'])
         except:
             return MateriaCursada.objects.none()
+
+class CantidadGraduadosView(View):
+
+    def get_graduados(self, carrera, anio):
+        graduados = Graduado.objects.filter(alumno__carrera=carrera)
+        return {"anio": anio, "cantidad": graduados.filter(fecha__year=anio).count()}
+
+    def get(self, request, codigo_carrera, anio=None, **kwargs):
+        carrera = Carrera.objects.get(codigo=codigo_carrera)
+        if anio:
+            return JsonResponse(self.get_graduados(carrera, anio), safe=False)
+        else:
+            return JsonResponse([self.get_graduados(carrera, anio_actual) for anio_actual in range(carrera.fecha_creacion.year, datetime.date.today().year + 1)], safe=False)
 
 
 class ImportadorView(View):

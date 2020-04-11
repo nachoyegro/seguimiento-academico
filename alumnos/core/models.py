@@ -14,6 +14,7 @@ class Materia(models.Model):
 class Carrera(models.Model):
     nombre = models.CharField(max_length=255)
     codigo = models.CharField(max_length=2)
+    fecha_creacion = models.DateField()
 
     def __str__(self):
         return u'%s' % (self.nombre)
@@ -41,6 +42,9 @@ class PlanDeEstudio(models.Model):
     descripcion = models.TextField(null=True)
     anio = models.IntegerField()
 
+    class Meta:
+        verbose_name_plural = "Planes de estudio"
+
     def __gt__(self, other):
         return self.anio > other.anio
 
@@ -63,6 +67,9 @@ class MateriaEnPlan(models.Model):
         "self", related_name="obligatoria_de", symmetrical=False)
     recomendadas = models.ManyToManyField(
         "self", related_name="recomendada_de", symmetrical=False)
+
+    class Meta:
+        verbose_name_plural = "Materias de plan"
 
     def cantidad_obligatoria_de(self):
         acum = self.obligatoria_de.count()
@@ -158,6 +165,14 @@ class Inscripcion(models.Model):
     def __str__(self):
         return u'%s-%s' % (self.alumno, self.materia)
 
+class Graduado(models.Model):
+    alumno = models.ForeignKey(
+        AlumnoDeCarrera, on_delete=models.CASCADE, related_name='egresos'
+    )
+    fecha = models.DateField()
+
+    def __str__(self):
+        return u'%s-%s' % (self.alumno, self.fecha)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
