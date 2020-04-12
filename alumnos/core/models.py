@@ -107,7 +107,6 @@ class Alumno(models.Model):
 class AlumnoDeCarrera(models.Model):
     alumno = models.ForeignKey(Alumno, on_delete=models.CASCADE)
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
-    # Solo descriptivo del plan actual en el que esta
     plan = models.ForeignKey(
         PlanDeEstudio, on_delete=models.SET_NULL, null=True)
     promedio = models.CharField(max_length=3, null=True)

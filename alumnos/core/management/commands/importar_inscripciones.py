@@ -33,6 +33,13 @@ class Command(BaseCommand):
                             alumno.save()
                         alumno_de_carrera, _ = AlumnoDeCarrera.objects.get_or_create(
                             alumno=alumno, carrera=carrera)
+                        if not alumno_de_carrera.plan:
+                            # Si no tiene plan
+                            # Entonces, le pongo el plan actual
+                            plan = PlanDeEstudio.objects.filter(carrera=carrera).order_by('-anio')[0]
+                            alumno_de_carrera.plan = plan
+                            alumno_de_carrera.save()
+
                         materia = Materia.objects.get(
                             codigo=cod_materia.zfill(5))
 

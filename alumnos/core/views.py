@@ -9,7 +9,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
 import datetime
-
+from .utils import *
 
 class AlumnosAPIV1(View):
     def get(self, *args, **kwargs):
@@ -264,17 +264,30 @@ class MateriaAlumnosView(generics.ListAPIView):
 
 class CantidadGraduadosView(View):
 
-    def get_graduados(self, carrera, anio):
-        graduados = Graduado.objects.filter(alumno__carrera=carrera)
-        return {"anio": anio, "cantidad": graduados.filter(fecha__year=anio).count()}
+    def get(self, request, codigo_carrera, anio=None, **kwargs):
+        carrera = Carrera.objects.get(codigo=codigo_carrera)
+        if anio:
+            return JsonResponse({"anio": anio, "cantidad": get_cantidad_graduados(carrera, anio)}, safe=False)
+        else:
+            return JsonResponse([{"anio": anio_actual, "cantidad": get_cantidad_graduados(carrera, anio_actual)} for anio_actual in range(carrera.fecha_creacion.year, datetime.date.today().year + 1)], safe=False)
+
+class CantidadIngresantesView(View):
 
     def get(self, request, codigo_carrera, anio=None, **kwargs):
         carrera = Carrera.objects.get(codigo=codigo_carrera)
         if anio:
-            return JsonResponse(self.get_graduados(carrera, anio), safe=False)
+            return JsonResponse({"anio": anio, "cantidad": get_cantidad_ingresantes(carrera, anio)}, safe=False)
         else:
-            return JsonResponse([self.get_graduados(carrera, anio_actual) for anio_actual in range(carrera.fecha_creacion.year, datetime.date.today().year + 1)], safe=False)
+            return JsonResponse([{"anio": anio_actual, "cantidad": get_cantidad_ingresantes(carrera, anio_actual)} for anio_actual in range(carrera.fecha_creacion.year, datetime.date.today().year + 1)], safe=False)
 
+class CantidadCursantesView(View):
+
+    def get(self, request, codigo_carrera, anio=None, **kwargs):
+        carrera = Carrera.objects.get(codigo=codigo_carrera)
+        if anio:
+            return JsonResponse({"anio": anio, "cantidad": get_cantidad_cursantes(carrera, anio)}, safe=False)
+        else:
+            return JsonResponse([{"anio": anio_actual, "cantidad": get_cantidad_cursantes(carrera, anio_actual)} for anio_actual in range(carrera.fecha_creacion.year, datetime.date.today().year + 1)], safe=False)
 
 class ImportadorView(View):
     form = None
