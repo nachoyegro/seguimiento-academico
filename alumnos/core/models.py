@@ -41,6 +41,7 @@ class PlanDeEstudio(models.Model):
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
     descripcion = models.TextField(null=True)
     anio = models.IntegerField()
+    materias_necesarias = models.IntegerField(default=40)
 
     class Meta:
         verbose_name_plural = "Planes de estudio"
