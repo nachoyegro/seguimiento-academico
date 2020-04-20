@@ -77,4 +77,4 @@ class PlanDeEstudioSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PlanDeEstudio
-        fields = ("id", "anio", "carrera")
+        fields = ("id", "anio", "carrera", "materias_necesarias")
