@@ -15,6 +15,8 @@ urlpatterns = [
          AlumnosFiltradosPorCarreraView.as_view()),
     path(r'api/carreras/<str:codigo_carrera>/planes/<int:plan_anio>/',
          MateriasEnPlanView.as_view()),
+    path(r'api/carreras/<str:codigo_carrera>/planes/<int:plan_anio>/cantidad-materias-necesarias/',
+         MateriasNecesariasView.as_view()),
     path(r'api/carreras/<str:codigo_carrera>/planes/',
          PlanesDeCarreraView.as_view()),
     path(r'api/carreras/<str:codigo_carrera>/materiascursadas/',

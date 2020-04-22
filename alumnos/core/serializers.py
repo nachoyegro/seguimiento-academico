@@ -69,7 +69,7 @@ class AlumnoDeCarreraSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = AlumnoDeCarrera
-        fields = ("alumno", "fecha_inscripcion", "plan")
+        fields = ("alumno", "fecha_inscripcion", "plan", "promedio", "coeficiente")
 
 
 class PlanDeEstudioSerializer(serializers.ModelSerializer):

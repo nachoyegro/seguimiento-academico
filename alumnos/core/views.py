@@ -289,6 +289,13 @@ class CantidadCursantesView(View):
         else:
             return JsonResponse([{"anio": anio_actual, "cantidad": get_cantidad_cursantes(carrera, anio_actual)} for anio_actual in range(carrera.fecha_creacion.year, datetime.date.today().year + 1)], safe=False)
 
+class MateriasNecesariasView(View):
+
+    def get(self, request, codigo_carrera, plan_anio, **kwargs):
+        carrera = Carrera.objects.get(codigo=codigo_carrera)
+        plan = PlanDeEstudio.objects.get(carrera=carrera, anio=plan_anio)
+        return JsonResponse({"cantidad": plan.materias_necesarias}, safe=False)
+
 class ImportadorView(View):
     form = None
     template = ''
