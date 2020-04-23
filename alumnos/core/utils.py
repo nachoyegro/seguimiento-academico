@@ -38,5 +38,13 @@ def get_cantidad_cursantes(carrera, anio):
     cursantes = alumnos - get_cantidad_ingresantes(carrera, anio) - graduados_hasta_anio
     return cursantes
     
-
+def get_cantidad_postulantes(carrera, anio):
+    '''
+        Retorna la cantidad de postulantes de una carrera en un año determinado
+    '''
+    postulantes = 0
+    for ps in Postulantes.objects.filter(carrera=carrera, fecha__year=anio):
+        postulantes += ps.cantidad
+    return postulantes
+    
 

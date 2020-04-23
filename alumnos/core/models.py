@@ -174,6 +174,14 @@ class Graduado(models.Model):
     def __str__(self):
         return u'%s-%s' % (self.alumno, self.fecha)
 
+class Postulantes(models.Model):
+    carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE, related_name='postulantes')
+    cantidad = models.IntegerField()
+    fecha = models.DateField()
+
+    def __str__(self):
+        return u'%s-%s-%s' % (self.fecha, self.carrera, self.cantidad)
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     carreras = models.ManyToManyField(Carrera)

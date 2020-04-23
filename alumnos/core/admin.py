@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
-from core.models import Inscripcion, Profile, Carrera, Alumno, Materia, MateriaEnPlan, MateriaCursada, PlanDeEstudio, AlumnoDeCarrera
+from core.models import Postulantes, Inscripcion, Profile, Carrera, Alumno, Materia, MateriaEnPlan, MateriaCursada, PlanDeEstudio, AlumnoDeCarrera
 
 
 class MateriaCursadaTabular(admin.TabularInline):
@@ -10,6 +10,18 @@ class MateriaCursadaTabular(admin.TabularInline):
     classes = ('grp-collapse grp-open',)
     raw_id_fields = ('materia', )
     extra = 0
+
+class PostulantesInline(admin.StackedInline):
+    model = Postulantes
+    extra = 0
+
+class PlanDeEstudioInline(admin.StackedInline):
+    model = PlanDeEstudio
+    extra = 0
+
+class CarreraAdmin(admin.ModelAdmin):
+    list_display = ('codigo', 'nombre')
+    inlines = [PlanDeEstudioInline, PostulantesInline]
 
 class AlumnoDeCarreraStackedAdmin(admin.StackedInline):
     model = AlumnoDeCarrera
@@ -55,5 +67,5 @@ admin.site.register(User, CustomUserAdmin)
 admin.site.register(Alumno, AlumnoAdmin)
 admin.site.register(MateriaEnPlan, MateriaAdmin)
 admin.site.register(PlanDeEstudio, PlanDeEstudioAdmin)
-admin.site.register(Carrera)
+admin.site.register(Carrera, CarreraAdmin)
 admin.site.register(MateriaCursada)

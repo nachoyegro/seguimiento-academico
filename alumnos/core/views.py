@@ -289,6 +289,16 @@ class CantidadCursantesView(View):
         else:
             return JsonResponse([{"anio": anio_actual, "cantidad": get_cantidad_cursantes(carrera, anio_actual)} for anio_actual in range(carrera.fecha_creacion.year, datetime.date.today().year + 1)], safe=False)
 
+class CantidadPostulantesView(View):
+
+    def get(self, request, codigo_carrera, anio=None, **kwargs):
+        carrera = Carrera.objects.get(codigo=codigo_carrera)
+        if anio:
+            return JsonResponse({"anio": anio, "cantidad": get_cantidad_postulantes(carrera, anio)}, safe=False)
+        else:
+            return JsonResponse([{"anio": anio_actual, "cantidad": get_cantidad_postulantes(carrera, anio_actual)} for anio_actual in range(carrera.fecha_creacion.year, datetime.date.today().year + 1)], safe=False)
+
+
 class MateriasNecesariasView(View):
 
     def get(self, request, codigo_carrera, plan_anio, **kwargs):
