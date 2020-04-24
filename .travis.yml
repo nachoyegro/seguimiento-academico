@@ -17,6 +17,7 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
+  - docker network create seguimiento-academico
   - docker-compose up -d
 
 install:
@@ -26,9 +27,8 @@ script:
   - token=b0d396b8-8527-4c19-84d2-1631fcb88d9d
   - ci_env="bash <(curl -s https://codecov.io/env)"
   - ci_post_cov="bash <(curl -s https://codecov.io/bash) -t $token"
-  - docker network create seguimiento-academico
-  - docker exec -it seguimiento-academico /bin/sh -c "yes | python alumnos/manage.py makemigrations"
-  - docker exec -it seguimiento-academico /bin/sh -c "$ci_env && coverage run alumnos/manage.py test alumnos/ && $ci_post_cov"
+  - docker exec -it seguimiento-academico bash -c "yes | python alumnos/manage.py makemigrations"
+  - docker exec -it seguimiento-academico bash -c "$ci_env && coverage run alumnos/manage.py test alumnos/ && $ci_post_cov"
 
 after_success:
   - codecov
