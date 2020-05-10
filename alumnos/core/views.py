@@ -309,11 +309,12 @@ class MateriasNecesariasView(View):
 class ImportadorView(View):
     form = None
     template = ''
+    titulo = ''
 
     @method_decorator(user_passes_test(lambda u: u.is_superuser))
     def get(self, request, **kwargs):
         form = self.form()
-        return render(request, self.template, dict(form=form))
+        return render(request, self.template, dict(form=form, titulo=self.titulo))
 
     def post(self, request):
         response = dict()
@@ -326,23 +327,28 @@ class ImportadorView(View):
 class ImportarMateriasCursadasView(ImportadorView):
     form = ImportarMateriasCursadasForm
     template = 'importadores/importador_materias_cursadas.html'
+    titulo = 'Importador de Materias Cursadas'
 
 
 class ImportarDatosAlumnosView(ImportadorView):
     form = ImportarDatosAlumnosForm
     template = 'importadores/importador_datos_alumnos.html'
+    titulo = 'Importador de Datos Personales de los Alumnos'
 
 
 class ImportarInscripcionesView(ImportadorView):
     form = ImportarInscripcionesForm
     template = 'importadores/importador_inscripciones.html'
+    titulo = 'Importador de Inscripciones'
 
 
 class ImportarRequisitosView(ImportadorView):
     form = ImportarRequisitosForm
     template = 'importadores/importador_requisitos.html'
+    titulo = 'Importador de Requisitos de las Materias'
 
 
 class ImportarPlanesView(ImportadorView):
     form = ImportarPlanesForm
     template = 'importadores/importador_planes.html'
+    titulo = 'Importador de Planes de Estudios'
