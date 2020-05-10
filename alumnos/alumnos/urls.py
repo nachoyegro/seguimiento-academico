@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
+    path('i18n/', include('django.conf.urls.i18n')),
     path('admin/', admin.site.urls),
     #path(r'admin/notas/', NotasWizard.as_view(NOTAS_FORMS)),
     path('', include('core.urls')),

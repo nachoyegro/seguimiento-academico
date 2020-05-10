@@ -62,6 +62,10 @@ class ProfileInLine(admin.StackedInline):
 class CustomUserAdmin(UserAdmin):
     inlines = [ProfileInLine, ]
 
+admin.site.site_url = 'http://127.0.0.1:3000/'
+admin.site.site_header = "Seguimiento Academico Admin"
+admin.site.site_title = "Seguimiento Academico"
+admin.site.index_title = "Bienvenido al admin de seguimiento academico"
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Alumno, AlumnoAdmin)

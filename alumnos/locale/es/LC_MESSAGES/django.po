@@ -1,0 +1,2 @@
+msgid "View site"
+msgstr "Ver estadisticas"
