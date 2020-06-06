@@ -1,16 +1,12 @@
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
  @import url('https://fonts.googleapis.com/css?family=Roboto');
- html, body, * {
+
+ .importador {
+	 padding: 2rem;
 	 box-sizing: border-box;
 	 font-size: 16px;
-}
- html, body {
 	 height: 100%;
 	 text-align: center;
-}
- body {
-	 padding: 2rem;
-	 background: #f8f8f8;
 }
 h1 {
   font-family: "Roboto", sans-serif;
@@ -22,7 +18,7 @@ h1 {
 	 font-family: "Roboto", sans-serif;
 	 font-size: 26px;
 	 line-height: 1;
-	 color: #454cad;
+	 color: #47bac1;
 	 margin-bottom: 0;
 }
  p {
@@ -53,10 +49,10 @@ h1 {
 	 user-select: none;
 }
  .uploader label:hover {
-	 border-color: #454cad;
+	 border-color: #47bac1;
 }
  .uploader label.hover {
-	 border: 3px solid #454cad;
+	 border: 3px solid #47bac1;
 	 box-shadow: inset 0 0 0 6px #eee;
 }
  .uploader label.hover #start i.fa {
@@ -123,11 +119,11 @@ h1 {
 	 background-color: #eee;
 }
  .uploader .progress[value]::-webkit-progress-value {
-	 background: linear-gradient(to right, #393f90 0%, #454cad 50%);
+	 background: linear-gradient(to right, #47bac1 0%, #47bac1 50%);
 	 border-radius: 4px;
 }
  .uploader .progress[value]::-moz-progress-bar {
-	 background: linear-gradient(to right, #393f90 0%, #454cad 50%);
+	 background: linear-gradient(to right, #47bac1 0%, #47bac1 50%);
 	 border-radius: 4px;
 }
  .uploader input[type="file"] {
@@ -155,8 +151,8 @@ h1 {
 	 color: #fff;
 	 transition: all 0.2s ease-in-out;
 	 box-sizing: border-box;
-	 background: #454cad;
-	 border-color: #454cad;
+	 background: #47bac1;
+	 border-color: #47bac1;
 	 cursor: pointer;
 }
  
