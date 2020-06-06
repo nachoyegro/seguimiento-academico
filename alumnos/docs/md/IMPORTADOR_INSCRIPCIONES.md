@@ -10,4 +10,4 @@ Las columnas tienen que estar en el orden que se detallan a continuación:
 - Legajo
 - Código de materia
 - Comision
-- Fecha (formato dd/mmm/YYY)
+- Fecha (formato DD/MM/YYYY)

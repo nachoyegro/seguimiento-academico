@@ -70,11 +70,19 @@ class InscripcionesView(generics.ListAPIView):
             - Si tiene permisos, filtro las inscripciones
         """
         try:
+            
             carrera = Carrera.objects.get(codigo=self.kwargs['codigo_carrera'])
             profile = Profile.objects.get(user=self.request.user)
             carreras = profile.carreras.all()
             if carrera in carreras:
-                return Inscripcion.objects.filter(carrera=carrera)
+                inscripciones = Inscripcion.objects.filter(carrera=carrera)
+                anio = self.kwargs['anio']
+                semestre = self.kwargs['semestre']
+                if anio and semestre:
+                    fecha_inicio = datetime.date(anio, 1, 1) if semestre == 1 else datetime.date(anio, 7, 1)
+                    fecha_fin = datetime.date(anio, 6, 30) if semestre == 1 else datetime.date(anio, 12, 31)
+                    return inscripciones.filter(fecha__gte=fecha_inicio, fecha__lte=fecha_fin)
+                return inscripciones
         except:
             pass
         return Inscripcion.objects.none()
