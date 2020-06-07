@@ -3,29 +3,32 @@
 
 {%block content%}
 <link rel="stylesheet" type="text/css" href='{% static "alumnos/css/dropfile.css" %}' />
-<div class="titulo-importador"><h1>{{titulo}}</h1></div>
-<form method="POST" action="{{action}}" id="file-upload-form" class="uploader" enctype="multipart/form-data">
+<div class="importador">
+  <div class="titulo-importador">
+    <h1>{{titulo}}</h1>
+  </div>
+  <form method="POST" action="{{action}}" id="id_archivo-form" class="uploader" enctype="multipart/form-data">
     {% csrf_token %}
     {{form.archivo}}
-    <label for="file-upload" id="file-drag">
-        <img id="file-image" src="#" alt="Previsualización" class="hidden">
-        <div id="start">
-          <i class="fa fa-download" aria-hidden="true"></i>
-          <div>Seleccione un archivo CSV o arrastre hasta aqui</div>
-          <div id="notcsv" class="hidden">Por favor, seleccione un archivo CSV</div>
-          <span id="file-upload-btn" class="btn btn-primary">Seleccionar uno</span>
-        </div>
-        <div id="response" class="hidden">
-          <div id="messages"></div>
-          <progress class="progress" id="file-progress" value="0">
-            <span>0</span>%
-          </progress>
-        </div>
-      </label>
-</form>
+    <label for="id_archivo" id="file-drag">
+      <img id="file-image" src="#" alt="Previsualización" class="hidden">
+      <div id="start">
+        <i class="fa fa-download" aria-hidden="true"></i>
+        <div>Seleccione un archivo CSV o arrastre hasta aqui</div>
+        <div id="notcsv" class="hidden">Por favor, seleccione un archivo CSV</div>
+        <span id="id_archivo-btn" class="btn btn-primary">Seleccionar uno</span>
+      </div>
+      <div id="response" class="hidden">
+        <div id="messages"></div>
+        <progress class="progress" id="file-progress" value="0">
+          <span>0</span>%
+        </progress>
+      </div>
+    </label>
+  </form>
+</div>
 
-
-    {% block dropjs %}
-        <script src='{% static "alumnos/js/dropfile.js" %}'></script>
-    {% endblock %}
+{% block dropjs %}
+<script src='{% static "alumnos/js/dropfile.js" %}'></script>
+{% endblock %}
 {% endblock %}
