@@ -118,6 +118,20 @@ class MateriaAdmin(admin.ModelAdmin):
         else:
             return qs.none()
 
+class MateriaCursadaAdmin(admin.ModelAdmin):
+    model = MateriaCursada
+    list_display = ('fecha','materia', 'carrera','nota')
+
+    # Filtro las carreras del usuario
+    def get_queryset(self, request):
+        qs = super(MateriaCursadaAdmin, self).get_queryset(request)
+        if request.user.profile:
+            # Filtro los alumnos de las carreras del usuario
+            return qs.filter(carrera__in=request.user.profile.carreras.all())
+        else:
+            return qs.none()
+
+
 class PlanDeEstudioAdmin(admin.ModelAdmin):
     list_display = ('anio', 'carrera')
     inlines = [MateriaEnPlanTabularInline]
@@ -148,4 +162,4 @@ admin.site.register(Alumno, AlumnoAdmin)
 admin.site.register(MateriaEnPlan, MateriaAdmin)
 admin.site.register(PlanDeEstudio, PlanDeEstudioAdmin)
 admin.site.register(Carrera, CarreraAdmin)
-admin.site.register(MateriaCursada)
+admin.site.register(MateriaCursada, MateriaCursadaAdmin)
