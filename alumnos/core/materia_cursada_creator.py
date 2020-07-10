@@ -53,7 +53,8 @@ class MateriaCursadaCreator:
         materia_en_plan.creditos = creditos
         materia_en_plan.save()
         materia_cursada = MateriaCursada.objects.create(
-            alumno=alumno, materia=materia_en_plan, carrera=carrera, fecha=fecha, resultado=resultado, forma_aprobacion=forma_aprob, nota=nota)
+            alumno=alumno, materia=materia_en_plan, carrera=carrera, fecha=fecha, resultado=resultado, 
+            forma_aprobacion=forma_aprob, nota=nota, acta_examen=acta_examen, acta_promocion=acta_promocion)
 
 
 """

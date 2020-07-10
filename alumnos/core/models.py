@@ -148,6 +148,8 @@ class MateriaCursada(models.Model):
         ('Eq', 'Equivalencia'),
         ('ExE', 'Examen equivalente'),
         ('Ex', 'Examen')))
+    acta_examen = models.CharField(max_length=32, null=True, blank=True)
+    acta_promocion = models.CharField(max_length=32, null=True, blank=True)
 
     def __str__(self):
         return u'%s, %s' % (self.materia, self.alumno)
