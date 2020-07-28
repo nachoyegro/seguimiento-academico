@@ -14,15 +14,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-#from graphene_django.views import GraphQLView
 from django.urls import path, include
 from django.conf.urls import url
-#from core.admin_views.notas import NotasWizard, NOTAS_FORMS
+from django.conf import settings
+from django.conf.urls.static import static
+from core.views import ImportarMateriasCursadasView, ImportarDatosAlumnosView, ImportarInscripcionesView, ImportarRequisitosView, ImportarPlanesView
 
 urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
+    path('i18n/', include('django.conf.urls.i18n')),
     path('admin/', admin.site.urls),
-    #path(r'admin/notas/', NotasWizard.as_view(NOTAS_FORMS)),
-    path('', include('core.urls')),
+    path(r'admin/core/importar_materias_cursadas/',
+         ImportarMateriasCursadasView.as_view(), name='importador_materias_cursadas'),
+    path(r'admin/core/importar_alumnos/', ImportarDatosAlumnosView.as_view(), name='importador_alumnos'),
+    path(r'admin/core/importar_inscripciones/',
+         ImportarInscripcionesView.as_view(), name='importador_inscripciones'),
+    path(r'admin/core/importar_requisitos/',
+         ImportarRequisitosView.as_view(), name='importador_requisitos'),
+    path(r'admin/core/importar_planes/',
+         ImportarPlanesView.as_view(), name='importador_planes'),
+    path('api/', include('core.urls')),
     #url(r'^graphql', GraphQLView.as_view(graphiql=True)),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    

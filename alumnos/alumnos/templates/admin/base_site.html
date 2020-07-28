@@ -1,10 +1,56 @@
-{% extends "admin/base.html" %}
+{% extends 'admin/base.html' %}
+{% load static i18n %}
 
+{# Setup favicon #}
+{% block extrahead %}<link rel="shortcut icon" type="image/png" href="/media/logo-color.png"/>{% endblock %}
+
+{# Setup browser tab label #}
 {% block title %}Seguimiento Academico{% endblock %}
 
+{# Setup branding #}
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">Seguimiento Academico - Admin</a>
-</h1>
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            {# Your logo here #}
+            <img style="background-color: white" src="/media/logo-fondo-oscuro.png"height="80%" width="80%">
+            <br><br>
+            </span>
+        </a>
+    </h1>
 {% endblock %}
 
-{% block nav-global %}{% endblock %}
+{% block importadores %}
+<a href="{% url 'importador_inscripciones'%}" class="sidebar-link icon">
+    <span class="sidebar-link-label">
+        Importador de Inscripciones
+    </span>
+</a>
+
+
+<a href="{% url 'importador_materias_cursadas'%}" class="sidebar-link icon">
+    <span class="sidebar-link-label">
+        Importador de Materias Cursadas
+    </span>
+</a>
+
+
+<a href="{% url 'importador_alumnos'%}" class="sidebar-link icon">
+    <span class="sidebar-link-label">
+        Importador de Datos de Alumnos
+    </span>
+</a>
+
+
+<a href="{% url 'importador_planes'%}" class="sidebar-link icon">
+    <span class="sidebar-link-label">
+        Importador de Planes
+    </span>
+</a>
+
+
+<a href="{% url 'importador_requisitos'%}" class="sidebar-link icon">
+    <span class="sidebar-link-label">
+        Importador de Requisitos
+    </span>
+</a>
+{% endblock %}

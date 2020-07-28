@@ -1,0 +1,10 @@
+.changeform-tabs-item-link {
+    color: #b2b5b7 !important;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+  }

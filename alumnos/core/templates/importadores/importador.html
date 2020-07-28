@@ -1,14 +1,34 @@
 {% extends 'admin/base_site.html' %}
-{% load i18n %}
+{% load i18n static %}
+
 {%block content%}
-<div class="alert alert-danger" name="alarm">
-    <h5>{% trans 'El archivo debe tener formato .CSV' %}</h5>
-</div>
-<form method="POST" action="{{action}}" enctype="multipart/form-data">
+<link rel="stylesheet" type="text/css" href='{% static "alumnos/css/dropfile.css" %}' />
+<div class="importador">
+  <div class="titulo-importador">
+    <h1>{{titulo}}</h1>
+  </div>
+  <form method="POST" action="{{action}}" id="id_archivo-form" class="uploader" enctype="multipart/form-data">
     {% csrf_token %}
-    <label>{% trans 'Archivo' %}</label>
     {{form.archivo}}
-    <br clear="all">
-    <button class="btn btn-primary default" type='submit'>{% trans 'Cargar' %}</input>
-</form>
+    <label for="id_archivo" id="file-drag">
+      <img id="file-image" src="#" alt="Previsualización" class="hidden">
+      <div id="start">
+        <i class="fa fa-download" aria-hidden="true"></i>
+        <div>Seleccione un archivo CSV o arrastre hasta aqui</div>
+        <div id="notcsv" class="hidden">Por favor, seleccione un archivo CSV</div>
+        <span id="id_archivo-btn" class="btn btn-primary">Seleccionar uno</span>
+      </div>
+      <div id="response" class="hidden">
+        <div id="messages"></div>
+        <progress class="progress" id="file-progress" value="0">
+          <span>0</span>%
+        </progress>
+      </div>
+    </label>
+  </form>
+</div>
+
+{% block dropjs %}
+<script src='{% static "alumnos/js/dropfile.js" %}'></script>
+{% endblock %}
 {% endblock %}
