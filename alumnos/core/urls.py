@@ -4,16 +4,12 @@ from .views import *
 from rest_framework import routers, serializers, viewsets, generics
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .token_serializer import AlumnosTokenObtainPairView
-from rest_framework_swagger.views import get_swagger_view
-
-schema_view = get_swagger_view(title='Nucleo de Seguimiento Académico API')
 
 router = routers.DefaultRouter()
 router.register(r'carreras', CarrerasView)
 
 urlpatterns = [
     path(r'', include(router.urls)),
-    url(r'docs/', schema_view),
     path(r'carreras/<str:codigo_carrera>/alumnos/',
          AlumnosDeCarreraView.as_view()),
     path(r'carreras/<str:codigo_carrera>/alumnos-completos/',
