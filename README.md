@@ -9,17 +9,51 @@ El Núcleo de Seguimiento Académico se encarga de administrar los datos no sens
 A su vez, tiene la capacidad de servir dichos datos para que sean consumidos por los usuarios que tengan los permisos correspondientes.
 Los usuarios tienen permisos asignados que corresponden con la carrera a la que pertenecen, que les permiten consultar datos de dicha carrera. 
 
-## Pre Requisitos
 
 ## Tecnologías usadas
 
-## Instalación
+## Instalación con Docker
 
-## Deploy sin docker
+Docker
 
-## Deploy con docker
+Si no se tiene instalado, correr el siguiente comando:
+
+```
+  $ apt install docker.io
+```
+
+Docker-compose
+
+Si no se tiene instalado, correr el siguiente comando:
+
+```
+  $ apt install docker-compose
+```
+
+Es necesario crear una red para que todas las instancias puedan comunicarse
+
+```
+  $ docker network create seguimiento-academico
+```
+
+### Desarrollo
+
+El deploy en desarrollo implica hacerlo con una base de datos SQLite de prueba, la cual se crea automáticamente.
+Además, la aplicación queda corriendo con el Web server de Django, que no está destinado para ser usado en producción.
+
+```
+  $ docker-compose -f docker-compose.dev.yml up --build -d
+```
 
 
+### Producción
+
+El deploy para producción tiene algunos aspectos extra, como correr la aplicación con Gunicorn y Nginx para resolver los requests.
+Además, la configuración de docker-compose implica que se tenga una base de datos PostgreSQL.
+
+```
+  $ docker-compose -f docker-compose.prod.yml up --build -d
+```
 
 ## Importadores
 
