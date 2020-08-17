@@ -148,7 +148,10 @@ LANGUAGES = (
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = os.path.join(PROJECT_ROOT, 'media/')
+STATIC_ROOT = '/code/alumnos/alumnos/static/'
+STATICFILES_DIR = '/code/alumnos/alumnos/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'alumnos/media')
 DOCS_URL = os.path.join(BASE_DIR, 'docs/')
 
 REST_FRAMEWORK = {
