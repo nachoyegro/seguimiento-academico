@@ -4,7 +4,7 @@ services:
     container_name: seguimiento-academico
     restart: always
     build: .
-    command: gunicorn -w 1 -b :8001 --pythonpath alumnos --env DJANGO_SETTINGS_MODULE=alumnos.settings alumnos.wsgi:application
+    command: gunicorn --timeout 1800 -w 1 -b :8001 --pythonpath alumnos --env DJANGO_SETTINGS_MODULE=alumnos.settings alumnos.wsgi:application
     volumes:
       - .:/code
     ports:
@@ -21,14 +21,21 @@ services:
       - POSTGRES_USER=hello_django
       - POSTGRES_PASSWORD=hello_django
       - POSTGRES_DB=hello_django_dev
-
+ 
   nginx:
     container_name: nginx-container
     restart: always
     build: ./nginx
     ports:
-      - "8000:80"
+      - "80:80"
+      - "443:443"
     depends_on:
       - alumnos_backend
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs
 volumes:
   postgres_data:
+networks:
+  default:
+    external:
+      name: seguimiento-academico
