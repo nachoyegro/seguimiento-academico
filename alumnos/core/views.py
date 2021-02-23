@@ -11,6 +11,7 @@ from django.shortcuts import render
 import datetime
 from .utils import *
 
+
 class AlumnosAPIV1(View):
     def get(self, *args, **kwargs):
         json = []
@@ -70,7 +71,7 @@ class InscripcionesView(generics.ListAPIView):
             - Si tiene permisos, filtro las inscripciones
         """
         try:
-            
+
             carrera = Carrera.objects.get(codigo=self.kwargs['codigo_carrera'])
             profile = Profile.objects.get(user=self.request.user)
             carreras = profile.carreras.all()
@@ -79,8 +80,10 @@ class InscripcionesView(generics.ListAPIView):
                 anio = self.kwargs['anio']
                 semestre = self.kwargs['semestre']
                 if anio and semestre:
-                    fecha_inicio = datetime.date(anio, 1, 1) if semestre == 1 else datetime.date(anio, 7, 1)
-                    fecha_fin = datetime.date(anio, 6, 30) if semestre == 1 else datetime.date(anio, 12, 31)
+                    fecha_inicio = datetime.date(
+                        anio, 1, 1) if semestre == 1 else datetime.date(anio, 7, 1)
+                    fecha_fin = datetime.date(
+                        anio, 6, 30) if semestre == 1 else datetime.date(anio, 12, 31)
                     return inscripciones.filter(fecha__gte=fecha_inicio, fecha__lte=fecha_fin)
                 return inscripciones
         except:
@@ -270,6 +273,7 @@ class MateriaAlumnosView(generics.ListAPIView):
         except:
             return MateriaCursada.objects.none()
 
+
 class CantidadGraduadosView(View):
 
     def get(self, request, codigo_carrera, anio=None, **kwargs):
@@ -278,6 +282,7 @@ class CantidadGraduadosView(View):
             return JsonResponse({"anio": anio, "cantidad": get_cantidad_graduados(carrera, anio)}, safe=False)
         else:
             return JsonResponse([{"anio": anio_actual, "cantidad": get_cantidad_graduados(carrera, anio_actual)} for anio_actual in range(carrera.fecha_creacion.year, datetime.date.today().year + 1)], safe=False)
+
 
 class CantidadIngresantesView(View):
 
@@ -288,6 +293,7 @@ class CantidadIngresantesView(View):
         else:
             return JsonResponse([{"anio": anio_actual, "cantidad": get_cantidad_ingresantes(carrera, anio_actual)} for anio_actual in range(carrera.fecha_creacion.year, datetime.date.today().year + 1)], safe=False)
 
+
 class CantidadCursantesView(View):
 
     def get(self, request, codigo_carrera, anio=None, **kwargs):
@@ -296,6 +302,7 @@ class CantidadCursantesView(View):
             return JsonResponse({"anio": anio, "cantidad": get_cantidad_cursantes(carrera, anio)}, safe=False)
         else:
             return JsonResponse([{"anio": anio_actual, "cantidad": get_cantidad_cursantes(carrera, anio_actual)} for anio_actual in range(carrera.fecha_creacion.year, datetime.date.today().year + 1)], safe=False)
+
 
 class CantidadPostulantesView(View):
 
@@ -314,6 +321,7 @@ class MateriasNecesariasView(View):
         plan = PlanDeEstudio.objects.get(carrera=carrera, anio=plan_anio)
         return JsonResponse({"cantidad": plan.materias_necesarias}, safe=False)
 
+
 class ImportadorView(View):
     form = None
     template = ''
@@ -325,10 +333,11 @@ class ImportadorView(View):
         return render(request, self.template, dict(form=form, titulo=self.titulo))
 
     def post(self, request):
-        response = dict()
+        response = dict(titulo=self.titulo)
         form = self.form(request.POST, request.FILES)
         if form.is_valid():
             response['form'] = form
+            response['cargando'] = True
         return render(request, self.template, response)
 
 

@@ -9,14 +9,14 @@
   </div>
   <form method="POST" action="{{action}}" id="id_archivo-form" class="uploader" enctype="multipart/form-data">
     {% csrf_token %}
-    {{form.archivo}}
+    <input type="file" class="input-file" name="archivo" required="" id="id_archivo">
     <label for="id_archivo" id="file-drag">
       <img id="file-image" src="#" alt="Previsualización" class="hidden">
       <div id="start">
         <i class="fa fa-download" aria-hidden="true"></i>
-        <div>Seleccione un archivo CSV o arrastre hasta aqui</div>
+        <div>Seleccione un archivo CSV</div>
         <div id="notcsv" class="hidden">Por favor, seleccione un archivo CSV</div>
-        <span id="id_archivo-btn" class="btn btn-primary">Seleccionar uno</span>
+        <span id="id_archivo-btn" class="btn btn-primary input-file-trigger">Seleccionar uno</span>
       </div>
       <div id="response" class="hidden">
         <div id="messages"></div>
@@ -24,11 +24,17 @@
           <span>0</span>%
         </progress>
       </div>
+
+      <button type="submit">Cargar</button>
     </label>
+
+    {% if cargando %}
+    <h1>Se están cargando los datos</h1>
+    {% endif %}
   </form>
 </div>
 
 {% block dropjs %}
-<script src='{% static "alumnos/js/dropfile.js" %}'></script>
+<script src='{% static "alumnos/js/upload.js" %}'></script>
 {% endblock %}
 {% endblock %}

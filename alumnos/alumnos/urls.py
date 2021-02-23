@@ -18,15 +18,18 @@ from django.urls import path, include
 from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic.base import RedirectView
 from core.views import ImportarMateriasCursadasView, ImportarDatosAlumnosView, ImportarInscripcionesView, ImportarRequisitosView, ImportarPlanesView
+
 
 urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
     path('i18n/', include('django.conf.urls.i18n')),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path(r'admin/core/importar_materias_cursadas/',
          ImportarMateriasCursadasView.as_view(), name='importador_materias_cursadas'),
-    path(r'admin/core/importar_alumnos/', ImportarDatosAlumnosView.as_view(), name='importador_alumnos'),
+    path(r'admin/core/importar_alumnos/',
+         ImportarDatosAlumnosView.as_view(), name='importador_alumnos'),
     path(r'admin/core/importar_inscripciones/',
          ImportarInscripcionesView.as_view(), name='importador_inscripciones'),
     path(r'admin/core/importar_requisitos/',
@@ -34,6 +37,6 @@ urlpatterns = [
     path(r'admin/core/importar_planes/',
          ImportarPlanesView.as_view(), name='importador_planes'),
     path('api/', include('core.urls')),
+    path('', RedirectView.as_view(url='admin', permanent=False), name='index')
     #url(r'^graphql', GraphQLView.as_view(graphiql=True)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    

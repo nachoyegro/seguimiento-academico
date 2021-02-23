@@ -10,12 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
+import datetime
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.join(BASE_DIR, 'alumnos')
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATIC_ROOT = '/static/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -121,7 +122,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 GRAPHENE = {
-    'SCHEMA': 'alumnos.schema.schema' # Where your Graphene schema lives
+    'SCHEMA': 'alumnos.schema.schema'  # Where your Graphene schema lives
 }
 
 
@@ -164,23 +165,22 @@ REST_FRAMEWORK = {
 
 
 STATICFILES_DIRS = (
-  os.path.join(PROJECT_ROOT, 'static/'),
+    os.path.join(PROJECT_ROOT, 'static/'),
 )
 
 
-import datetime
 SIMPLE_JWT = {
-        'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=1),
-    }
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=1),
+}
 
 JET_INDEX_DASHBOARD = 'alumnos.NucleoDashboard'
 JET_SIDE_MENU_COMPACT = True
 
 JET_THEMES = [
     {
-        'theme': 'default', # theme folder name
-        'color': '#47bac1', # color of the theme's button in user menu
-        'title': 'Default' # theme title
+        'theme': 'default',  # theme folder name
+        'color': '#47bac1',  # color of the theme's button in user menu
+        'title': 'Default'  # theme title
     },
     {
         'theme': 'green',
