@@ -168,6 +168,7 @@ STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static/'),
 )
 
+MEMCACHED_URL = '172.18.0.1:11211'
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=1),
