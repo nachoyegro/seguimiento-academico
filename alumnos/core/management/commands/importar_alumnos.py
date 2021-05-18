@@ -17,6 +17,7 @@ class Command(BaseCommand):
             for fila, row in enumerate(spamreader):
                 if fila > 0:
                     try:
+                        """
                         legajo = row[0]
                         dni = row[1]
                         apellido = row[2]
@@ -32,6 +33,21 @@ class Command(BaseCommand):
                         alumno.nombre = nombre
                         alumno.email = email
                         alumno.save()
+                        """
+                        dni = row[0]
+                        apellido = row[1]
+                        nombre = row[2]
+                        email = row[3]
+                        fecha_str = row[4]
+                        fecha = datetime.strptime(fecha_str, '%d/%m/%Y')
+                        cod_carrera = row[5]
+                        plan = row[6]
+                        alumno = Alumno.objects.get(dni=dni)
+                        alumno.dni = dni
+                        alumno.apellido = apellido
+                        alumno.nombre = nombre
+                        alumno.email = email
+                        alumno.save()
                         carrera = Carrera.objects.get(codigo=cod_carrera)
                         plan_de_estudios = PlanDeEstudio.objects.get(
                             carrera=carrera, anio=int(plan))
@@ -41,5 +57,6 @@ class Command(BaseCommand):
                         alumno_de_carrera.plan = plan_de_estudios
                         alumno_de_carrera.fecha_inscripcion = fecha
                         alumno_de_carrera.save()
-                    except:
+                    except Exception as e:
+                        print(e)
                         print(row)
