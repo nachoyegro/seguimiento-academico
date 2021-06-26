@@ -1,10 +1,10 @@
 from django.core.management.base import BaseCommand
 from core.models import MateriaCursada
 from core.serializers import MateriaCursadaSerializer
-from pymemcache.client.base import Client
+from pymemcache.client.base import PooledClient
 from django.conf import settings
 
-cache = Client(settings.MEMCACHED_URL, encoding="utf-8")
+cache = PooledClient(settings.MEMCACHED_URL, max_pool_size=4, encoding="utf-8")
 
 class Command(BaseCommand):
 
