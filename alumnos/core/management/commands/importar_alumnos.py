@@ -17,7 +17,7 @@ class Command(BaseCommand):
             for fila, row in enumerate(spamreader):
                 if fila > 0:
                     try:
-                        """
+                        
                         legajo = row[0]
                         dni = row[1]
                         apellido = row[2]
@@ -27,7 +27,7 @@ class Command(BaseCommand):
                         fecha = datetime.strptime(fecha_str, '%d/%m/%Y')
                         cod_carrera = row[6]
                         plan = row[7]
-                        alumno = Alumno.objects.get(legajo=legajo)
+                        alumno, _ = Alumno.objects.get_or_create(legajo=legajo)
                         alumno.dni = dni
                         alumno.apellido = apellido
                         alumno.nombre = nombre
@@ -48,6 +48,7 @@ class Command(BaseCommand):
                         alumno.nombre = nombre
                         alumno.email = email
                         alumno.save()
+                        """
                         carrera = Carrera.objects.get(codigo=cod_carrera)
                         plan_de_estudios = PlanDeEstudio.objects.get(
                             carrera=carrera, anio=int(plan))
