@@ -10,3 +10,5 @@ WORKDIR /code
 ADD requirements.txt /code/
 RUN pip install -r requirements.txt
 ADD . /code/
+RUN python alumnos/manage.py collectstatic
+CMD ["gunicorn", "--timeout", "1800", "-w", "1", "-b", ":8001", "--pythonpath", "alumnos", "--env", "DJANGO_SETTINGS_MODULE=alumnos.settings", "alumnos.wsgi:application"]
