@@ -6,6 +6,7 @@ from django.core.management import call_command
 class ImportadorForm(forms.Form):
     archivo = forms.FileField()
     command = ''
+    userFeedback = ''
 
     def clean(self):
         if not self.errors:
@@ -13,7 +14,7 @@ class ImportadorForm(forms.Form):
             # Guardo el file
             path = settings.MEDIA_URL + materias.name
             self.save_file_in_media(materias, path)
-            call_command(self.command, path)
+            self.userFeedback = call_command(self.command, path)
             #messages.info(request,'Your export request is being processed')
         return self.cleaned_data
 

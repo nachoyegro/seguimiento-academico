@@ -22,4 +22,4 @@ class Command(BaseCommand):
             settings.BASE_DIR, 'data/requisitos_lds.csv'))
         print('Importando Materias Cursadas')
         call_command('importar_csv_guarani', os.path.join(
-            settings.BASE_DIR, 'data/materias_cursadas_lds.csv'))
+            settings.BASE_DIR, 'data/lds2021.csv'))
