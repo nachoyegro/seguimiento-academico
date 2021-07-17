@@ -333,11 +333,12 @@ class ImportadorView(View):
         return render(request, self.template, dict(form=form, titulo=self.titulo))
 
     def post(self, request):
+        '''It's called from form Submit'''
         response = dict(titulo=self.titulo)
         form = self.form(request.POST, request.FILES)
+        # form.is_valid() calls clean() method in forms.py
         if form.is_valid():
             response['form'] = form
-            response['cargando'] = True
         return render(request, self.template, response)
 
 

@@ -13,6 +13,8 @@ class Command(BaseCommand):
         path = kwargs['archivo']
         with open(path, 'r', encoding="utf8") as csvfile:
             spamreader = csv.reader(csvfile, delimiter=';')
+            createdPlans = createdSubjects = createdPlanSubjects = failedRows = 0
+            nonExistentCareers = set()
             for fila, row in enumerate(spamreader):
                 if fila > 0:
                     cod_carrera = row[0]
@@ -24,18 +26,26 @@ class Command(BaseCommand):
                     creditos = row[6]
                     nombre_materia = row[7]
 
-                    carrera = Carrera.objects.get(codigo=cod_carrera)
+                    try:
+                        carrera = Carrera.objects.get(codigo=cod_carrera)
+                    except Carrera.DoesNotExist:
+                        failedRows += 1
+                        nonExistentCareers.add(cod_carrera)
+                        continue
+
                     plan, created = PlanDeEstudio.objects.get_or_create(
                         anio=anio_plan, carrera=carrera)
                     if created:
                         plan.nombre = anio_plan
                         plan.save()
+                        createdPlans += 1
 
                     materia, created = Materia.objects.get_or_create(
                         codigo=cod_materia)
                     if created:
                         materia.nombre = nombre_materia
                         materia.save()
+                        createdSubjects += 1
 
                     area, created = Area.objects.get_or_create(
                         nombre=nombre_area, carrera=carrera)
@@ -50,3 +60,9 @@ class Command(BaseCommand):
                         materia_en_plan.codigo = cod_materia
                         materia_en_plan.creditos = creditos
                         materia_en_plan.save()
+                        createdPlanSubjects += 1
+
+        userFeedback = 'Registros creados: Planes: ' + str(createdPlans) + ', Materias: ' + str(createdSubjects) + ', Materias asignadas a planes: ' + str(createdPlanSubjects)
+        if failedRows > 0:
+            userFeedback += ', Registros no creados: ' + str(failedRows) + ', carreras inexistentes: ' + str(nonExistentCareers)
+        return userFeedback

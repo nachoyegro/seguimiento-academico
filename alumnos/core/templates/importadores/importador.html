@@ -16,22 +16,22 @@
         <i class="fa fa-download" aria-hidden="true"></i>
         <div>Seleccione un archivo CSV</div>
         <div id="notcsv" class="hidden">Por favor, seleccione un archivo CSV</div>
+        <input type="text" class="file-selected" hidden="true" disabled="true">
         <span id="id_archivo-btn" class="btn btn-primary input-file-trigger">Seleccionar uno</span>
       </div>
-      <div id="response" class="hidden">
-        <div id="messages"></div>
-        <progress class="progress" id="file-progress" value="0">
-          <span>0</span>%
-        </progress>
-      </div>
 
-      <button type="submit">Cargar</button>
+      <div id="spinner" hidden="true">
+        <h1> Se están cargando los datos</h1>
+        <div class="loader"></div>
+      </div>      
+
+      <button id="cargarButton" hidden="true" type="submit">Cargar</button>
+
     </label>
+    
+    <h1 id="userFeedback">{{ form.userFeedback }}</h1>
+  </form>  
 
-    {% if cargando %}
-    <h1>Se están cargando los datos</h1>
-    {% endif %}
-  </form>
 </div>
 
 {% block dropjs %}
