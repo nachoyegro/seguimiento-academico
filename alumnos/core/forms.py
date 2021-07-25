@@ -25,7 +25,7 @@ class ImportadorForm(forms.Form):
 
 
 class ImportarMateriasCursadasForm(ImportadorForm):
-    command = 'importar_csv_guarani'
+    command = 'importar_materias_cursadas_guarani'
 
 
 class ImportarDatosAlumnosForm(ImportadorForm):
