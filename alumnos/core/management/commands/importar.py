@@ -21,5 +21,5 @@ class Command(BaseCommand):
         call_command('importar_requisitos', os.path.join(
             settings.BASE_DIR, 'data/requisitos_lds.csv'))
         print('Importando Materias Cursadas')
-        call_command('importar_csv_guarani', os.path.join(
+        call_command('importar_materias_cursadas_guarani', os.path.join(
             settings.BASE_DIR, 'data/lds2021.csv'))
