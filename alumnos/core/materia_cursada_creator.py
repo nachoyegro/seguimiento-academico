@@ -55,6 +55,7 @@ class MateriaCursadaCreator:
         materia_cursada, created = MateriaCursada.objects.get_or_create(
             alumno=alumno, materia=materia_en_plan, carrera=carrera, fecha=fecha, resultado=resultado,
             forma_aprobacion=forma_aprob, nota=nota, acta_examen=acta_examen, acta_promocion=acta_promocion)
+        return created
 
 
 """

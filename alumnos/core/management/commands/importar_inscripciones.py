@@ -18,6 +18,9 @@ class Command(BaseCommand):
             if not self.isValidCSVHeader(next(csvReader)):
                 return '(ToDo: validar con CSV ej) CSV invalido, el encabezado debe ser: ' + self.csvHeader
             print('##### Importando inscripciones ##### ', date.today())
+            createdInscriptions = failedRows = 0
+            failedIndeces = []
+            exceptions = set()
             for csvRow in csvReader:
                 try:
                     cod_carrera = csvRow[0]
@@ -47,10 +50,20 @@ class Command(BaseCommand):
                     materia = Materia.objects.get(
                         codigo=cod_materia.zfill(5))
 
-                    Inscripcion.objects.get_or_create(
+                    _, wasCreated = Inscripcion.objects.get_or_create(
                         alumno=alumno, materia=materia, carrera=carrera, fecha=fecha, comision=comision)
+                    if wasCreated:
+                        createdInscriptions += 1
                 except Exception as e:
-                    print(e)
+                    failedRows += 1
+                    failedIndeces.append(i+2)
+                    exceptions.add(str(e))
+
+        userFeedback = 'Inscripciones creadas: ' + str(createdInscriptions)
+        if failedRows > 0:
+            userFeedback += '\nRegistros fallidos: ' + str(failedRows) + ', filas con errores: ' + str(failedIndeces)
+            userFeedback += '\nExcepciones: ' + str(exceptions)
+        return userFeedback
 
     def isValidCSVHeader(self, headerRow):
         # ToDo: No tengo CSV de ejemplo. validar.

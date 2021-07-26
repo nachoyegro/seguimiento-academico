@@ -19,6 +19,9 @@ class Command(BaseCommand):
             if not self.isValidCSVHeader(next(csvReader)):
                 return 'CSV invalido, el encabezado debe ser: ' + self.csvHeader
             print('##### Importando materias cursadas ##### ', date.today())
+            createdRecords = failedRows = 0
+            failedIndeces = []
+            exceptions = set()
             for csvRow in csvReader:
                 try:
                     legajo = csvRow[0]
@@ -34,14 +37,24 @@ class Command(BaseCommand):
                     acta_promocion = csvRow[12]
                     acta_examen = csvRow[13]
                     plan = int(csvRow[14])
-                    mc_creator.create(legajo=legajo, dni=dni, codigo_carrera=cod_carrera,
+                    recordWasCreated = mc_creator.create(legajo=legajo, dni=dni, codigo_carrera=cod_carrera,
                                       codigo_materia=cod_materia, nombre_materia=nombre_materia,
                                       fecha=fecha, resultado=resultado, nota=nota,
                                       forma_aprobacion=forma_aprob, creditos=creditos,
                                       acta_promocion=acta_promocion, acta_examen=acta_examen,
                                       plan=plan)
+                    if recordWasCreated:
+                        createdRecords += 1
                 except:
-                    print(csvRow)
+                    failedRows += 1
+                    failedIndeces.append(i+2)
+                    exceptions.add(str(e))
+
+        userFeedback = 'Registros creados: ' + str(createdRecords)
+        if failedRows > 0:
+            userFeedback += '\nRegistros fallidos: ' + str(failedRows) + ', filas con errores: ' + str(failedIndeces)
+            userFeedback += '\nExcepciones: ' + str(exceptions)
+        return userFeedback
 
     def isValidCSVHeader(self, headerRow):
         return ';'.join(headerRow) == self.csvHeader

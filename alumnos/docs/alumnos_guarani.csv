@@ -1,4 +1,4 @@
-Legajo;DNI;Carrera;Regular;Calidad;Cod.Materia;Nombre_materia;Fecha;Result;Nota;Forma Aprobación;Créditos;Acta Promo;Acta Ex;Plan
+Legajo;DNI;Carrera;Regular;Calidad;Materia;Nombre;Fecha;Resultado;Nota;Forma Aprobación;Crédito;Acta_Promo;Acta_Ex;Plan
 1;;D;;;69;FISICA I;22/08/2002;A;A;Eq;12;0;;2003
 1;;D;;;355;ELECTRÓNICA ANALÓGICA;22/08/2002;A;A;Eq;12;0;;2003
 1;;D;;;834;INSTRUMENTACIÓN I;22/08/2002;A;A;Eq;12;0;;2003

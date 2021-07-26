@@ -18,6 +18,9 @@ class Command(BaseCommand):
             if not self.isValidCSVHeader(next(csvReader)):
                 return 'CSV invalido, el encabezado debe ser: ' + self.csvHeader
             print('##### Importando inscripciones ##### ', date.today())
+            updatedRecords = failedRows = 0
+            failedIndeces = []
+            exceptions = set()
             for csvRow in csvReader:
                 try:
                     cod_carrera = csvRow[0]
@@ -43,8 +46,17 @@ class Command(BaseCommand):
                                 materia__codigo=recomendada.replace(' ', '').replace('\n', '').zfill(5), plan=plan)
                             materia.recomendadas.add(materia_recomendada)
                     materia.save()
+                    updatedRecords += 1
                 except:
-                    print(csvRow)
+                    failedRows += 1
+                    failedIndeces.append(i+2)
+                    exceptions.add(str(e))
+
+        userFeedback = 'Registros actualizados: ' + str(updatedRecords)
+        if failedRows > 0:
+            userFeedback += '\nRegistros fallidos: ' + str(failedRows) + ', filas con errores: ' + str(failedIndeces)
+            userFeedback += '\nExcepciones: ' + str(exceptions)
+        return userFeedback
 
     def isValidCSVHeader(self, headerRow):
         return ';'.join(headerRow) == self.csvHeader

@@ -18,6 +18,9 @@ class Command(BaseCommand):
             if not self.isValidCSVHeader(next(csvReader)):
                 return '(ToDo: validar con CSV ej) CSV invalido, el encabezado debe ser: ' + self.csvHeader
             print('##### Importando alumnos ##### ', date.today())
+            createdRecords = updatedRecords = failedRows = 0
+            failedIndeces = []
+            exceptions = set()
             for csvRow in csvReader:
                 try:                    
                     legajo = csvRow[0]
@@ -29,7 +32,7 @@ class Command(BaseCommand):
                     fecha = datetime.strptime(fecha_str, '%d/%m/%Y')
                     cod_carrera = csvRow[6]
                     plan = csvRow[7]
-                    alumno, _ = Alumno.objects.get_or_create(legajo=legajo)
+                    alumno, createdStudent = Alumno.objects.get_or_create(legajo=legajo)
                     alumno.dni = dni
                     alumno.apellido = apellido
                     alumno.nombre = nombre
@@ -40,14 +43,25 @@ class Command(BaseCommand):
                     plan_de_estudios = PlanDeEstudio.objects.get(
                         carrera=carrera, anio=int(plan))
 
-                    alumno_de_carrera, _ = AlumnoDeCarrera.objects.get_or_create(
+                    alumno_de_carrera, createdCareerStudent = AlumnoDeCarrera.objects.get_or_create(
                         alumno=alumno, carrera=carrera)
                     alumno_de_carrera.plan = plan_de_estudios
                     alumno_de_carrera.fecha_inscripcion = fecha
                     alumno_de_carrera.save()
+                    if createdStudent or createdCareerStudent:
+                        createdRecords += 1
+                    else:
+                        updatedRecords += 1
                 except Exception as e:
-                    print(e)
-                    print(csvRow)
+                    failedRows += 1
+                    failedIndeces.append(i+2)
+                    exceptions.add(str(e))
+
+        userFeedback = 'Registros creados: ' + str(createdRecords) + ', Registros actualizados: ' + str(updatedRecords)
+        if failedRows > 0:
+            userFeedback += '\nRegistros fallidos: ' + str(failedRows) + ', filas con errores: ' + str(failedIndeces)
+            userFeedback += '\nExcepciones: ' + str(exceptions)
+        return userFeedback
 
     def isValidCSVHeader(self, headerRow):
         return ';'.join(headerRow) == self.csvHeader
