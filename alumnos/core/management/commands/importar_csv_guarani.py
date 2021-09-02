@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand
 import csv
 from datetime import datetime, date
 from core.materia_cursada_creator import MateriaCursadaCreator
+from django.core.management import call_command
 
 
 class Command(BaseCommand):
@@ -12,6 +13,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         path = kwargs['archivo']
         mc_creator = MateriaCursadaCreator()
+        carreras = set()
         with open(path, 'r', encoding="utf8") as csvfile:
             spamreader = csv.reader(csvfile, delimiter=';')
             print('##### Importando materias cursadas ##### ', date.today())
@@ -22,6 +24,7 @@ class Command(BaseCommand):
                         dni = row[1]
                         cod_carrera = row[2]
                         cod_materia = row[5]
+                        carreras.add(cod_carrera)
                         nombre_materia = row[6]
                         fecha = datetime.strptime(row[7], '%d/%m/%Y')
                         resultado = row[8]
@@ -37,5 +40,9 @@ class Command(BaseCommand):
                                           forma_aprobacion=forma_aprob, creditos=creditos,
                                           acta_promocion=acta_promocion, acta_examen=acta_examen,
                                           plan=plan)
-                    except:
-                        print(row)
+                    except Exception as e:
+                        print(e)
+        print(carreras)
+        for carrera in carreras:
+            call_command('actualizar_cache', carrera=carrera)
+        

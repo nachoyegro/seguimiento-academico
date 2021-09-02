@@ -13,7 +13,7 @@ class Command(BaseCommand):
         path = kwargs['archivo']
         with open(path, 'r', encoding="utf8") as csvfile:
             spamreader = csv.reader(csvfile, delimiter=';')
-            print('##### Importando inscripciones ##### ', date.today())
+            print('##### Importando requisitos ##### ', date.today())
             for fila, row in enumerate(spamreader):
                 if fila > 0:
                     try:
