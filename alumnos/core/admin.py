@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
-from core.models import Postulantes, Inscripcion, Profile, Carrera, Alumno, Materia, MateriaEnPlan, MateriaCursada, PlanDeEstudio, AlumnoDeCarrera
+from core.models import Postulantes, Graduado, Inscripcion, Profile, Carrera, Alumno, Materia, MateriaEnPlan, MateriaCursada, PlanDeEstudio, AlumnoDeCarrera
 
 
 class MateriaCursadaTabular(admin.TabularInline):
@@ -145,6 +145,18 @@ class PlanDeEstudioAdmin(admin.ModelAdmin):
         else:
             return qs.none()
 
+class GraduadoAdmin(admin.ModelAdmin):
+    list_display = ('alumno', 'fecha')
+
+    # Filtro las carreras del usuario
+    def get_queryset(self, request):
+        qs = super(GraduadoAdmin, self).get_queryset(request)
+        if request.user.profile:
+            # Filtro los alumnos de las carreras del usuario
+            return qs.filter(alumno__carrera__in=request.user.profile.carreras.all())
+        else:
+            return qs.none()
+
 class ProfileInLine(admin.StackedInline):
     model = Profile
     filter_horizontal = ['carreras', ]
@@ -163,3 +175,4 @@ admin.site.register(MateriaEnPlan, MateriaAdmin)
 admin.site.register(PlanDeEstudio, PlanDeEstudioAdmin)
 admin.site.register(Carrera, CarreraAdmin)
 admin.site.register(MateriaCursada, MateriaCursadaAdmin)
+admin.site.register(Graduado, GraduadoAdmin)

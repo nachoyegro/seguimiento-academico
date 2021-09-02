@@ -40,7 +40,7 @@ class PlanDeEstudio(models.Model):
     nombre = models.CharField(max_length=64)
     carrera = models.ForeignKey(Carrera, on_delete=models.CASCADE)
     descripcion = models.TextField(null=True, blank=True)
-    anio = models.IntegerField()
+    anio = models.IntegerField(verbose_name="Año")
     materias_necesarias = models.IntegerField(default=40)
 
     class Meta:
@@ -90,7 +90,7 @@ class Alumno(models.Model):
     legajo = models.CharField(max_length=32)
     es_regular = models.BooleanField(default=True)
     sexo = models.CharField(
-        choices=(('F', 'Femenino'), ('M', 'Masculino')), max_length=2, null=True, blank=True)
+        choices=(('F', 'Femenino'), ('M', 'Masculino'), ('X', 'No binario')), max_length=2, null=True, blank=True)
     telefono = models.CharField(max_length=32, null=True, blank=True)
     celular = models.CharField(max_length=32, null=True, blank=True)
     tiene_beca = models.BooleanField(default=False)
@@ -141,7 +141,8 @@ class MateriaCursada(models.Model):
         ('3', '3'), ('4', '4'), ('5', '5'), ('6', '6'),
         ('7', '7'), ('8', '8'), ('9', '9'), ('10', '10')), null=True, blank=True)
     fecha = models.DateField(null=True, blank=True)
-    forma_aprobacion = models.CharField(max_length=32, null=True, blank=True, choices=(
+    forma_aprobacion = models.CharField(max_length=32, null=True, blank=True, verbose_name="Forma de aprobación",
+     choices=(
         ('EqE', 'Equivalencia equivalente'),
         ('PC', 'Promocion en otra carrera'),
         ('P', 'Promocion'),
@@ -181,12 +182,19 @@ class Postulantes(models.Model):
     cantidad = models.IntegerField()
     fecha = models.DateField()
 
+    class Meta:
+        verbose_name_plural = "Postulantes"
+
     def __str__(self):
         return u'%s-%s-%s' % (self.fecha, self.carrera, self.cantidad)
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     carreras = models.ManyToManyField(Carrera)
+
+    class Meta:
+        verbose_name = "Perfil"
+        verbose_name_plural = "Perfil"
 
     def __str__(self):
         return u'%s' % self.user
