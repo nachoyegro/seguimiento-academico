@@ -13,3 +13,5 @@ gunicorn==19.9.0
 
 python-memcached
 pymemcache
+
+django-rest-swagger==2.1.2

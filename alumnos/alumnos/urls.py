@@ -20,7 +20,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic.base import RedirectView
 from core.views import ImportarMateriasCursadasView, ImportarDatosAlumnosView, ImportarInscripcionesView, ImportarRequisitosView, ImportarPlanesView
+from rest_framework_swagger.views import get_swagger_view
 
+schema_view = get_swagger_view(title='Nucleo Academico API')
 
 urlpatterns = [
     url(r'^jet/', include('jet.urls', 'jet')),
@@ -37,6 +39,8 @@ urlpatterns = [
     path(r'admin/core/importar_planes/',
          ImportarPlanesView.as_view(), name='importador_planes'),
     path('api/', include('core.urls')),
+    path('docs/', schema_view),
+
     path('', RedirectView.as_view(url='admin', permanent=False), name='index')
     #url(r'^graphql', GraphQLView.as_view(graphiql=True)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
